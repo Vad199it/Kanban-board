@@ -1,6 +1,9 @@
-# Kanban
+# KanbanBoard
+#### https://kanban-board-b3d29.firebaseapp.com
+The app allows you to add tasks cards, move tasks between the columns, delete the completed tasks.
+The interface consists of columns (ready for development, in development, in qa, closed) for placing tasks according to different statuses, buttons for adding and deleting tasks, an input field for adding a task name.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
 
 ## Development server
 
