@@ -1,0 +1,17 @@
+<section>
+  <div class="container">
+    <div class="user signupBx">
+      <div class="formBx">
+        <form>
+          <h2>Thank You for Registering</h2>
+          <div class="formGroup" *ngIf="authService.userData as user">
+            <p>We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
+          </div>
+          <p>Please check your email and click on the link to verfiy your email address.</p>
+            <input type="button" name="" value="Resend" (click)="authService.sendVerificationMail()">
+          <p class="signup">Go back to ? <a routerLink="/sign-in">Sign in.</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
