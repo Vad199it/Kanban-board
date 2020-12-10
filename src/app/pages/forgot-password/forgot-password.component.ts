@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-  public PATH_IMG3 = '../assets/thirdcassette.jpg';
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {

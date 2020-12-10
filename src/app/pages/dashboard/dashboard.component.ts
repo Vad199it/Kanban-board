@@ -11,7 +11,7 @@ import Board from '../../models/board';
 export class DashboardComponent implements OnInit {
 
   board: Board;
-  public submitted = false;
+  public submitted: boolean = false;
   public addBoardImg = '../../../assets/add-board.png';
 
   constructor(private boardService: BoardService,

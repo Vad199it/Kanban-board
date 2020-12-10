@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  public PATH_IMG2 = '../assets/secondcassette.png';
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {

@@ -8,7 +8,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  public PATH_IMG1 = '../assets/firstcassette.png';
 
   myForm: FormGroup;
   constructor(public authService: AuthService) {

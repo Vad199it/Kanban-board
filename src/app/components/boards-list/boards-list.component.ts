@@ -14,7 +14,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   currentIndex = -1;
   title = '';
   subscription: Subscription;
-  tittle1: string;
+  tittle: string;
 
   constructor(private boardService: BoardService) { }
 
@@ -44,14 +44,14 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  Search(): void{
-    if (this.tittle1 !== ''){
+  search(): void { // ??????
+    if (this.tittle !== ''){
       this.boards = this.boards.filter(res => {
-        return res.title.toLowerCase().match(this.tittle1.toLowerCase());
+        return res.title.toLowerCase().match(this.tittle.toLowerCase());
       });
     }
-    else if (this.tittle1 === ''){
-      this.ngOnInit();
+    else if (this.tittle === ''){
+      this.retrieveBoards();
     }
   }
 
