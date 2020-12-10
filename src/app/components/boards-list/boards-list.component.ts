@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-// import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { BoardService } from '../../services/board.service';
