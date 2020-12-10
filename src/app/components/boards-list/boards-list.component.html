@@ -1,0 +1,29 @@
+<input type="text" [(ngModel)]="tittle1" (input)="Search()" >
+<div class="list">
+  <div class="col">
+    <h4>Boards List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let board of boards; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveBoard(board, i)"
+      >
+        {{ board.title }}
+      </li>
+    </ul>
+  </div>
+  <div class="col">
+    <div *ngIf="currentBoard">
+      <app-board-details
+        (refreshList)="refreshList()"
+        [board]="currentBoard"
+      ></app-board-details>
+    </div>
+
+    <div *ngIf="!currentBoard">
+      <br />
+      <p>Please click on a Board...</p>
+    </div>
+  </div>
+</div>

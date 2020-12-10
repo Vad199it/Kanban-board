@@ -1,0 +1,18 @@
+<section>
+  <div class="container">
+    <div class="user signinBx">
+      <div class="imgBx"><img src="{{PATH_IMG1}}" alt="cassette" width="400px" height="500px"/></div>
+      <div class="formBx">
+        <form>
+          <h2>Sign In</h2>
+          <input type="text" name="" placeholder="Username" #userName required>
+          <input type="password" name="" placeholder="Password" #userPassword required>
+          <input type="button" name="" value="Login" (click)="authService.signIn(userName.value, userPassword.value)">
+          <input class="Google" type="button" name="" value="Login with Google" (click)="authService.googleAuth()">
+          <p class="signup">Don't have an account ? <a routerLink="/sign-up">Sign Up.</a></p>
+          <p class="signup"><a routerLink="/forgot-password">Forgot Password ? </a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

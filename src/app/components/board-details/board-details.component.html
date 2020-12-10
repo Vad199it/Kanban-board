@@ -1,0 +1,51 @@
+<div *ngIf="currentBoard" class="edit-form">
+  <h4>Board</h4>
+  <form>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="currentBoard.title"
+        name="title"
+      />
+    </div>
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input
+        type="text"
+        class="form-control"
+        id="type"
+        [(ngModel)]="currentBoard.type"
+        name="type"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input
+        type="color"
+        class="form-control"
+        id="color"
+        value="{{currentBoard.color}}"
+        [(ngModel)]="currentBoard.color"
+        name="color"
+      />
+    </div>
+  </form>
+
+  <button class="badge badge-danger mr-2" (click)="deleteBoard()">
+    Delete
+  </button>
+
+  <button type="submit" class="badge badge-success" (click)="updateBoard()">
+    Update
+  </button>
+  <p>{{ message }}</p>
+</div>
+
+<div *ngIf="!currentBoard">
+  <br />
+  <p>Cannot access this Board...</p>
+</div>
