@@ -12,7 +12,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() board: Board;
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   currentBoard: Board = null;
-  message = '';
+  message: string = '';
 
   constructor(private boardService: BoardService) { }
 
@@ -26,7 +26,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   updateBoard(): void {
-    const data = {
+    const data: Object = {
       title: this.currentBoard.title,
       type: this.currentBoard.type,
       color: this.currentBoard.color
