@@ -10,6 +10,7 @@ import Board from '../../models/board';
 export class BoardDetailsComponent implements OnInit, OnChanges {
 
   @Input() board: Board;
+  @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   currentBoard: Board = null;
   message: string = '';
@@ -26,7 +27,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   updateBoard(): void {
-    const data: Object = {
+    const data = {
       title: this.currentBoard.title,
       type: this.currentBoard.type,
       color: this.currentBoard.color
@@ -37,6 +38,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   deleteBoard(): void {
+    this.isModal.emit(true);
     this.boardService.deleteBoard(this.currentBoard.id)
       .then(() => {
         this.refreshList.emit();
