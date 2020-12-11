@@ -6,7 +6,7 @@ import { BoardService } from '../../services/board.service';
 @Component({
   selector: 'app-boards-list',
   templateUrl: './boards-list.component.html',
-  styleUrls: ['./boards-list.component.css']
+  styleUrls: ['./boards-list.component.scss']
 })
 export class BoardsListComponent implements OnInit, OnDestroy {
   boards: any;
@@ -15,6 +15,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   title = '';
   subscription: Subscription;
   tittle: string;
+  isModal: boolean = false;
 
   constructor(private boardService: BoardService) { }
 
@@ -38,6 +39,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   setActiveBoard(board, index): void {
     this.currentBoard = board;
     this.currentIndex = index;
+    this.isModal = !this.isModal;
   }
 
   ngOnDestroy(): void {
@@ -51,8 +53,12 @@ export class BoardsListComponent implements OnInit, OnDestroy {
       });
     }
     else if (this.tittle === ''){
-      this.retrieveBoards();
+      this.ngOnInit();
     }
+  }
+
+  closeModal(value: boolean): void {
+    this.isModal = !value;
   }
 
 }
