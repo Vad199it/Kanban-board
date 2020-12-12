@@ -22,11 +22,41 @@
       font-size: 150%;
       min-height: 100px;
 
+      .update-button
+      {
+        position: relative;
+        top: -1em;
+        right: -3em;
+        width: 25px;
+        height: 25px;
+        color: white;
+        border-radius: 50%;
+
+        &:hover
+        {
+          transform: scale(1.05);
+          transition: 0.1s;
+          cursor: pointer;
+        }
+
+        &:after
+        {
+          content: '•••';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(90deg);
+          font-size: 10px;
+          letter-spacing: 4px;
+          margin-top: 2px;
+        }
+      }
+
       &:hover
       {
         transform: scale(1.1);
         transition: 0.5s;
-        box-shadow: 0 0 10px #fee648;
+        box-shadow: 0 0 10px #030303;
       }
     }
   }

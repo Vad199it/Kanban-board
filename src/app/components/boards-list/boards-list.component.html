@@ -6,10 +6,12 @@
         class="list-group-item"
         *ngFor="let board of boards; let i = index"
         [class.active]="i == currentIndex"
-        (click)="setActiveBoard(board, i)"
         [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
       >
         {{ board.title }}
+        <div class="update-button"
+          (click)="setActiveBoard(board, i)"
+        ></div>
       </div>
     </div>
   </div>

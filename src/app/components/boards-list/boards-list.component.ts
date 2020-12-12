@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { BoardService } from '../../services/board.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-boards-list',
@@ -17,7 +18,8 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   tittle: string;
   isModal: boolean = false;
 
-  constructor(private boardService: BoardService) { }
+  constructor(private boardService: BoardService,
+              public authService: AuthService) { }
 
   ngOnInit(): void {
     this.retrieveBoards();
@@ -30,7 +32,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   }
 
   retrieveBoards(): void {
-    this.subscription = this.boardService.getBoards().valueChanges({idField: 'id'})
+    this.subscription = this.boardService.getBoards(this.authService.userData.uid).valueChanges({idField: 'id'})
       .subscribe(data => {
       this.boards = data;
     });

@@ -12,12 +12,12 @@ export class BoardService {
 
   tutorialsRef: AngularFirestoreCollection<Board>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(public db: AngularFirestore) {
     this.tutorialsRef = db.collection(this.dbPath);
   }
 
-  getBoards(): AngularFirestoreCollection<Board> {
-    return this.tutorialsRef;
+  getBoards(userId: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId));
   }
 
   createBoard(board: Board): any {
