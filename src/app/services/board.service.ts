@@ -10,10 +10,10 @@ export class BoardService {
 
   private dbPath = '/boards';
 
-  tutorialsRef: AngularFirestoreCollection<Board>;
+  boardsRef: AngularFirestoreCollection<Board>;
 
   constructor(public db: AngularFirestore) {
-    this.tutorialsRef = db.collection(this.dbPath);
+    this.boardsRef = db.collection(this.dbPath);
   }
 
   getBoards(userId: string): AngularFirestoreCollection<Board> {
@@ -21,14 +21,14 @@ export class BoardService {
   }
 
   createBoard(board: Board): any {
-    return this.tutorialsRef.add({ ...board });
+    return this.boardsRef.add({ ...board });
   }
 
   updateBoard(id: string, data: any): Promise<void> {
-    return this.tutorialsRef.doc(id).update(data);
+    return this.boardsRef.doc(id).update(data);
   }
 
   deleteBoard(id: string): Promise<void> {
-    return this.tutorialsRef.doc(id).delete();
+    return this.boardsRef.doc(id).delete();
   }
 }
