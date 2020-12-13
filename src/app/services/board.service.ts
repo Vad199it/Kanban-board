@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 
 import Board from '../models/board';
 
@@ -20,8 +20,12 @@ export class BoardService {
     return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId));
   }
 
-  createBoard(board: Board): any {
-    return this.boardsRef.add({ ...board });
+  createBoard(board: Board): Promise<void> {
+    const id = this.db.createId();
+    const boardRef: AngularFirestoreDocument<any> = this.db.doc(`boards/${id}`);
+    return boardRef.set({ ...board, ...{uid: id} }, {
+      merge: true
+    });
   }
 
   updateBoard(id: string, data: any): Promise<void> {
@@ -31,4 +35,5 @@ export class BoardService {
   deleteBoard(id: string): Promise<void> {
     return this.boardsRef.doc(id).delete();
   }
+
 }

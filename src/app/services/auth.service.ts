@@ -71,12 +71,6 @@ export class AuthService implements OnDestroy{
       });
   }
 
-  // Returns true when user is logged in and email is verified
- /* get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false);
-  }*/
-
   // Sign in with Google
   googleAuth(): Promise<void> {
     return this.authLogin(new firebase.auth.GoogleAuthProvider());

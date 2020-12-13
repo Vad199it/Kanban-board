@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { BoardsListComponent } from '../../components/boards-list/boards-list.component';
 import { BoardDetailsComponent } from '../../components/board-details/board-details.component';
+import { ClickStopPropagationDirective } from '../../directives/click-stop-propagation.directive';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { BoardDetailsComponent } from '../../components/board-details/board-deta
     DashboardComponent,
     NavbarComponent,
     BoardsListComponent,
-    BoardDetailsComponent],
+    BoardDetailsComponent,
+    ClickStopPropagationDirective],
   imports: [
     CommonModule,
     DashboardRoutingModule,

@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { BoardService } from '../../services/board.service';
 import { AuthService } from '../../services/auth.service';
@@ -19,7 +20,8 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   isModal: boolean = false;
 
   constructor(private boardService: BoardService,
-              public authService: AuthService) { }
+              public authService: AuthService,
+              public router: Router) { }
 
   ngOnInit(): void {
     this.retrieveBoards();
@@ -61,6 +63,14 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   closeModal(value: boolean): void {
     this.isModal = !value;
+  }
+
+  trackByMethod(index: number, el: any): number {
+    return el.uid;
+  }
+
+  navigateToBoard(id: string): void{
+    this.router.navigate(['board' , id]);
   }
 
 }

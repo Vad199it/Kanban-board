@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'forgot-password', loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule) },
   { path: 'verify-email', loadChildren: () => import('./pages/verify-email/verify-email.module').then(m => m.VerifyEmailModule) },
   { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), ...canActivate(redirectUnauthorizedToLogin) },
-  { path: 'board', loadChildren: () => import('./pages/board/board.module').then(m => m.BoardModule), ...canActivate(redirectUnauthorizedToLogin) },
+  { path: 'board/:uid', loadChildren: () => import('./pages/board/board.module').then(m => m.BoardModule), ...canActivate(redirectUnauthorizedToLogin) },
 ];
 
 @NgModule({
