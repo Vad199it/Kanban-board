@@ -6,7 +6,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CookieService } from 'ngx-cookie';
 
 import {AppConst} from '../app.constants';
 
@@ -15,7 +14,6 @@ import {AppConst} from '../app.constants';
 })
 
 export class AuthService implements OnDestroy{
-  public userData: any; // Save logged in user data
   subscription: Subscription;
 
   constructor(
@@ -23,22 +21,11 @@ export class AuthService implements OnDestroy{
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone,
-    private cookieService: CookieService// NgZone service to remove outside scope warning
-  ) {
-    /* Saving user data in cookie when
-    logged in and setting up null when logged out */
-    this.subscription = this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        this.cookieService.putObject('user', this.userData);
-        this.cookieService.getObject('user');
-      } else {
-        this.cookieService.putObject('user', null);
-        this.cookieService.getObject('user');
-      }
-    });
-  }
+  ) {}
 
+  getUser(): any{
+    return firebase.auth().currentUser;
+  }
   // Sign in with email/password
   signIn(email: string, password: string): Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password)
@@ -128,7 +115,6 @@ export class AuthService implements OnDestroy{
   // Sign out
   signOut(): Promise<void> {
     return this.afAuth.signOut().then(() => {
-      this.cookieService.remove('user');
       this.router.navigate([`${AppConst.SIGN_IN}`]);
     });
   }

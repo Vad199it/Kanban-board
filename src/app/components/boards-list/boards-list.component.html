@@ -4,8 +4,7 @@
     <div class="list-group">
       <div
         class="list-group-item"
-        *ngFor="let board of boards; let i = index"
-        [class.active]="i == currentIndex"
+        *ngFor="let board of boards; let i = index;"
         [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
       >
         {{ board.title }}

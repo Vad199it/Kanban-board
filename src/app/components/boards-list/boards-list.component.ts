@@ -32,7 +32,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   }
 
   retrieveBoards(): void {
-    this.subscription = this.boardService.getBoards(this.authService.userData.uid).valueChanges({idField: 'id'})
+    this.subscription = this.boardService.getBoards(this.authService.getUser().uid).valueChanges({idField: 'id'})
       .subscribe(data => {
       this.boards = data;
     });

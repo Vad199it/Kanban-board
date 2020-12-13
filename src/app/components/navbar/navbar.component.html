@@ -1,5 +1,5 @@
 <div class="container"></div><div class="head"><h2>KanbanBoard</h2></div>
-<div class="action" *ngIf="authService.userData as user">
+<div class="action" *ngIf="authService.getUser() as user">
   <div class="profile" (click)="changeActiveFont()">
     <img src="{{(user.photoURL) ? user.photoURL : this.userImg}}" alt="{{user.displayName}}">
   </div>
