@@ -1,4 +1,5 @@
 export default class Board {
+  uid: string;
   ownerUsername: string;
   title: string;
   type: number;

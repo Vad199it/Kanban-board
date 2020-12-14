@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 
+import {TaskListService} from './task-list.service';
 import Board from '../models/board';
 
 @Injectable({
@@ -10,25 +11,32 @@ export class BoardService {
 
   private dbPath = '/boards';
 
-  tutorialsRef: AngularFirestoreCollection<Board>;
+  boardsRef: AngularFirestoreCollection<Board>;
 
-  constructor(private db: AngularFirestore) {
-    this.tutorialsRef = db.collection(this.dbPath);
+  constructor(public db: AngularFirestore,
+              private taskListService: TaskListService) {
+    this.boardsRef = db.collection(this.dbPath);
   }
 
-  getBoards(): AngularFirestoreCollection<Board> {
-    return this.tutorialsRef;
+  getBoards(userId: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId));
   }
 
-  createBoard(board: Board): any {
-    return this.tutorialsRef.add({ ...board });
+  createBoard(board: Board): Promise<void> {
+    const id = this.db.createId();
+    const boardRef: AngularFirestoreDocument<any> = this.db.doc(`boards/${id}`);
+    return boardRef.set({ ...board, ...{uid: id} }, {
+      merge: true
+    });
   }
 
   updateBoard(id: string, data: any): Promise<void> {
-    return this.tutorialsRef.doc(id).update(data);
+    return this.boardsRef.doc(id).update(data);
   }
 
   deleteBoard(id: string): Promise<void> {
-    return this.tutorialsRef.doc(id).delete();
+    this.taskListService.deleteAllTaskListFromBoard(id);
+    return this.boardsRef.doc(id).delete();
   }
+
 }

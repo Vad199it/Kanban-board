@@ -1,0 +1,32 @@
+<div class="taskList">
+  <div class="col">
+    <div
+      *ngFor="let taskList of taskLists; let i = index;trackBy: trackByMethod"
+      class="taskList-group">
+      {{ taskList.title }}
+      <div class="update-button"
+           (click)="setActiveTaskList(taskList, i)"
+      ></div>
+      <div class="taskList-group-item">
+
+      </div>
+    </div>
+  </div>
+  <div
+    class="container-details"
+    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
+  >
+    <div class="details" *ngIf="currentTaskList">
+      <span
+        class="close"
+        (click)="this.isModal = !this.isModal"
+      >&times;</span>
+      <app-tasks-list-details
+        (refreshList)="refreshTaskList()"
+        [taskList]="currentTaskList"
+        (isModal)= "this.closeModal($event)"
+      ></app-tasks-list-details>
+    </div>
+  </div>
+</div>
+

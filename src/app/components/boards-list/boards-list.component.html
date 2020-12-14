@@ -4,12 +4,14 @@
     <div class="list-group">
       <div
         class="list-group-item"
-        *ngFor="let board of boards; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="setActiveBoard(board, i)"
+        *ngFor="let board of boards; let i = index;trackBy: trackByMethod"
         [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
+        (click)="navigateToBoard(board.uid)"
       >
         {{ board.title }}
+        <div appClickStopPropagation class="update-button"
+          (click)="setActiveBoard(board, i)"
+        ></div>
       </div>
     </div>
   </div>

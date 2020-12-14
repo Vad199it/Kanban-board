@@ -1,31 +1,33 @@
-.list
-{
+.taskList {
   margin: 80px;
 
-  .list-group
-  {
+  .col {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
+    height: 100vh;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
     background-color: #fff;
     color: #444;
 
-    .list-group-item
-    {
+    .taskList-group {
       display: flex;
       justify-content: center;
-      align-items: center;
-      background-color: #444;
-      color: #fff;
+      align-items: flex-start;
+      color: #ff0000;
       border-radius: 5px;
       padding: 20px;
       font-size: 150%;
       min-height: 100px;
       word-wrap: break-word;
       cursor: grabbing;
+      box-shadow: #030303 1px 1px 1px 1px;
 
-      .update-button
-      {
+      .taskList-group-item{
+        width: 100%;
+        height: 100%;
+      }
+
+      .update-button {
         position: relative;
         top: -1em;
         right: -3em;
@@ -34,15 +36,13 @@
         color: white;
         border-radius: 50%;
 
-        &:hover
-        {
+        &:hover {
           transform: scale(1.05);
           transition: 0.1s;
           cursor: pointer;
         }
 
-        &:after
-        {
+        &:after {
           content: '•••';
           position: absolute;
           top: 50%;
@@ -51,14 +51,8 @@
           font-size: 10px;
           letter-spacing: 4px;
           margin-top: 2px;
+          color: #030303;
         }
-      }
-
-      &:hover
-      {
-        transform: scale(1.1);
-        transition: 0.5s;
-        box-shadow: 0 0 10px #030303;
       }
     }
   }
@@ -99,4 +93,3 @@
   }
 
 }
-
