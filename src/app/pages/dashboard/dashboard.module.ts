@@ -11,16 +11,19 @@ import { ClickStopPropagationDirective } from '../../directives/click-stop-propa
 
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    NavbarComponent,
-    BoardsListComponent,
-    BoardDetailsComponent,
-    ClickStopPropagationDirective],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    FormsModule
-  ]
+    declarations: [
+        DashboardComponent,
+        NavbarComponent,
+        BoardsListComponent,
+        BoardDetailsComponent,
+        ClickStopPropagationDirective],
+    exports: [
+        NavbarComponent
+    ],
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        FormsModule
+    ]
 })
 export class DashboardModule { }

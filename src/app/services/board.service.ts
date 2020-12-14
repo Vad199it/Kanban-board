@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 
+import {TaskListService} from './task-list.service';
 import Board from '../models/board';
 
 @Injectable({
@@ -12,7 +13,8 @@ export class BoardService {
 
   boardsRef: AngularFirestoreCollection<Board>;
 
-  constructor(public db: AngularFirestore) {
+  constructor(public db: AngularFirestore,
+              private taskListService: TaskListService) {
     this.boardsRef = db.collection(this.dbPath);
   }
 
@@ -33,6 +35,7 @@ export class BoardService {
   }
 
   deleteBoard(id: string): Promise<void> {
+    this.taskListService.deleteAllTaskListFromBoard(id);
     return this.boardsRef.doc(id).delete();
   }
 

@@ -1,0 +1,39 @@
+<div *ngIf="currentTaskList" class="edit-form">
+  <h4>TaskList</h4>
+  <form>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="currentTaskList.title"
+        name="title"
+      />
+    </div>
+    <div class="form-group">
+      <label for="order">Order</label>
+      <input
+        type="text"
+        class="form-control"
+        id="order"
+        [(ngModel)]="currentTaskList.order"
+        name="type"
+      />
+    </div>
+  </form>
+
+  <button class="badge" (click)="deleteTaskList()">
+    Delete
+  </button>
+
+  <button type="submit" class="badge-success" (click)="updateTaskList()">
+    Update
+  </button>
+  <p>{{ message }}</p>
+</div>
+
+<div *ngIf="!currentTaskList">
+  <br />
+  <p>Cannot access this Board...</p>
+</div>

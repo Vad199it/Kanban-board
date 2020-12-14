@@ -1,0 +1,95 @@
+.taskList {
+  margin: 80px;
+
+  .col {
+    display: grid;
+    grid-gap: 10px;
+    height: 100vh;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
+    background-color: #fff;
+    color: #444;
+
+    .taskList-group {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      color: #ff0000;
+      border-radius: 5px;
+      padding: 20px;
+      font-size: 150%;
+      min-height: 100px;
+      word-wrap: break-word;
+      cursor: grabbing;
+      box-shadow: #030303 1px 1px 1px 1px;
+
+      .taskList-group-item{
+        width: 100%;
+        height: 100%;
+      }
+
+      .update-button {
+        position: relative;
+        top: -1em;
+        right: -3em;
+        width: 25px;
+        height: 25px;
+        color: white;
+        border-radius: 50%;
+
+        &:hover {
+          transform: scale(1.05);
+          transition: 0.1s;
+          cursor: pointer;
+        }
+
+        &:after {
+          content: '•••';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(90deg);
+          font-size: 10px;
+          letter-spacing: 4px;
+          margin-top: 2px;
+          color: #030303;
+        }
+      }
+    }
+  }
+
+  .container-details {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+
+    .details {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      &:hover,
+      &:focus
+      {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  }
+
+}

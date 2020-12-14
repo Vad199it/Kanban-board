@@ -1,11 +1,10 @@
-import {Injectable, NgZone, OnDestroy} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import { User } from '../models/user';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import {AppConst} from '../app.constants';
 
@@ -13,8 +12,7 @@ import {AppConst} from '../app.constants';
   providedIn: 'root'
 })
 
-export class AuthService implements OnDestroy{
-  subscription: Subscription;
+export class AuthService {
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -111,9 +109,5 @@ export class AuthService implements OnDestroy{
     return this.afAuth.signOut().then(() => {
       this.router.navigate([`${AppConst.SIGN_IN}`]);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }
