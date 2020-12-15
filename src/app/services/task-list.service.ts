@@ -44,6 +44,7 @@ export class TaskListService implements OnDestroy {
     return this.subscription = this.db.collection(this.dbPath, ref => ref.where('id', '==', boardId))
       .get().subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          this.taskService.deleteAllTaskFromTaskList(doc.id);
           doc.ref.delete();
         });
       });
