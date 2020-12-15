@@ -2,9 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { TaskListService } from '../../services/task-list.service';
-import {TaskService} from '../../services/task.service';
-import {AuthService} from '../../services/auth.service';
-import Task from '../../models/task';
 
 @Component({
   selector: 'app-tasks-list',
@@ -20,14 +17,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   isModal: boolean = false;
 
-  task: Task;
-  public submitted: boolean = false;
-  public addBoardImg = '../../../assets/add-board.png';
-  id: string;
-
-  constructor(private taskListService: TaskListService,
-              private taskService: TaskService,
-              private authService: AuthService) { }
+  constructor(private taskListService: TaskListService) { }
 
   ngOnInit(): void {
     this.retrieveTaskLists();
@@ -62,19 +52,5 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   closeModal(value: boolean): void {
     this.isModal = !value;
-  }
-
-  saveTask(taskListId: string): void {
-    this.task.id = taskListId;
-    this.task.ownerTask = this.authService.getUser().displayName;
-    console.log(this.task);
-    this.taskService.createTask(this.task).then(() => {
-      console.log('Created new board successfully!');
-      this.submitted = false;
-    });
-  }
-  newTask(): void {
-    this.submitted = true;
-    this.task = new Task();
   }
 }
