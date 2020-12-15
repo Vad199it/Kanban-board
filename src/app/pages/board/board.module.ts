@@ -7,13 +7,17 @@ import { TasksListComponent } from '../../components/tasks-list/tasks-list.compo
 import {DashboardModule} from '../dashboard/dashboard.module';
 import {FormsModule} from '@angular/forms';
 import { TasksListDetailsComponent } from '../../components/tasks-list-details/tasks-list-details.component';
+import { TasksComponent } from '../../components/tasks/tasks.component';
+import { TasksDetailsComponent } from '../../components/tasks-details/tasks-details.component';
 
 
 @NgModule({
   declarations: [
     BoardComponent,
     TasksListComponent,
-    TasksListDetailsComponent
+    TasksListDetailsComponent,
+    TasksComponent,
+    TasksDetailsComponent
   ],
   imports: [
     CommonModule,

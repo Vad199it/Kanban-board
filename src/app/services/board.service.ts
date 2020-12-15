@@ -13,16 +13,16 @@ export class BoardService {
 
   boardsRef: AngularFirestoreCollection<Board>;
 
-  constructor(public db: AngularFirestore,
+  constructor(private db: AngularFirestore,
               private taskListService: TaskListService) {
     this.boardsRef = db.collection(this.dbPath);
   }
 
-  getBoards(userId: string): AngularFirestoreCollection<Board> {
+  public getBoards(userId: string): AngularFirestoreCollection<Board> {
     return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId));
   }
 
-  createBoard(board: Board): Promise<void> {
+  public createBoard(board: Board): Promise<void> {
     const id = this.db.createId();
     const boardRef: AngularFirestoreDocument<any> = this.db.doc(`boards/${id}`);
     return boardRef.set({ ...board, ...{uid: id} }, {
@@ -30,11 +30,11 @@ export class BoardService {
     });
   }
 
-  updateBoard(id: string, data: any): Promise<void> {
+  public updateBoard(id: string, data: any): Promise<void> {
     return this.boardsRef.doc(id).update(data);
   }
 
-  deleteBoard(id: string): Promise<void> {
+  public deleteBoard(id: string): Promise<void> {
     this.taskListService.deleteAllTaskListFromBoard(id);
     return this.boardsRef.doc(id).delete();
   }

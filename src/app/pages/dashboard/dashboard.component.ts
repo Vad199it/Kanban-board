@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   public addBoardImg = '../../../assets/add-board.png';
 
   constructor(private boardService: BoardService,
-              public authService: AuthService) {}
+              private authService: AuthService) {}
 
   ngOnInit(): void {
   }

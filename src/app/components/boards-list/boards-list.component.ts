@@ -20,8 +20,8 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   isModal: boolean = false;
 
   constructor(private boardService: BoardService,
-              public authService: AuthService,
-              public router: Router) { }
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.retrieveBoards();

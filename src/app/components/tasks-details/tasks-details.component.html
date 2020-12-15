@@ -1,0 +1,121 @@
+<div *ngIf="currentTask" class="edit-form">
+  <h4>TaskList</h4>
+  <form>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        [(ngModel)]="task.title"
+        name="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="content">Content</label>
+      <input
+        class="form-control"
+        id="content"
+        required
+        [(ngModel)]="task.content"
+        name="content"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="doTask">Develop</label>
+      <input
+        class="form-control"
+        id="doTask"
+        required
+        [(ngModel)]="task.doTask"
+        name="doTask"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="createDate">Created date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="createDate"
+        required
+        [(ngModel)]="task.createDate"
+        name="createDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="dueDate">Due date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="dueDate"
+        required
+        [(ngModel)]="task.dueDate"
+        name="dueDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="order">Order</label>
+      <input
+        class="form-control"
+        id="order"
+        required
+        [(ngModel)]="task.order"
+        name="dueDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="comments">Comments</label>
+      <input
+        class="form-control"
+        id="comments"
+        required
+        [(ngModel)]="task.comments"
+        name="comments"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="idTicket">IdTicket</label>
+      <input
+        class="form-control"
+        id="idTicket"
+        required
+        [(ngModel)]="task.idTicket"
+        name="idTicket"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="attachmentTicket">AttachmentTicket</label>
+      <input
+        class="form-control"
+        id="attachmentTicket"
+        required
+        [(ngModel)]="task.attachmentTicket"
+        name="attachmentTicket"
+      />
+    </div>
+
+  </form>
+
+  <button class="badge" (click)="deleteTask()">
+    Delete
+  </button>
+
+  <button type="submit" class="badge-success" (click)="updateTask()">
+    Update
+  </button>
+  <p>{{ message }}</p>
+</div>
+
+<div *ngIf="!currentTask">
+  <br />
+  <p>Cannot access this Board...</p>
+</div>

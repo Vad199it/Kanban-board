@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   public isActiveFont: boolean = false;
+
   public userImg = '.../../../assets/person-icon.png';
   public profileImg = '../../../assets/user.png';
   public logoutImg = '../../../assets/log-out.png';

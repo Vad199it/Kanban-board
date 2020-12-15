@@ -25,7 +25,7 @@ export class AuthService {
     return firebase.auth().currentUser;
   }
   // Sign in with email/password
-  signIn(email: string, password: string): Promise<void> {
+  public signIn(email: string, password: string): Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
         this.ngZone.run(() => {
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   // Sign up with email/password
-  signUp(name: string, email: string, password: string): Promise<void> {
+  public signUp(name: string, email: string, password: string): Promise<void> {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificationMail() function when new user sign
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   // Send email verification when new user sign up
-  sendVerificationMail(): Promise<void> {
+  public sendVerificationMail(): Promise<void> {
     return this.afAuth.currentUser.then((user) => {
       return user.sendEmailVerification();
     }).then(() => {
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   // Reset Forgot password
-  forgotPassword(passwordResetEmail): Promise<void> {
+  public forgotPassword(passwordResetEmail): Promise<void> {
     return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');
@@ -70,12 +70,12 @@ export class AuthService {
   }
 
   // Sign in with Google
-  googleAuth(): Promise<void> {
+  public googleAuth(): Promise<void> {
     return this.authLogin(new firebase.auth.GoogleAuthProvider());
   }
 
   // Auth logic to run auth providers
-  authLogin(provider: any): Promise<void> {
+  public authLogin(provider: any): Promise<void> {
     return this.afAuth.signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
@@ -90,7 +90,7 @@ export class AuthService {
   /* Setting up user data when sign in with username/password,
   sign up with username/password and sign in with social auth
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  setUserData(user: any, name?: string): Promise<void> {
+  private setUserData(user: any, name?: string): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
@@ -105,7 +105,7 @@ export class AuthService {
   }
 
   // Sign out
-  signOut(): Promise<void> {
+  public signOut(): Promise<void> {
     return this.afAuth.signOut().then(() => {
       this.router.navigate([`${AppConst.SIGN_IN}`]);
     });
