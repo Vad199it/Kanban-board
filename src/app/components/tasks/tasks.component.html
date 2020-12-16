@@ -7,6 +7,7 @@
       <div class="update-button"
            (click)="setActiveTask(task, i)"
       ></div>
+      <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
     </div>
   </div>
   <div

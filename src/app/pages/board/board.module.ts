@@ -10,6 +10,10 @@ import { TasksListDetailsComponent } from '../../components/tasks-list-details/t
 import { TasksComponent } from '../../components/tasks/tasks.component';
 import { TasksDetailsComponent } from '../../components/tasks-details/tasks-details.component';
 import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.component';
+import { LabelComponent } from '../../components/label/label.component';
+import { LabelListProjectComponent } from '../../components/label-list-project/label-list-project.component';
+import { LabelListProjectDetailsComponent } from '../../components/label-list-project-details/label-list-project-details.component';
+import { LabelListTaskComponent } from '../../components/label-list-task/label-list-task.component';
 
 
 @NgModule({
@@ -19,7 +23,11 @@ import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.co
     TasksListDetailsComponent,
     TasksComponent,
     TasksDetailsComponent,
-    TasksBoardComponent
+    TasksBoardComponent,
+    LabelComponent,
+    LabelListProjectComponent,
+    LabelListProjectDetailsComponent,
+    LabelListTaskComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,35 @@
+<div class="submit-form">
+  <div *ngIf="submitted">
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        [(ngModel)]="label.title"
+        name="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input
+        class="form-control"
+        id="color"
+        type="color"
+        required
+        [(ngModel)]="label.color"
+        name="color"
+      />
+    </div>
+
+    <button (click)="saveLabel()" class="btn-success">Submit</button>
+  </div>
+
+  <div *ngIf="!submitted">
+    <img src='{{addBoardImg}}' alt="add Board" (click)="newLabel()">
+  </div>
+</div>
+<app-label-list-project [projectId]="id" [taskId]="taskId"></app-label-list-project>

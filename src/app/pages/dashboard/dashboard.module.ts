@@ -18,7 +18,8 @@ import { ClickStopPropagationDirective } from '../../directives/click-stop-propa
         BoardDetailsComponent,
         ClickStopPropagationDirective],
     exports: [
-        NavbarComponent
+        NavbarComponent,
+        ClickStopPropagationDirective
     ],
     imports: [
         CommonModule,

@@ -5,9 +5,9 @@
       <div class="formBx">
         <form>
           <h2>Sign In</h2>
-          <input type="text" name="" placeholder="Username" #userName required>
+          <input type="text" name="" placeholder="UserEmail" #userEmail required>
           <input type="password" name="" placeholder="Password" #userPassword required>
-          <input type="button" name="" value="Login" (click)="authService.signIn(userName.value, userPassword.value)">
+          <input type="button" name="" value="Login" (click)="authService.signIn(userEmail.value, userPassword.value)">
           <input class="Google" type="button" name="" value="Login with Google" (click)="authService.googleAuth()">
           <p class="signup">Don't have an account ? <a routerLink="/sign-up">Sign Up.</a></p>
           <p class="signup"><a routerLink="/forgot-password">Forgot Password ? </a></p>

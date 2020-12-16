@@ -3,17 +3,19 @@ import { User } from '../models/user';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
+
 import {AppConst} from '../app.constants';
+import Board from '../models/board';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-
+  private dbPath = '/users';
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -44,7 +46,7 @@ export class AuthService {
         /* Call the SendVerificationMail() function when new user sign
         up and returns promise */
         this.sendVerificationMail();
-        this.setUserData(result.user, name);
+        this.setUserData(result.user);
       }).catch((error) => {
         window.alert(error.message);
       });
@@ -90,12 +92,12 @@ export class AuthService {
   /* Setting up user data when sign in with username/password,
   sign up with username/password and sign in with social auth
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  private setUserData(user: any, name?: string): Promise<void> {
+  public setUserData(user: any, name?: string): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName || name,
+      displayName: name || user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
@@ -110,4 +112,12 @@ export class AuthService {
       this.router.navigate([`${AppConst.SIGN_IN}`]);
     });
   }
+
+  public getUsers(): AngularFirestoreCollection<User> {
+    return this.afs.collection(this.dbPath);
+  }
+  public getNames(userId: string): AngularFirestoreCollection<Board> {
+    return this.afs.collection(this.dbPath, ref => ref.where('uid', '==', userId));
+  }
+
 }
