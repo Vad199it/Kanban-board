@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 
 import {LabelService} from '../../services/label.service';
+import Label from '../../models/label';
 
 @Component({
   selector: 'app-label-list-project',
@@ -11,13 +12,14 @@ import {LabelService} from '../../services/label.service';
 export class LabelListProjectComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
   @Input() taskId: string;
-  labels: any;
+  labels: Label[];
   currentLabel = null;
   currentIndex = -1;
   title = '';
   subscription: Subscription;
   tittle: string;
   isModal: boolean = false;
+
   constructor(private labelService: LabelService) { }
 
   ngOnInit(): void {
@@ -32,7 +34,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
 
   retrieveLabels(): void {
     this.subscription = this.labelService.getLabelsFromProject(this.projectId).valueChanges({idField: 'id'})
-      .subscribe(data => {
+      .subscribe((data: Label[]) => {
         this.labels = data;
       });
   }

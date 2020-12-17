@@ -1,24 +1,24 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-
 import Task from '../models/task';
 import {Subscription} from 'rxjs';
+import {AppConst} from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService implements OnDestroy {
-  subscription: Subscription;
-  private dbPath = '/tasks';
 
-  taskRef: AngularFirestoreCollection<Task>;
+  private subscription: Subscription;
+  private dbPath = '/tasks';
+  private taskRef: AngularFirestoreCollection<Task>;
 
   constructor(private db: AngularFirestore) {
     this.taskRef = db.collection(this.dbPath);
   }
 
   public getTasks(taskId: string): AngularFirestoreCollection<Task> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', taskId));
+    return this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskId));
   }
 
   public createTask(task: Task): Promise<void> {
@@ -37,8 +37,8 @@ export class TaskService implements OnDestroy {
     return this.taskRef.doc(id).delete();
   }
 
-  public deleteAllTaskFromTaskList(taskListId: string): any{
-    return this.subscription = this.db.collection(this.dbPath, ref => ref.where('id', '==', taskListId))
+  public deleteAllTaskFromTaskList(taskListId: string): Subscription{
+    return this.subscription = this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskListId))
       .get().subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           doc.ref.delete();

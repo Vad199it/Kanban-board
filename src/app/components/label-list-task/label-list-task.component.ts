@@ -4,6 +4,7 @@ import { ActivatedRoute} from '@angular/router';
 
 import {LabelService} from '../../services/label.service';
 import {switchMap} from 'rxjs/operators';
+import Label from '../../models/label';
 
 @Component({
   selector: 'app-label-list-task',
@@ -11,8 +12,9 @@ import {switchMap} from 'rxjs/operators';
   styleUrls: ['./label-list-task.component.scss']
 })
 export class LabelListTaskComponent implements OnInit, OnDestroy {
+
   @Input() taskId: string;
-  labels: any;
+  labels: Label[];
   currentLabel = null;
   currentIndex = -1;
   title: string = '';
@@ -41,7 +43,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
 
   retrieveLabels(): void {
     this.subscription = this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
-      .subscribe(data => {
+      .subscribe((data: Label[]) => {
         this.labels = data;
       });
   }

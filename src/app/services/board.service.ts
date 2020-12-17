@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-
 import {TaskListService} from './task-list.service';
 import {LabelService} from './label.service';
 import Board from '../models/board';
+import {AppConst} from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,7 @@ import Board from '../models/board';
 export class BoardService {
 
   private dbPath = '/boards';
-
-  boardsRef: AngularFirestoreCollection<Board>;
+  private boardsRef: AngularFirestoreCollection<Board>;
 
   constructor(private db: AngularFirestore,
               private taskListService: TaskListService,
@@ -21,7 +20,9 @@ export class BoardService {
   }
 
   public getBoards(userId: string): AngularFirestoreCollection<Board> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId).orderBy('order', 'asc'));
+    return this.db.collection(this.dbPath, ref => ref
+      .where(AppConst.ID, '==', userId)
+      .orderBy(AppConst.ORDER, 'asc'));
   }
 
   public createBoard(board: Board): Promise<void> {

@@ -1,8 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-
 import Label from '../models/label';
 import {Subscription} from 'rxjs';
+import {AppConst} from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,8 @@ import {Subscription} from 'rxjs';
 export class LabelService  implements OnDestroy {
 
   private dbPath = '/labels';
-  subscription: Subscription;
-
-  labelsRef: AngularFirestoreCollection<Label>;
+  private subscription: Subscription;
+  private labelsRef: AngularFirestoreCollection<Label>;
 
   constructor(private db: AngularFirestore) {
     this.labelsRef = db.collection(this.dbPath);
@@ -20,15 +19,15 @@ export class LabelService  implements OnDestroy {
 
   public getLabelsFromProject(projectId: string): AngularFirestoreCollection<Label> {
     return this.db.collection(this.dbPath, ref => ref
-      .where('projectId', '==', projectId)
-      .orderBy('order', 'asc'));
+      .where(AppConst.PROJECTID, '==', projectId)
+      .orderBy(AppConst.ORDER, 'asc'));
   }
 
   public getLabelsFromTask(taskId: string, projectId: string): AngularFirestoreCollection<Label> {
     return this.db.collection(this.dbPath, ref =>
-      ref.where('projectId', '==', projectId)
-        .where('taskId', 'array-contains', taskId)
-        .orderBy('order', 'asc')
+      ref.where(AppConst.PROJECTID, '==', projectId)
+        .where(AppConst.TASKID, 'array-contains', taskId)
+        .orderBy(AppConst.ORDER, 'asc')
     );
   }
 
@@ -48,8 +47,8 @@ export class LabelService  implements OnDestroy {
     return this.labelsRef.doc(id).delete();
   }
 
-  public deleteAllLabelsFromBoard(projectId: string): any{
-    return this.subscription = this.db.collection(this.dbPath, ref => ref.where('projectId', '==', projectId))
+  public deleteAllLabelsFromBoard(projectId: string): Subscription{
+    return this.subscription = this.db.collection(this.dbPath, ref => ref.where(AppConst.PROJECTID, '==', projectId))
       .get().subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           doc.ref.delete();

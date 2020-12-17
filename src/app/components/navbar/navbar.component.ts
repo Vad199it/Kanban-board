@@ -2,6 +2,9 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import {Observable} from 'rxjs';
+import {User} from '../../models/user';
+
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +12,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  users: Observable<User>;
   public isActiveFont: boolean = false;
+  displayName: any;
 
   public userImg = '.../../../assets/person-icon.png';
   public profileImg = '../../../assets/user.png';
@@ -20,6 +25,7 @@ export class NavbarComponent implements OnInit {
               public ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.users = this.authService.getUserById(this.authService.getUser().uid);
   }
 
    public changeActiveFont(): void {

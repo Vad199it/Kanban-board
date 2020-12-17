@@ -5,10 +5,8 @@ import 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-
-
 import {AppConst} from '../app.constants';
-import Board from '../models/board';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +14,9 @@ import Board from '../models/board';
 
 export class AuthService {
   private dbPath = '/users';
+  private userDoc: AngularFirestoreDocument<User>;
+  private user: Observable<User>;
+
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -23,10 +24,9 @@ export class AuthService {
     public ngZone: NgZone,
   ) {}
 
-  getUser(): any{
+  public getUser(): any{
     return firebase.auth().currentUser;
   }
-  // Sign in with email/password
   public signIn(email: string, password: string): Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -39,20 +39,18 @@ export class AuthService {
       });
   }
 
-  // Sign up with email/password
   public signUp(name: string, email: string, password: string): Promise<void> {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificationMail() function when new user sign
         up and returns promise */
         this.sendVerificationMail();
-        this.setUserData(result.user);
+        this.setUserData(result.user, name);
       }).catch((error) => {
         window.alert(error.message);
       });
   }
 
-  // Send email verification when new user sign up
   public sendVerificationMail(): Promise<void> {
     return this.afAuth.currentUser.then((user) => {
       return user.sendEmailVerification();
@@ -61,7 +59,6 @@ export class AuthService {
     });
   }
 
-  // Reset Forgot password
   public forgotPassword(passwordResetEmail): Promise<void> {
     return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
@@ -71,42 +68,42 @@ export class AuthService {
       });
   }
 
-  // Sign in with Google
   public googleAuth(): Promise<void> {
     return this.authLogin(new firebase.auth.GoogleAuthProvider());
   }
 
-  // Auth logic to run auth providers
   public authLogin(provider: any): Promise<void> {
     return this.afAuth.signInWithPopup(provider)
       .then((result) => {
+
         this.ngZone.run(() => {
           this.router.navigate([`${AppConst.TASKS}`]);
         });
-        this.setUserData(result.user, name);
+        this.setUserData(result.user);
       }).catch((error) => {
         window.alert(error);
       });
   }
 
-  /* Setting up user data when sign in with username/password,
-  sign up with username/password and sign in with social auth
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   public setUserData(user: any, name?: string): Promise<void> {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: name || user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true
-    });
+    try {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+      const userData: User = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || name,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+      };
+      return userRef.set(userData, {
+        merge: true
+      });
+    }
+    catch (err){
+      console.log(err);
+    }
   }
 
-  // Sign out
   public signOut(): Promise<void> {
     return this.afAuth.signOut().then(() => {
       this.router.navigate([`${AppConst.SIGN_IN}`]);
@@ -116,8 +113,10 @@ export class AuthService {
   public getUsers(): AngularFirestoreCollection<User> {
     return this.afs.collection(this.dbPath);
   }
-  public getNames(userId: string): AngularFirestoreCollection<Board> {
-    return this.afs.collection(this.dbPath, ref => ref.where('uid', '==', userId));
+
+  public getUserById(id: string): Observable<User>{
+    this.userDoc = this.afs.doc<User>(`users/${id}`);
+    return this.user = this.userDoc.valueChanges();
   }
 
 }

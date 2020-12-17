@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { TaskListService } from '../../services/task-list.service';
+import TaskList from '../../models/task-list';
 
 @Component({
   selector: 'app-tasks-list',
@@ -10,7 +11,7 @@ import { TaskListService } from '../../services/task-list.service';
 })
 export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
-  taskLists: any;
+  taskLists: TaskList[];
   currentTaskList = null;
   currentIndex = -1;
   title = '';
@@ -31,7 +32,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   retrieveTaskLists(): void {
     this.subscription = this.taskListService.getTaskLists(this.projectId).valueChanges({idField: 'id'})
-      .subscribe(data => {
+      .subscribe((data: TaskList[]) => {
         this.taskLists = data;
       });
   }

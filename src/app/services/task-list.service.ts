@@ -1,6 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-
 import TaskList from '../models/task-list';
 import {TaskService} from './task.service';
 import {Subscription} from 'rxjs';
@@ -9,10 +8,10 @@ import {Subscription} from 'rxjs';
   providedIn: 'root'
 })
 export class TaskListService implements OnDestroy {
-  subscription: Subscription;
-  private dbPath = '/task-lists';
 
-  taskListRef: AngularFirestoreCollection<TaskList>;
+  private subscription: Subscription;
+  private dbPath = '/task-lists';
+  private taskListRef: AngularFirestoreCollection<TaskList>;
 
   constructor(private db: AngularFirestore,
               private taskService: TaskService) {
@@ -20,7 +19,9 @@ export class TaskListService implements OnDestroy {
   }
 
   public getTaskLists(taskListId: string): AngularFirestoreCollection<TaskList> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', taskListId).orderBy('order', 'asc'));
+    return this.db.collection(this.dbPath, ref => ref
+      .where('id', '==', taskListId)
+      .orderBy('order', 'asc'));
   }
 
   public createTaskList(taskList: TaskList): Promise<void> {
@@ -40,7 +41,7 @@ export class TaskListService implements OnDestroy {
     return this.taskListRef.doc(id).delete();
   }
 
-  public deleteAllTaskListFromBoard(boardId: string): any {
+  public deleteAllTaskListFromBoard(boardId: string): Subscription {
     return this.subscription = this.db.collection(this.dbPath, ref => ref.where('id', '==', boardId))
       .get().subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {

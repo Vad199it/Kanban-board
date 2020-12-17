@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { formatDate } from '@angular/common';
 
 import {TaskService} from '../../services/task.service';
+import Task from '../../models/task';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -11,7 +12,7 @@ import {Subscription} from 'rxjs';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
-  tasks: any;
+  tasks: Task[];
   currentTask = null;
   currentIndex = -1;
   title = '';
@@ -32,7 +33,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   retrieveTasks(): void {
     this.subscription = this.taskService.getTasks(this.taskListId).valueChanges({idField: 'id'})
-      .subscribe(data => {
+      .subscribe((data: Task[]) => {
         this.tasks = data;
       });
   }

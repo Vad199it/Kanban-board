@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { BoardService } from '../../services/board.service';
 import { AuthService } from '../../services/auth.service';
+import Board from '../../models/board';
 
 @Component({
   selector: 'app-boards-list',
@@ -11,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./boards-list.component.scss']
 })
 export class BoardsListComponent implements OnInit, OnDestroy {
-  boards: any;
+  boards: Board[];
   currentBoard = null;
   currentIndex = -1;
   title = '';
@@ -35,7 +36,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   retrieveBoards(): void {
     this.subscription = this.boardService.getBoards(this.authService.getUser().uid).valueChanges({idField: 'id'})
-      .subscribe(data => {
+      .subscribe((data: Board[]) => {
       this.boards = data;
     });
   }
