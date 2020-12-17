@@ -36,7 +36,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges {
       content: this.currentTask.content,
       order: this.currentTask.order,
       comments: this.currentTask.comments,
-      idTicket: this.currentTask.idTicket,
       attachmentTicket: this.currentTask.attachmentTicket,
     };
     this.taskService.updateTask(this.currentTask.id, data)

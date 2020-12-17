@@ -1,4 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { formatDate } from '@angular/common';
 
 import {TaskService} from '../../services/task.service';
 import {Subscription} from 'rxjs';
@@ -39,6 +40,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.currentTask = task;
     this.currentIndex = index;
     this.isModal = !this.isModal;
+    console.log(this.currentTask.dueDate);
   }
 
   ngOnDestroy(): void {
@@ -51,5 +53,9 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   closeModal(value: boolean): void {
     this.isModal = !value;
+  }
+
+  getCurrentData(): string{
+    return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 }

@@ -21,7 +21,7 @@ export class BoardService {
   }
 
   public getBoards(userId: string): AngularFirestoreCollection<Board> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId));
+    return this.db.collection(this.dbPath, ref => ref.where('id', '==', userId).orderBy('order', 'asc'));
   }
 
   public createBoard(board: Board): Promise<void> {

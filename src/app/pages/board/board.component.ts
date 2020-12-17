@@ -31,7 +31,9 @@ export class BoardComponent implements OnInit {
   }
 
   saveTaskList(): void {
+    const date = new Date();
     this.taskList.id = this.id;
+    this.taskList.order = +date;
     this.taskListService.createTaskList(this.taskList).then(() => {
       console.log('Created new board successfully!');
       this.submitted = false;

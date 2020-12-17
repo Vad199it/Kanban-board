@@ -23,7 +23,8 @@ export class DashboardComponent implements OnInit {
   saveBoard(): void {
     this.board.ownerUsername = this.authService.getUser().displayName;
     this.board.id = this.authService.getUser().uid;
-    this.board.taskLists = [];
+    const date = new Date();
+    this.board.order = +date;
     this.boardService.createBoard(this.board).then(() => {
       console.log('Created new board successfully!');
       this.submitted = false;

@@ -8,6 +8,11 @@
            (click)="setActiveTask(task, i)"
       ></div>
       <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
+      <div
+        class="date"
+        [ngStyle]="{'display': task.dueDate == getCurrentData() ? 'default' : 'none'}"
+      >
+        Date expired</div>
     </div>
   </div>
   <div

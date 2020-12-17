@@ -20,7 +20,7 @@ export class TaskListService implements OnDestroy {
   }
 
   public getTaskLists(taskListId: string): AngularFirestoreCollection<TaskList> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', taskListId));
+    return this.db.collection(this.dbPath, ref => ref.where('id', '==', taskListId).orderBy('order', 'asc'));
   }
 
   public createTaskList(taskList: TaskList): Promise<void> {

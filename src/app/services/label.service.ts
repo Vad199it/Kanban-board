@@ -19,12 +19,16 @@ export class LabelService  implements OnDestroy {
   }
 
   public getLabelsFromProject(projectId: string): AngularFirestoreCollection<Label> {
-    return this.db.collection(this.dbPath, ref => ref.where('projectId', '==', projectId));
+    return this.db.collection(this.dbPath, ref => ref
+      .where('projectId', '==', projectId)
+      .orderBy('order', 'asc'));
   }
 
   public getLabelsFromTask(taskId: string, projectId: string): AngularFirestoreCollection<Label> {
     return this.db.collection(this.dbPath, ref =>
-      ref.where('projectId', '==', projectId).where('taskId', 'array-contains', taskId)
+      ref.where('projectId', '==', projectId)
+        .where('taskId', 'array-contains', taskId)
+        .orderBy('order', 'asc')
     );
   }
 

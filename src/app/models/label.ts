@@ -4,4 +4,5 @@ export default class Label {
   color: string;
   projectId: string;
   taskId: string[] = [];
+  order: number;
 }

@@ -8,7 +8,7 @@
         class="form-control"
         id="title"
         required
-        [(ngModel)]="task.title"
+        [(ngModel)]="currentTask.title"
         name="title"
       />
     </div>
@@ -19,7 +19,7 @@
         class="form-control"
         id="content"
         required
-        [(ngModel)]="task.content"
+        [(ngModel)]="currentTask.content"
         name="content"
       />
     </div>
@@ -30,10 +30,11 @@
         class="form-control"
         id="doTask"
         required
-        [(ngModel)]="task.doTask"
+        [(ngModel)]="currentTask.doTask"
         name="doTask"
       />
     </div>
+
 
     <div class="form-group">
       <label for="createDate">Created date</label>
@@ -42,8 +43,20 @@
         class="form-control"
         id="createDate"
         required
-        [(ngModel)]="task.createDate"
+        [(ngModel)]="currentTask.createDate"
         name="createDate"
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label for="order">Order</label>
+      <input
+        class="form-control"
+        id="order"
+        required
+        [(ngModel)]="currentTask.order"
+        name="dueDate"
       />
     </div>
 
@@ -54,18 +67,7 @@
         class="form-control"
         id="dueDate"
         required
-        [(ngModel)]="task.dueDate"
-        name="dueDate"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="order">Order</label>
-      <input
-        class="form-control"
-        id="order"
-        required
-        [(ngModel)]="task.order"
+        [(ngModel)]="currentTask.dueDate"
         name="dueDate"
       />
     </div>
@@ -76,19 +78,8 @@
         class="form-control"
         id="comments"
         required
-        [(ngModel)]="task.comments"
+        [(ngModel)]="currentTask.comments"
         name="comments"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="idTicket">IdTicket</label>
-      <input
-        class="form-control"
-        id="idTicket"
-        required
-        [(ngModel)]="task.idTicket"
-        name="idTicket"
       />
     </div>
 
@@ -98,7 +89,7 @@
         class="form-control"
         id="attachmentTicket"
         required
-        [(ngModel)]="task.attachmentTicket"
+        [(ngModel)]="currentTask.attachmentTicket"
         name="attachmentTicket"
       />
     </div>

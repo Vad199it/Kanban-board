@@ -28,7 +28,6 @@ export class TasksListDetailsComponent implements OnInit, OnChanges {
   updateTaskList(): void {
     const data = {
       title: this.currentTaskList.title,
-      type: this.currentTaskList.order,
     };
     this.taskListService.updateTaskList(this.currentTaskList.id, data)
       .then(() => this.message = 'The board was updated successfully!')

@@ -4,6 +4,6 @@ export default class Board {
   title: string;
   type: number;
   color: string;
-  taskLists: string[];
   id: string;
+  order: number;
 }

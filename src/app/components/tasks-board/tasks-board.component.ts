@@ -24,7 +24,8 @@ export class TasksBoardComponent implements OnInit {
   saveTask(): void {
     this.task.id = this.taskListId;
     this.task.ownerTask = this.authService.getUser().displayName;
-    console.log(this.task);
+    this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
+    console.log(this.task.idTicket);
     this.taskService.createTask(this.task).then(() => {
       console.log('Created new board successfully!');
       this.submitted = false;
@@ -33,6 +34,17 @@ export class TasksBoardComponent implements OnInit {
   newTask(): void {
     this.submitted = true;
     this.task = new Task();
+  }
+
+  generationKey(str: string): number {
+    let hash = 0, i, chr, len;
+    if (str.length === 0) return hash;
+    for (i = 0, len = str.length; i < len; i++) {
+      chr   = str.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
   }
 
 }

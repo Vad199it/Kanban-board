@@ -31,6 +31,8 @@ export class LabelComponent implements OnInit {
 
   saveLabel(): void {
     this.label.projectId = this.id;
+    const date = new Date();
+    this.label.order = +date;
     this.labelService.createLabel(this.label).then(() => {
       console.log('Created new board successfully!');
       this.submitted = false;
