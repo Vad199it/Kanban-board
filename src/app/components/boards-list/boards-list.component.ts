@@ -14,7 +14,7 @@ import Board from '../../models/board';
 export class BoardsListComponent implements OnInit, OnDestroy {
   boards: Board[];
   currentBoard = null;
-  currentIndex = -1;
+  // currentIndex = -1;
   title = '';
   subscription: Subscription;
   tittle: string;
@@ -30,7 +30,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   refreshList(): void {
     this.currentBoard = null;
-    this.currentIndex = -1;
+    // this.currentIndex = -1;
     this.retrieveBoards();
   }
 
@@ -41,9 +41,9 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  setActiveBoard(board, index): void {
+  setActiveBoard(board): void {
     this.currentBoard = board;
-    this.currentIndex = index;
+    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 

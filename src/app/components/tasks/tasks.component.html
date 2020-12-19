@@ -1,11 +1,11 @@
 <div class="task">
   <div class="col">
     <div
-      *ngFor="let task of tasks; let i = index;trackBy: trackByMethod"
+      *ngFor="let task of tasks; trackBy: trackByMethod"
       class="task-group">
       {{ task.title }}
       <div class="update-button"
-           (click)="setActiveTask(task, i)"
+           (click)="setActiveTask(task)"
       ></div>
       <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
       <div
@@ -17,7 +17,7 @@
   </div>
   <div
     class="container-details"
-    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
     <div class="details" *ngIf="currentTask">
       <span

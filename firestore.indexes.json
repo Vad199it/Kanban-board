@@ -33,6 +33,10 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "projectId",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "taskId",
           "arrayConfig": "CONTAINS"
         },

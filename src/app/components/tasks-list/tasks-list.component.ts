@@ -13,7 +13,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
   taskLists: TaskList[];
   currentTaskList = null;
-  currentIndex = -1;
+  // currentIndex = -1;
   title = '';
   subscription: Subscription;
   isModal: boolean = false;
@@ -26,7 +26,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   refreshTaskList(): void {
     this.currentTaskList = null;
-    this.currentIndex = -1;
+    // this.currentIndex = -1;
     this.retrieveTaskLists();
   }
 
@@ -37,9 +37,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
       });
   }
 
-  setActiveTaskList(taskList, index): void {
+  setActiveTaskList(taskList): void {
     this.currentTaskList = taskList;
-    this.currentIndex = index;
+    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 

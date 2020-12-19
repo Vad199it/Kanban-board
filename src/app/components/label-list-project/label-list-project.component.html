@@ -4,13 +4,13 @@
     <div class="list-group">
       <div
         class="list-group-item"
-        *ngFor="let label of labels; let i = index;trackBy: trackByMethod"
+        *ngFor="let label of labels; trackBy: trackByMethod"
         [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
         (click)="choseLabel(label, i)"
       >
         {{ label.title }}
         <div appClickStopPropagation class="update-button"
-             (click)="setActiveLabel(label, i)"
+             (click)="setActiveLabel(label)"
         ></div>
       </div>
     </div>

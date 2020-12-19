@@ -14,6 +14,9 @@ import { LabelComponent } from '../../components/label/label.component';
 import { LabelListProjectComponent } from '../../components/label-list-project/label-list-project.component';
 import { LabelListProjectDetailsComponent } from '../../components/label-list-project-details/label-list-project-details.component';
 import { LabelListTaskComponent } from '../../components/label-list-task/label-list-task.component';
+import { FileFormComponent } from '../../components/file-form/file-form.component';
+import { FileListComponent } from '../../components/file-list/file-list.component';
+import { FileDetailsComponent } from '../../components/file-details/file-details.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { LabelListTaskComponent } from '../../components/label-list-task/label-l
     LabelComponent,
     LabelListProjectComponent,
     LabelListProjectDetailsComponent,
-    LabelListTaskComponent
+    LabelListTaskComponent,
+    FileFormComponent,
+    FileListComponent,
+    FileDetailsComponent
   ],
   imports: [
     CommonModule,

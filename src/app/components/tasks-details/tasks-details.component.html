@@ -25,14 +25,15 @@
     </div>
 
     <div class="form-group">
-      <label for="doTask">Develop</label>
-      <input
-        class="form-control"
-        id="doTask"
-        required
-        [(ngModel)]="currentTask.doTask"
-        name="doTask"
-      />
+      <label>Develop
+        <select class="form-control" name="develop"
+          [(ngModel)]="currentTask.doTask">
+          <option *ngFor="let user of users" [value]="user.uid"
+          >
+            {{user.displayName}}
+          </option>
+        </select>
+      </label>
     </div>
 
 
@@ -83,15 +84,14 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="attachmentTicket">AttachmentTicket</label>
-      <input
-        class="form-control"
-        id="attachmentTicket"
-        required
-        [(ngModel)]="currentTask.attachmentTicket"
-        name="attachmentTicket"
-      />
+    <div>
+      <div class="fileForm">
+        <app-file-form [taskId]="currentTask.uid"></app-file-form>
+      </div>
+
+      <div class="fileList">
+        <app-file-list [taskId]="currentTask.uid"></app-file-list>
+      </div>
     </div>
 
     <app-label [taskId]="task.uid"></app-label>

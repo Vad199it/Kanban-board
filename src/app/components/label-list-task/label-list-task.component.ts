@@ -16,7 +16,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
   @Input() taskId: string;
   labels: Label[];
   currentLabel = null;
-  currentIndex = -1;
+  // currentIndex = -1;
   title: string = '';
   subscription: Subscription;
   projectId: string;
@@ -37,7 +37,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
 
   refreshList(): void {
     this.currentLabel = null;
-    this.currentIndex = -1;
+    // this.currentIndex = -1;
     this.retrieveLabels();
   }
 
@@ -48,7 +48,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteLabelFromTask(board, index): void {
+  deleteLabelFromTask(board): void {
     this.currentLabel = board;
     const set = new Set(this.currentLabel.taskId);
     set.delete(this.taskId);

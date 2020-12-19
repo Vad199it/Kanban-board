@@ -9,6 +9,5 @@ export default class Task {
   order: number;
   comments: string;
   idTicket: string;
-  attachmentTicket: string;
   uid: string; //
 }

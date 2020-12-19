@@ -14,7 +14,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
   tasks: Task[];
   currentTask = null;
-  currentIndex = -1;
+  // currentIndex = -1;
   title = '';
   subscription: Subscription;
   isModal: boolean = false;
@@ -27,7 +27,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   refreshTask(): void {
     this.currentTask = null;
-    this.currentIndex = -1;
+    // this.currentIndex = -1;
     this.retrieveTasks();
   }
 
@@ -37,11 +37,10 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.tasks = data;
       });
   }
-  setActiveTask(task, index): void {
+  setActiveTask(task): void {
     this.currentTask = task;
-    this.currentIndex = index;
+    // this.currentIndex = index;
     this.isModal = !this.isModal;
-    console.log(this.currentTask.dueDate);
   }
 
   ngOnDestroy(): void {

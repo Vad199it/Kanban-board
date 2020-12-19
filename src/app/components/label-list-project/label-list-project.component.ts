@@ -14,7 +14,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   @Input() taskId: string;
   labels: Label[];
   currentLabel = null;
-  currentIndex = -1;
+  // currentIndex = -1;
   title = '';
   subscription: Subscription;
   tittle: string;
@@ -28,7 +28,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
 
   refreshList(): void {
     this.currentLabel = null;
-    this.currentIndex = -1;
+    // this.currentIndex = -1;
     this.retrieveLabels();
   }
 
@@ -39,9 +39,9 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
       });
   }
 
-  setActiveLabel(label, index): void {
+  setActiveLabel(label): void {
     this.currentLabel = label;
-    this.currentIndex = index;
+    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 

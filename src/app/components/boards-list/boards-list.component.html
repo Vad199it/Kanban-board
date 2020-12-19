@@ -4,20 +4,20 @@
     <div class="list-group">
       <div
         class="list-group-item"
-        *ngFor="let board of boards; let i = index;trackBy: trackByMethod"
+        *ngFor="let board of boards; trackBy: trackByMethod"
         [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
         (click)="navigateToBoard(board.uid)"
       >
         {{ board.title }}
         <div appClickStopPropagation class="update-button"
-          (click)="setActiveBoard(board, i)"
+          (click)="setActiveBoard(board)"
         ></div>
       </div>
     </div>
   </div>
   <div
     class="container-details"
-    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
     <div class="details" *ngIf="currentBoard">
       <span
