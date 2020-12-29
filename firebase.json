@@ -1,6 +1,7 @@
 {
   "hosting": [
     {
+      "target": "kanban",
       "public": "dist/kanban",
       "ignore": [
         "firebase.json",

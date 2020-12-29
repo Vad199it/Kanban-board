@@ -48,8 +48,8 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   }
 
   saveTask(): void {
-    let set = new Set(this.board[0].usernames);
-    set.add(this.task.doTask);
+    const set: string[] = this.board[0].usernames;
+    set.push(this.task.doTask);
     const boardData = {
       usernames: [...set],
     };

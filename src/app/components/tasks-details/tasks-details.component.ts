@@ -53,16 +53,16 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   changeUserInBoard(newValue: string): void {
-    this.prevUserId = this.task.doTask;
-    // this.task.doTask = newValue;
+    this.prevUserId = this.currentTask.doTask;
+    this.currentTask.doTask = newValue;
+    console.log(this.currentTask.doTask, this.prevUserId);
   }
 
   updateTask(): void {
     if (this.currentTask.doTask !== this.prevUserId){
-      console.log(this.currentTask.doTask, this.prevUserId);
-      const set = new Set(this.board[0].usernames);
-      set.delete(this.prevUserId);
-      set.add(this.currentTask.doTask);
+      let set: string[] = this.board[0].usernames;
+      set = this.removeFirst(set, this.prevUserId);
+      set.push(this.currentTask.doTask);
       const boardData = {
         usernames: [...set],
       };
@@ -86,6 +86,13 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   deleteTask(): void {
     this.isModal.emit(true);
+    let set: string[] = this.board[0].usernames;
+    set = this.removeFirst(set, this.currentTask.doTask);
+    const boardData = {
+      usernames: [...set],
+    };
+    this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
+
     this.taskService.deleteTask(this.currentTask.id)
       .then(() => {
         this.refreshList.emit();
@@ -105,6 +112,12 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe((data: User[]) => {
         this.users = data;
       });
+  }
+
+  removeFirst(src: string[], element: string): string[] {
+    const index = src.indexOf(element);
+    if (index === -1) { return src; }
+    return [...src.slice(0, index), ...src.slice(index + 1)];
   }
 
   ngOnDestroy(): void {
