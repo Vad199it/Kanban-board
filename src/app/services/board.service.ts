@@ -4,6 +4,7 @@ import {TaskListService} from './task-list.service';
 import {LabelService} from './label.service';
 import Board from '../models/board';
 import {AppConst} from '../app.constants';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ import {AppConst} from '../app.constants';
 export class BoardService {
 
   private dbPath = '/boards';
+  private board: Observable<Board>;
+  private boardDoc: AngularFirestoreDocument<Board>;
   private boardsRef: AngularFirestoreCollection<Board>;
 
   constructor(private db: AngularFirestore,
@@ -22,6 +25,12 @@ export class BoardService {
   public getBoards(userId: string): AngularFirestoreCollection<Board> {
     return this.db.collection(this.dbPath, ref => ref
       .where(AppConst.ID, '==', userId)
+      .orderBy(AppConst.ORDER, 'asc'));
+  }
+
+  public getOtherBoards(userId: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, ref => ref
+      .where('usernames', 'array-contains', userId)
       .orderBy(AppConst.ORDER, 'asc'));
   }
 
@@ -41,6 +50,11 @@ export class BoardService {
     this.taskListService.deleteAllTaskListFromBoard(id);
     this.labelService.deleteAllLabelsFromBoard(id);
     return this.boardsRef.doc(id).delete();
+  }
+
+  public getAllBoards(id: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, ref => ref
+      .where('uid', '==', id));
   }
 
 }

@@ -13,6 +13,7 @@ import Board from '../../models/board';
 })
 export class BoardsListComponent implements OnInit, OnDestroy {
   boards: Board[];
+  otherBoards: Board[];
   currentBoard = null;
   // currentIndex = -1;
   title = '';
@@ -26,12 +27,20 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.retrieveBoards();
+    this.retrieveOtherBoards();
   }
 
   refreshList(): void {
     this.currentBoard = null;
     // this.currentIndex = -1;
     this.retrieveBoards();
+  }
+
+  retrieveOtherBoards(): void {
+    this.subscription = this.boardService.getOtherBoards(this.authService.getUser().uid).valueChanges({idField: 'id'})
+      .subscribe((data: Board[]) => {
+        this.otherBoards = data;
+      });
   }
 
   retrieveBoards(): void {
@@ -54,6 +63,9 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   search(): void { // ??????
     if (this.tittle !== ''){
       this.boards = this.boards.filter(res => {
+        return res.title.toLowerCase().match(this.tittle.toLowerCase());
+      });
+      this.otherBoards = this.boards.filter(res => {
         return res.title.toLowerCase().match(this.tittle.toLowerCase());
       });
     }

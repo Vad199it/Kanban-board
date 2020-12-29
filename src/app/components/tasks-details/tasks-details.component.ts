@@ -4,6 +4,10 @@ import {TaskService} from '../../services/task.service';
 import {Subscription} from 'rxjs';
 import {User} from '../../models/user';
 import {AuthService} from '../../services/auth.service';
+import { ActivatedRoute} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
+import {BoardService} from '../../services/board.service';
+import Board from '../../models/board';
 
 @Component({
   selector: 'app-tasks-details',
@@ -20,13 +24,27 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   message: string = '';
   subscription: Subscription;
   currentUser = null;
+  boardId: string;
+  prevUserId: string;
+  board: Board[];
 
   constructor(private taskService: TaskService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private activateRoute: ActivatedRoute,
+              private boardService: BoardService) { }
 
   ngOnInit(): void {
+    this.getUrlParam();
     this.message = '';
     this.retrieveUsers();
+    this.retrieveBoards();
+  }
+
+  getUrlParam(): void{
+    this.activateRoute.paramMap.pipe(
+      switchMap(params => params.getAll('uid'))
+    )
+      .subscribe(data => this.boardId = data);
   }
 
   ngOnChanges(): void {
@@ -34,7 +52,23 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.currentTask = { ...this.task };
   }
 
+  changeUserInBoard(newValue: string): void {
+    this.prevUserId = this.task.doTask;
+    // this.task.doTask = newValue;
+  }
+
   updateTask(): void {
+    if (this.currentTask.doTask !== this.prevUserId){
+      console.log(this.currentTask.doTask, this.prevUserId);
+      const set = new Set(this.board[0].usernames);
+      set.delete(this.prevUserId);
+      set.add(this.currentTask.doTask);
+      const boardData = {
+        usernames: [...set],
+      };
+      this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
+
+    }
     const data = {
       ownerTask: this.currentTask.ownerTask,
       doTask: this.currentTask.doTask,
@@ -59,7 +93,13 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       })
       .catch(err => console.log(err));
   }
-  /////////////////////////////////////////
+
+  retrieveBoards(): void {
+    this.subscription = this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
+      .subscribe((data: Board[]) => {
+        this.board = data;
+      });
+  }
   retrieveUsers(): void {
     this.subscription = this.authService.getUsers().valueChanges({idField: 'id'})
       .subscribe((data: User[]) => {

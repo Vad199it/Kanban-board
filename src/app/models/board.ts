@@ -6,4 +6,5 @@ export default class Board {
   color: string;
   id: string;
   order: number;
+  usernames: string[] = [];
 }

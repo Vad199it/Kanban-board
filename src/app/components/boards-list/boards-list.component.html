@@ -15,6 +15,26 @@
       </div>
     </div>
   </div>
+
+  <hr>
+
+  <div class="list">
+    <div class="col">
+      <div class="list-group">
+        <div
+          class="list-group-item"
+          *ngFor="let board of otherBoards; trackBy: trackByMethod"
+          [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
+          (click)="navigateToBoard(board.uid)"
+        >
+          {{ board.title }}
+          <div appClickStopPropagation class="update-button"
+               (click)="setActiveBoard(board)"
+          ></div>
+        </div>
+      </div>
+    </div>
+
   <div
     class="container-details"
     [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"

@@ -27,7 +27,7 @@
     <div class="form-group">
       <label>Develop
         <select class="form-control" name="develop"
-          [(ngModel)]="currentTask.doTask">
+          [(ngModel)]="currentTask.doTask" #userId (ngModelChange)="changeUserInBoard(userId.value)" >
           <option *ngFor="let user of users" [value]="user.uid"
           >
             {{user.displayName}}
