@@ -27,6 +27,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   boardId: string;
   prevUserId: string;
   board: Board[];
+  isChanged: boolean = false;
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
@@ -55,11 +56,11 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   changeUserInBoard(newValue: string): void {
     this.prevUserId = this.currentTask.doTask;
     this.currentTask.doTask = newValue;
-    console.log(this.currentTask.doTask, this.prevUserId);
+    this.isChanged = true;
   }
 
   updateTask(): void {
-    if (this.currentTask.doTask !== this.prevUserId){
+    if (this.isChanged){
       let set: string[] = this.board[0].usernames;
       set = this.removeFirst(set, this.prevUserId);
       set.push(this.currentTask.doTask);
@@ -67,7 +68,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         usernames: [...set],
       };
       this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
-
+      this.isChanged = false;
     }
     const data = {
       ownerTask: this.currentTask.ownerTask,

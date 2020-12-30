@@ -58,7 +58,6 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.task.ownerTask = this.authService.getUser().displayName;
     this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
     this.taskService.createTask(this.task, this.task.uid).then(() => {
-      console.log('Created new board successfully!');
       this.submitted = false;
     });
   }
@@ -83,7 +82,6 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.subscription = this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
       .subscribe((data: Board[]) => {
         this.board = data;
-        console.log(this.board);
       });
   }
 

@@ -3,7 +3,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import Task from '../models/task';
 import {Subscription} from 'rxjs';
 import {AppConst} from '../app.constants';
-import {FileDataService} from '../services/file-data.service';
+import {FileDataService} from './file-data.service';
 import Board from '../models/board';
 
 @Injectable({

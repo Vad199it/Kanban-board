@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import { formatDate } from '@angular/common';
 
 import {TaskService} from '../../services/task.service';
@@ -58,4 +58,16 @@ export class TasksComponent implements OnInit, OnDestroy {
   getCurrentData(): string{
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
+
+  changeDateInSec(date: string): number{
+    const currDate = new Date(date);
+    return +currDate;
+  }
+
+  changeDoDateInSec(date: string): number{
+    const currDate = new Date(date);
+    currDate.setDate(currDate.getDate() + 1);
+    return +(currDate.setHours(currDate.getHours() - 3));
+  }
+
 }

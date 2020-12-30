@@ -10,7 +10,7 @@
       <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
       <div
         class="date"
-        [ngStyle]="{'display': task.dueDate == getCurrentData() ? 'default' : 'none'}"
+        [ngStyle]="{'display': changeDoDateInSec(task.dueDate) < changeDateInSec(getCurrentData()) ? 'block' : 'none'}"
       >
         Date expired</div>
     </div>
