@@ -4,7 +4,6 @@ import {TaskListService} from './task-list.service';
 import {LabelService} from './label.service';
 import Board from '../models/board';
 import {AppConst} from '../app.constants';
-import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,6 @@ import {Observable} from 'rxjs';
 export class BoardService {
 
   private dbPath = '/boards';
-  private board: Observable<Board>;
-  private boardDoc: AngularFirestoreDocument<Board>;
   private boardsRef: AngularFirestoreCollection<Board>;
 
   constructor(private db: AngularFirestore,

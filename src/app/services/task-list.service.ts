@@ -36,8 +36,8 @@ export class TaskListService implements OnDestroy {
     return this.taskListRef.doc(id).update(data);
   }
 
-  public deleteTaskList(id: string): Promise<void> {
-    this.taskService.deleteAllTaskFromTaskList(id);
+  public deleteTaskList(id: string, boardId?: string): Promise<void> {
+    this.taskService.deleteAllTaskFromTaskList(id, boardId);
     return this.taskListRef.doc(id).delete();
   }
 

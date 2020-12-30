@@ -8,6 +8,7 @@ import {TaskListService} from '../../services/task-list.service';
   styleUrls: ['./tasks-list-details.component.css']
 })
 export class TasksListDetailsComponent implements OnInit, OnChanges {
+  @Input() boardId: string;
   @Input() taskList: TaskList;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
@@ -36,7 +37,7 @@ export class TasksListDetailsComponent implements OnInit, OnChanges {
 
   deleteTaskList(): void {
     this.isModal.emit(true);
-    this.taskListService.deleteTaskList(this.currentTaskList.id)
+    this.taskListService.deleteTaskList(this.currentTaskList.id, this.boardId)
       .then(() => {
         this.refreshList.emit();
         this.message = 'The board was updated successfully!';
