@@ -41,7 +41,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.retrieveBoards();
   }
 
-  getUrlParam(): void{
+  getUrlParam(): void{ // todo: ????
     this.activateRoute.paramMap.pipe(
       switchMap(params => params.getAll('uid'))
     )

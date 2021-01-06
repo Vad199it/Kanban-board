@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   board: Board;
   public submitted: boolean = false;
-  public addBoardImg = '../../../assets/add-board.png';
+  // public addBoardImg = '../../../assets/add-board.png';
 
   constructor(private boardService: BoardService,
               private authService: AuthService) {}

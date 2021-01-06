@@ -46,24 +46,29 @@ export class TaskService implements OnDestroy {
   }
 
   public deleteAllTaskFromTaskList(taskListId: string, boardId?: string): Subscription{
-    this.subscription1 = this.db.collection(this.dbPathBoard, ref => ref
-      .where('uid', '==', boardId)).valueChanges({idField: 'uid'})
-      .subscribe((data: Board[]) => {
-        this.board = data;
-      });
+    if (boardId) {
+      this.subscription1 = this.db.collection(this.dbPathBoard, ref => ref
+        .where('uid', '==', boardId)).valueChanges({idField: 'uid'})
+        .subscribe((data: Board[]) => {
+          this.board = data;
+        });
+    }
 
     return this.subscription = this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskListId))
       .get().subscribe((querySnapshot) => {
-        let set: string[] = this.board[0].usernames;
+        let set: string[];
+        if (boardId) {
+          set = this.board[0].usernames;
+        }
         querySnapshot.forEach((doc) => {
           this.fileDataService.deleteAllFilesFromProject(doc.id);
-          console.log(set);
-          console.log(doc.get('doTask'));
+          if (boardId) {
           set = this.removeFirst(set, doc.get('doTask'));
           const boardData = {
             usernames: [...set],
           };
           this.db.collection(this.dbPathBoard).doc(boardId).update(boardData).catch(err => console.log(err));
+          }
           doc.ref.delete();
         });
       });

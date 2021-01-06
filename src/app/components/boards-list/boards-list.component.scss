@@ -1,67 +1,116 @@
-.list
-{
-  margin: 80px;
+.list-container {
+  display: flex;
+  background-color: #f4f5f7;
+  margin: 1%;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px -2px rgba(9, 30, 66, .25), 0 0 1px rgba(9, 30, 66, .31);
+  min-height: 84%;
+  padding: 2%;
+  justify-content: space-between;
 
-  .list-group
-  {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
-    background-color: #fff;
-    color: #444;
+  .list {
+    width: 48%;
 
-    .list-group-item
-    {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #444;
-      color: #fff;
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 150%;
-      min-height: 100px;
-      word-wrap: break-word;
-      cursor: grabbing;
+    .name-list-boards {
+      color: darkslateblue;
+      font-size: 16px;
+      margin-bottom: 2%;
+    }
 
-      .update-button
-      {
-        position: relative;
-        top: -1em;
-        right: -3em;
-        width: 25px;
-        height: 25px;
-        color: white;
-        border-radius: 50%;
+    .search {
+      margin-bottom: 2%;
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3.01px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(255, 255, 255);
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+    }
 
-        &:hover
-        {
-          transform: scale(1.05);
-          transition: 0.1s;
+    .list-group {
+      .boards-table {
+        display: grid;
+        border-collapse: collapse;
+        min-width: 100%;
+        grid-template-columns:
+      minmax(50px, 0.8fr)
+      minmax(50px, 1.67fr)
+      minmax(50px, 1.67fr)
+      minmax(50px, 0.8fr);
+
+        thead,
+        tbody,
+        tr {
+          display: contents;
+
+          th,
+          td {
+            padding: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .board-details {
+            overflow: unset;
+          }
+
+          th {
+            position: sticky;
+            top: 0;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+            color: darkslateblue;
+            border-bottom: 2px solid #cdcdcd;
+
+            &:last-child {
+
+            }
+          }
+
+          td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #808080;
+            border-bottom: 1px solid #cdcdcd;
+          }
+
+        }
+      }
+
+      .list-group-item {
+
+        .board-icon {
+          width: 16px;
+          height: 16px;
           cursor: pointer;
         }
 
-        &:after
-        {
-          content: '•••';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) rotate(90deg);
-          font-size: 10px;
-          letter-spacing: 4px;
-          margin-top: 2px;
+        .board-title {
+          a {
+            cursor: pointer;
+          }
         }
-      }
 
-      &:hover
-      {
-        transform: scale(1.1);
-        transition: 0.5s;
-        box-shadow: 0 0 10px #030303;
+        .update-button {
+          padding: 0;
+          border: none;
+          font: inherit;
+          color: inherit;
+          background-color: transparent;
+          cursor: pointer;
+        }
       }
     }
   }
+}
 
   .container-details {
     display: none;
@@ -97,6 +146,4 @@
       }
     }
   }
-
-}
 

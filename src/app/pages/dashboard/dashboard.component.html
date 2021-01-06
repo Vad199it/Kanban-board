@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 <div class="submit-form">
-  <div *ngIf="submitted">
+  <div class="create-board" *ngIf="submitted">
+    <div class="details">
     <div class="form-group">
       <label for="title">Title</label>
       <input
@@ -38,11 +39,22 @@
     </div>
 
     <button (click)="saveBoard()" class="btn-success">Submit</button>
+    <span
+      class="close"
+      (click)="submitted = !submitted"
+    >&times;</span>
+    </div>
   </div>
 
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newBoard()">
+  <div class="add-board-button-container">
+    <span>Boards</span>
+    <div *ngIf="!submitted">
+      <button class="add-board-button" (click)="newBoard()">
+        Create board
+      </button>
+    </div>
   </div>
+
 </div>
 
 <app-boards-list></app-boards-list>

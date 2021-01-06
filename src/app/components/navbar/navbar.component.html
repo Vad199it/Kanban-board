@@ -1,13 +1,18 @@
-<div class="container"></div><div class="head"><h2>KanbanBoard</h2></div>
-<div class="action" *ngIf="(users | async) as user">
-  <div class="profile" (click)="changeActiveFont()">
-    <img src="{{user.photoURL ? user.photoURL : this.userImg}}" alt="{{user.displayName}}">
-  </div>
-  <div class="menu" [ngClass]="{active:isActiveFont}">
-    <h3>{{user.displayName}}<br><span>{{user.email}}</span></h3>
-    <ul>
-      <li><img src="{{profileImg}}" alt><a href="#">My Profile</a></li>
-      <li><img src="{{logoutImg}}" alt><a (click)="authService.signOut()">Logout</a></li>
-    </ul>
+<div class="container">
+  <div class="head">
+    <h2>KanbanBoard</h2>
+    <div class="action" *ngIf="(users | async) as user">
+      <div class="profile" (click)="changeActiveFont()">
+        <img src="{{user.photoURL ? user.photoURL : this.userImg}}" alt="{{user.displayName}}">
+      </div>
+      <div class="menu" [ngClass]="{active:isActiveFont}">
+        <h3>{{user.displayName}}<br><span>{{user.email}}</span></h3>
+        <ul>
+          <li><img src="{{profileImg}}" alt><a href="#">My Profile</a></li>
+          <li><img src="{{logoutImg}}" alt><a (click)="authService.signOut()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
+

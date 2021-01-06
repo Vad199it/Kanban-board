@@ -19,6 +19,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   title = '';
   subscription: Subscription;
   tittle: string;
+  tittleOther: string;
   isModal: boolean = false;
 
   constructor(private boardService: BoardService,
@@ -60,17 +61,25 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  search(): void { // ??????
+  searchInBoards(): void { // ??????
     if (this.tittle !== ''){
       this.boards = this.boards.filter(res => {
         return res.title.toLowerCase().match(this.tittle.toLowerCase());
       });
-      this.otherBoards = this.boards.filter(res => {
-        return res.title.toLowerCase().match(this.tittle.toLowerCase());
-      });
     }
     else if (this.tittle === ''){
-      this.ngOnInit();
+      this.retrieveBoards();
+    }
+  }
+
+  searchInOtherBoards(): void { // ??????
+    if (this.tittleOther !== ''){
+      this.otherBoards = this.boards.filter(res => {
+        return res.title.toLowerCase().match(this.tittleOther.toLowerCase());
+      });
+    }
+    else if (this.tittleOther === ''){
+      this.retrieveOtherBoards();
     }
   }
 
