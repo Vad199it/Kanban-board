@@ -95,4 +95,5 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     this.router.navigate(['board' , id]);
   }
 
+
 }

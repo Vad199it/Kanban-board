@@ -2,57 +2,48 @@
 <div class="submit-form">
   <div class="create-board" *ngIf="submitted">
     <div class="details">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="board.title"
-        name="title"
-      />
-    </div>
+      <div class="option-container">
+        <p class="title-create-board">Create board</p>
+        <span
+          class="close"
+          (click)="submitted = !submitted"
+        >&times;</span>
+      </div>
+      <div class="board-title">
+        <label for="title"><span>Title</span></label>
+        <input
+          type="text"
+          class="title-input"
+          id="title"
+          required
+          [(ngModel)]="board.title"
+          name="title"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="type">Type</label>
-      <input
-        class="form-control"
-        id="type"
-        required
-        [(ngModel)]="board.type"
-        name="type"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="color">Type</label>
-      <input
-        type="color"
-        class="form-control"
-        id="color"
-        value="#444"
-        required
-        [(ngModel)]="board.color"
-        name="color"
-      />
-    </div>
-
-    <button (click)="saveBoard()" class="btn-success">Submit</button>
-    <span
-      class="close"
-      (click)="submitted = !submitted"
-    >&times;</span>
+      <div class="board-color">
+        <label for="color">Color</label>
+        <input
+          type="color"
+          class="color-input"
+          id="color"
+          value="#444"
+          required
+          [(ngModel)]="board.color"
+          name="color"
+        />
+      </div>
+      <div class="container-btn-save-board">
+        <button (click)="saveBoard()" class="btn-save-board">Create</button>
+      </div>
     </div>
   </div>
 
   <div class="add-board-button-container">
     <span>Boards</span>
-    <div *ngIf="!submitted">
-      <button class="add-board-button" (click)="newBoard()">
-        Create board
-      </button>
-    </div>
+    <button class="add-board-button" (click)="newBoard()">
+      Create board
+    </button>
   </div>
 
 </div>

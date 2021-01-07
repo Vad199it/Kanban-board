@@ -6,25 +6,29 @@
       <div class="list-group">
         <table class="boards-table">
           <thead>
-            <tr>
-              <th>Icon</th>
-              <th>Board name</th>
-              <th>Owner name</th>
-              <th></th>
-            </tr>
+          <tr>
+            <th>Icon</th>
+            <th>Board name</th>
+            <th>Owner name</th>
+            <th></th>
+          </tr>
           </thead>
           <tbody>
-            <tr
-              class="list-group-item"
-              *ngFor="let board of boards; trackBy: trackByMethod">
-              <td>
-                <div (click)="navigateToBoard(board.uid)" class="board-icon" [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}"></div>
-              </td>
-              <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
-              <td>{{board.ownerUsername}}</td>
-              <td class="board-details"><button appClickStopPropagation class="update-button"
-                          (click)="setActiveBoard(board)">Edit</button></td>
-            </tr>
+          <tr
+            class="list-group-item"
+            *ngFor="let board of boards; trackBy: trackByMethod">
+            <td>
+              <div (click)="navigateToBoard(board.uid)" class="board-icon"
+                   [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}"></div>
+            </td>
+            <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
+            <td>{{board.ownerUsername}}</td>
+            <td class="board-details">
+              <button appClickStopPropagation class="update-button"
+                      (click)="setActiveBoard(board)">Edit
+              </button>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -47,19 +51,22 @@
           </tr>
           </thead>
           <tbody>
-        <tr
-          class="list-group-item"
-          *ngFor="let board of otherBoards; trackBy: trackByMethod">
-          <td>
-            <div (click)="navigateToBoard(board.uid)"
-                 class="board-icon" [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}">
-            </div>
-          </td>
-          <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
-          <td>{{board.ownerUsername}}</td>
-          <td class="board-details"><button appClickStopPropagation class="update-button"
-                                            (click)="setActiveBoard(board)">Edit</button></td>
-        </tr>
+          <tr
+            class="list-group-item"
+            *ngFor="let board of otherBoards; trackBy: trackByMethod">
+            <td>
+              <div (click)="navigateToBoard(board.uid)"
+                   class="board-icon" [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}">
+              </div>
+            </td>
+            <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
+            <td>{{board.ownerUsername}}</td>
+            <td class="board-details">
+              <button appClickStopPropagation class="update-button"
+                      (click)="setActiveBoard(board)">Edit
+              </button>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -67,19 +74,22 @@
   </div>
 </div>
 
-  <div
-    class="container-details"
-    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
-  >
-    <div class="details" *ngIf="currentBoard">
+<div
+  class="container-details"
+  [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
+>
+  <div class="details" *ngIf="currentBoard">
+    <div class="option-container">
+      <p class="title-update-board">Update board</p>
       <span
         class="close"
         (click)="this.isModal = !this.isModal"
       >&times;</span>
-      <app-board-details
-        (refreshList)="refreshList()"
-        [board]="currentBoard"
-        (isModal)= "this.closeModal($event)"
-      ></app-board-details>
     </div>
+    <app-board-details
+      (refreshList)="refreshList()"
+      [board]="currentBoard"
+      (isModal)="this.closeModal($event)"
+    ></app-board-details>
   </div>
+</div>
