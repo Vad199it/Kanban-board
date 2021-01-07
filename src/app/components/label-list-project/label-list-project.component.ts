@@ -56,7 +56,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
       });
     }
     else if (this.tittle === ''){
-      this.ngOnInit();
+      this.retrieveLabels();
     }
   }
 
