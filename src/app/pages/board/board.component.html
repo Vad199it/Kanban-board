@@ -1,7 +1,9 @@
 <app-navbar></app-navbar>
+<div *ngFor="let board of boards | async" class="name-task-list-container">
+  <span>{{board.title}}</span>
+</div>
 <div class="submit-form">
   <div *ngIf="submitted">
-
     <div class="form-group">
       <label for="title">Title</label>
       <input
@@ -13,12 +15,10 @@
         name="title"
       />
     </div>
-
     <button (click)="saveTaskList()" class="btn-success">Submit</button>
   </div>
-
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newTaskList()">
-  </div>
 </div>
-<app-tasks-list [projectId]="id"></app-tasks-list>
+<div class="task-list-container">
+  <app-tasks-list [projectId]="id"></app-tasks-list>
+  <button class="btn-add-task-list" (click)="newTaskList()">+ New task list</button>
+</div>

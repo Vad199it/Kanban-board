@@ -1,57 +1,42 @@
+:host{
+
+}
+
 .taskList {
-  margin: 80px;
 
   .col {
-    display: grid;
-    grid-gap: 10px;
-    height: 100vh;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
-    background-color: #fff;
-    color: #444;
+    display: flex;
 
     .taskList-group {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      color: #ff0000;
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 150%;
-      min-height: 100px;
-      word-wrap: break-word;
-      cursor: grabbing;
-      box-shadow: #030303 1px 1px 1px 1px;
+
+      .task-list-header{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 10px;
+      }
+      width: 250px;
+      background-color: white;
+      margin-right: 10px;
+      border-radius: 3px;
+      color: darkslateblue;
+      padding: 10px;
 
       .taskList-group-item{
-        width: 100%;
-        height: 100%;
+
       }
 
       .update-button {
-        position: relative;
-        top: -1em;
-        right: -3em;
-        width: 25px;
-        height: 25px;
-        color: white;
-        border-radius: 50%;
 
         &:hover {
-          transform: scale(1.05);
-          transition: 0.1s;
-          cursor: pointer;
+
         }
 
         &:after {
           content: '•••';
-          position: absolute;
-          top: 50%;
-          left: 50%;
           transform: translate(-50%, -50%) rotate(90deg);
           font-size: 10px;
           letter-spacing: 4px;
-          margin-top: 2px;
-          color: #030303;
+          color: darkslateblue;
         }
       }
     }

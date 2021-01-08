@@ -11,6 +11,11 @@
   .list {
     width: 48%;
 
+    .list-group{
+      overflow-y: auto;
+      max-height: 65vh;
+    }
+
     .name-list-boards {
       color: darkslateblue;
       font-size: 16px;
@@ -31,6 +36,7 @@
       color: darkslateblue;
       outline: none;
       border: 1px solid #cdcdcd;
+      width: 35%;
     }
 
     .list-group {
@@ -69,6 +75,7 @@
             font-size: 14px;
             color: darkslateblue;
             border-bottom: 2px solid #cdcdcd;
+            background-color: #f4f5f7;
 
             &:last-child {
 

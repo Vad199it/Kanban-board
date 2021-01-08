@@ -26,7 +26,7 @@
     <div class="form-group">
       <label>Develop
         <select class="form-control" name="develop"
-          [(ngModel)]="task.doTask">
+                [(ngModel)]="task.doTask">
           <option [ngValue]="undefined" hidden>Select develop:</option>
           <option *ngFor="let user of users" [value]="user.uid"
           >
@@ -95,9 +95,7 @@
     <button (click)="saveTask()" class="btn-success">Submit</button>
   </div>
 
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newTask()">
-  </div>
+  <button class="btn-add-task" (click)="newTask()">+ Add another task</button>
 </div>
 
 <div class="taskList-group-item">

@@ -14,7 +14,7 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-tasks-board',
   templateUrl: './tasks-board.component.html',
-  styleUrls: ['./tasks-board.component.css']
+  styleUrls: ['./tasks-board.component.scss']
 })
 export class TasksBoardComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
@@ -22,7 +22,6 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   currentUser = null;
   task: Task;
   public submitted: boolean = false;
-  public addBoardImg = '../../../assets/add-board.png';
   id: string;
   subscription: Subscription;
   board: Board[];

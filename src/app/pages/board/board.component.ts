@@ -1,26 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import TaskList from '../../models/task-list';
 import {TaskListService} from '../../services/task-list.service';
+import {BoardService} from '../../services/board.service';
+import Board from '../../models/board';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit{
   taskList: TaskList;
+
   public submitted: boolean = false;
-  public addBoardImg = '../../../assets/add-board.png';
   id: string;
+  boards: Observable<Board[]>;
   constructor(private activateRoute: ActivatedRoute,
-              private taskListService: TaskListService) {
+              private taskListService: TaskListService,
+              private boardService: BoardService) {
   }
 
   ngOnInit(): void {
     this.getUrlParam();
+    this.retrieveBoards();
+  }
+
+  retrieveBoards(): void {
+    this.boards = this.boardService.getAllBoards(this.id).valueChanges({idField: 'id'});
   }
 
   getUrlParam(): void{

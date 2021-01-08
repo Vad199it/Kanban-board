@@ -1,24 +1,9 @@
   .task
   {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr) ) ;
-    background-color: #fff;
-    color: #444;
 
     .task-group
     {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #444;
-      color: #fff;
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 150%;
-      min-height: 100px;
-      word-wrap: break-word;
-      cursor: grabbing;
+
 
       .update-button
       {
@@ -32,8 +17,6 @@
 
         &:hover
         {
-          transform: scale(1.05);
-          transition: 0.1s;
           cursor: pointer;
         }
 
@@ -53,7 +36,6 @@
       &:hover
       {
         transform: scale(1.1);
-        transition: 0.5s;
         box-shadow: 0 0 10px #030303;
       }
     }

@@ -28,7 +28,6 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       title: this.currentBoard.title,
       color: this.currentBoard.color || 'black'
     };
-    console.log(data);
     this.boardService.updateBoard(this.currentBoard.id, data)
       .catch(err => console.log(err));
   }
