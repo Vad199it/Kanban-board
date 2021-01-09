@@ -10,6 +10,7 @@ import Board from '../../models/board';
 import {BoardService} from '../../services/board.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
+import TaskList from '../../models/task-list';
 
 @Component({
   selector: 'app-tasks-board',
@@ -46,7 +47,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       .subscribe(data => this.boardId = data);
   }
 
-  saveTask(): void {
+  async saveTask(): Promise<void> {
     const set: string[] = this.board[0].usernames;
     set.push(this.task.doTask);
     const boardData = {
@@ -54,10 +55,13 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     };
     this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
     this.task.id = this.taskListId;
-    this.task.ownerTask = this.authService.getUser().displayName;
-    this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
-    this.taskService.createTask(this.task, this.task.uid).then(() => {
-      this.submitted = false;
+    await this.authService.getAllUsers(this.task.doTask).valueChanges({idField: 'id'}).subscribe((data: User[]) => {
+      this.task.nameOfDeveloper = data[0].displayName;
+      this.task.ownerTask = this.authService.getUser().displayName;
+      this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
+      this.taskService.createTask(this.task, this.task.uid).then(() => {
+        this.submitted = false;
+      });
     });
   }
   newTask(): void {
@@ -94,5 +98,4 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }

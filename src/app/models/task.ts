@@ -2,6 +2,7 @@ export default class Task {
   id: string; //
   ownerTask: string; //
   doTask: string;
+  nameOfDeveloper: string;
   createDate: Date;
   dueDate: Date;
   title: string;

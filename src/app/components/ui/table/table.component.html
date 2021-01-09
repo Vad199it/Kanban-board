@@ -1,0 +1,30 @@
+<input type="text" [(ngModel)]="title" placeholder="Search" class="search" autofocus>
+<div class="boards-table-container">
+  <table class="boards-table">
+    <thead>
+    <tr>
+      <th>Icon</th>
+      <th>Board name</th>
+      <th>Owner name</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+      class="list-group-item"
+      *ngFor="let board of boards | appFilter: title; trackBy: trackByMethod">
+      <td>
+        <div (click)="navigateToBoard(board.uid)" class="board-icon"
+             [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}"></div>
+      </td>
+      <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
+      <td>{{board.ownerUsername}}</td>
+      <td class="board-details">
+        <button class="update-button"
+                (click)="setActiveBoard(board)">Edit
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

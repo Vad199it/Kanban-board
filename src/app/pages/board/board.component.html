@@ -3,19 +3,30 @@
   <span>{{board.title}}</span>
 </div>
 <div class="submit-form">
-  <div *ngIf="submitted">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="taskList.title"
-        name="title"
-      />
+  <div class="create-task-list" *ngIf="submitted">
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-task-list">Create task list</p>
+        <span
+          class="close"
+          (click)="submitted = !submitted"
+        >&times;</span>
+      </div>
+      <div class="task-list-title">
+        <label for="title"><span>Title</span></label>
+        <input
+          type="text"
+          class="title-input"
+          id="title"
+          required
+          [(ngModel)]="taskList.title"
+          name="title"
+        />
+      </div>
+      <div class="container-btn-save-task-list">
+      <button (click)="saveTaskList()" class="btn-save-task-list">Create</button>
+      </div>
     </div>
-    <button (click)="saveTaskList()" class="btn-success">Submit</button>
   </div>
 </div>
 <div class="task-list-container">

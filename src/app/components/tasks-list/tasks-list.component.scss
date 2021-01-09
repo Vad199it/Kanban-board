@@ -5,7 +5,6 @@
 .taskList {
 
   .col {
-    display: flex;
 
     .taskList-group {
 
@@ -20,6 +19,8 @@
       border-radius: 3px;
       color: darkslateblue;
       padding: 10px;
+      display: inline-block;
+      vertical-align: top;
 
       .taskList-group-item{
 
@@ -43,7 +44,6 @@
   }
 
   .container-details {
-    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -59,22 +59,36 @@
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 80%;
+      width: 350px;
+      line-height: 16px;
+      border-radius: 3px;
+
+      .option-container{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e2e2e2;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+
+        .title-update-task-list{
+          color: darkslateblue;
+          font-size: 16px;
+        }
+      }
 
       .close {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
-      }
-      &:hover,
-      &:focus
-      {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
+        &:hover,
+        &:focus
+        {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
       }
     }
   }
-
 }

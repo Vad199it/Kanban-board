@@ -1,76 +1,18 @@
 <div class="list-container">
   <div class="list">
     <p class="name-list-boards">My boards</p>
-    <input type="text" [(ngModel)]="tittle" (input)="searchInBoards()" placeholder="Search" class="search">
-    <div class="col">
-      <div class="list-group">
-        <table class="boards-table">
-          <thead>
-          <tr>
-            <th>Icon</th>
-            <th>Board name</th>
-            <th>Owner name</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            class="list-group-item"
-            *ngFor="let board of boards; trackBy: trackByMethod">
-            <td>
-              <div (click)="navigateToBoard(board.uid)" class="board-icon"
-                   [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}"></div>
-            </td>
-            <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
-            <td>{{board.ownerUsername}}</td>
-            <td class="board-details">
-              <button appClickStopPropagation class="update-button"
-                      (click)="setActiveBoard(board)">Edit
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <app-table [boards]="boards" [title]="tittle"
+               (isModal)="this.closeModal($event)"
+               (currentBoard)="setActiveBoard($event)">
+    </app-table>
   </div>
-
 
   <div class="list">
     <p class="name-list-boards">Assigned boards </p>
-    <input type="text" [(ngModel)]="tittleOther" (input)="searchInOtherBoards()" placeholder="Search" class="search">
-    <div class="col">
-      <div class="list-group">
-        <table class="boards-table">
-          <thead>
-          <tr>
-            <th>Icon</th>
-            <th>Board name</th>
-            <th>Owner name</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            class="list-group-item"
-            *ngFor="let board of otherBoards; trackBy: trackByMethod">
-            <td>
-              <div (click)="navigateToBoard(board.uid)"
-                   class="board-icon" [ngStyle]="{'background-color': board.color == null ? 'black' : board.color}">
-              </div>
-            </td>
-            <td class="board-title"><a (click)="navigateToBoard(board.uid)">{{ board.title }}</a></td>
-            <td>{{board.ownerUsername}}</td>
-            <td class="board-details">
-              <button appClickStopPropagation class="update-button"
-                      (click)="setActiveBoard(board)">Edit
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <app-table [boards]="otherBoards" [title]="tittleOther"
+               (isModal)="this.closeModal($event)"
+               (currentBoard)="setActiveBoard($event)">
+    </app-table>
   </div>
 </div>
 

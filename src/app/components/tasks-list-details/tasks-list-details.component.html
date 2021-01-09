@@ -1,11 +1,10 @@
 <div *ngIf="currentTaskList" class="edit-form">
-  <h4>TaskList</h4>
   <form>
-    <div class="form-group">
-      <label for="title">Title</label>
+    <div class="task-list-title">
+      <label for="title"><span>Title</span></label>
       <input
         type="text"
-        class="form-control"
+        class="title-input"
         id="title"
         [(ngModel)]="currentTaskList.title"
         name="title"
@@ -13,17 +12,18 @@
     </div>
   </form>
 
-  <button class="badge" (click)="deleteTaskList()">
-    Delete
-  </button>
+  <div class="container-btn-delete-update-task-list">
+    <button type="submit" class="btn-update-task-list" (click)="updateTaskList()">
+      Update
+    </button>
 
-  <button type="submit" class="badge-success" (click)="updateTaskList()">
-    Update
-  </button>
-  <p>{{ message }}</p>
+    <button class="btn-delete-task-list" (click)="deleteTaskList()">
+      Delete
+    </button>
+  </div>
 </div>
 
 <div *ngIf="!currentTaskList">
-  <br />
+  <br/>
   <p>Cannot access this Board...</p>
 </div>

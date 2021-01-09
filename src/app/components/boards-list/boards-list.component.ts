@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   boards: Board[];
   otherBoards: Board[];
   currentBoard = null;
-  // currentIndex = -1;
   title = '';
   subscription: Subscription;
   tittle: string;
@@ -33,7 +32,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   refreshList(): void {
     this.currentBoard = null;
-    // this.currentIndex = -1;
     this.retrieveBoards();
   }
 
@@ -53,7 +51,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
 
   setActiveBoard(board): void {
     this.currentBoard = board;
-    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 
@@ -61,39 +58,7 @@ export class BoardsListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  searchInBoards(): void { // ??????
-    if (this.tittle !== ''){
-      this.boards = this.boards.filter(res => {
-        return res.title.toLowerCase().match(this.tittle.toLowerCase());
-      });
-    }
-    else if (this.tittle === ''){
-      this.retrieveBoards();
-    }
-  }
-
-  searchInOtherBoards(): void { // ??????
-    if (this.tittleOther !== ''){
-      this.otherBoards = this.boards.filter(res => {
-        return res.title.toLowerCase().match(this.tittleOther.toLowerCase());
-      });
-    }
-    else if (this.tittleOther === ''){
-      this.retrieveOtherBoards();
-    }
-  }
-
   closeModal(value: boolean): void {
     this.isModal = !value;
   }
-
-  trackByMethod(index: number, el: any): number {
-    return el.uid;
-  }
-
-  navigateToBoard(id: string): void{
-    this.router.navigate(['board' , id]);
-  }
-
-
 }

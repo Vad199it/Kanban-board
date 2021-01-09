@@ -7,6 +7,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import { Router } from '@angular/router';
 import {AppConst} from '../app.constants';
 import {Observable} from 'rxjs';
+import Board from '../models/board';
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +118,11 @@ export class AuthService {
   public getUserById(id: string): Observable<User>{
     this.userDoc = this.afs.doc<User>(`users/${id}`);
     return this.user = this.userDoc.valueChanges();
+  }
+
+  public getAllUsers(id: string): AngularFirestoreCollection<User> {
+    return this.afs.collection(this.dbPath, ref => ref
+      .where('uid', '==', id));
   }
 
 }

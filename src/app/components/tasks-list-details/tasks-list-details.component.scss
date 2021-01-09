@@ -1,5 +1,4 @@
-.board-color,
-.board-title {
+.task-list-title {
   display: flex;
   margin-bottom: 2%;
   label{
@@ -8,7 +7,6 @@
     align-items: center;
     color: #808080;
   }
-
 
   .title-input{
     padding: 4px;
@@ -26,12 +24,13 @@
   }
 }
 
-.container-btn-delete-update-board {
+.container-btn-delete-update-task-list {
   display: flex;
   justify-content: flex-end;
+  margin-top: 4%;
 
-  .btn-delete-board,
-  .btn-update-board {
+  .btn-delete-task-list,
+  .btn-update-task-list {
     margin: 0;
     padding: 4px 10px;
     box-sizing: border-box;
@@ -52,7 +51,7 @@
     }
   }
 
-  .btn-update-board {
+  .btn-update-task-list {
     margin-right: 10px;
   }
 }

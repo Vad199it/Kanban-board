@@ -1,15 +1,15 @@
-<input type="text" [(ngModel)]="tittle" (input)="search()" >
+<input type="text" [(ngModel)]="tittle" >
 <div class="list">
   <div class="col">
     <div class="list-group">
       <div
         class="list-group-item"
-        *ngFor="let label of labels; trackBy: trackByMethod"
+        *ngFor="let label of labels | appFilter: tittle; trackBy: trackByMethod"
         [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
-        (click)="choseLabel(label, i)"
+        (click)="choseLabel(label)"
       >
         {{ label.title }}
-        <div appClickStopPropagation class="update-button"
+        <div class="update-button"
              (click)="setActiveLabel(label)"
         ></div>
       </div>

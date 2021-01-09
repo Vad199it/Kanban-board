@@ -3,7 +3,13 @@ import { formatDate } from '@angular/common';
 
 import {TaskService} from '../../services/task.service';
 import Task from '../../models/task';
-import {Subscription} from 'rxjs';
+import {User} from '../../models/user';
+import {Observable, Subscription} from 'rxjs';
+import {AuthService} from '../../services/auth.service';
+import Board from '../../models/board';
+import {BoardService} from '../../services/board.service';
+import {switchMap} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -12,23 +18,42 @@ import {Subscription} from 'rxjs';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
+  projectId: string;
   tasks: Task[];
   currentTask = null;
-  // currentIndex = -1;
   title = '';
   subscription: Subscription;
-  isModal: boolean = false;
+  isModal = false;
+  boardName: string;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService,
+              private authService: AuthService,
+              private boardService: BoardService,
+              private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getUrlParam();
     this.retrieveTasks();
+    this.retrieveBoards();
+  }
+
+  getUrlParam(): void{
+    this.activateRoute.paramMap.pipe(
+        switchMap(params => params.getAll('uid'))
+    )
+        .subscribe(data => this.projectId = data);
   }
 
   refreshTask(): void {
     this.currentTask = null;
-    // this.currentIndex = -1;
     this.retrieveTasks();
+  }
+
+  retrieveBoards(): void {
+    this.subscription = this.boardService.getAllBoards(this.projectId).valueChanges({idField: 'uid'})
+      .subscribe((data: Board[]) => {
+        this.boardName = data[0].title;
+      });
   }
 
   retrieveTasks(): void {

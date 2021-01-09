@@ -17,10 +17,13 @@
     [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
     <div class="details" *ngIf="currentTaskList">
-      <span
-        class="close"
-        (click)="this.isModal = !this.isModal"
-      >&times;</span>
+      <div class="option-container">
+        <p class="title-update-task-list">Update board</p>
+        <span
+          class="close"
+          (click)="this.isModal = !this.isModal"
+        >&times;</span>
+      </div>
       <app-tasks-list-details
         [boardId]="projectId"
         (refreshList)="refreshTaskList()"

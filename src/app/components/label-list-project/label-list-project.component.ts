@@ -49,16 +49,6 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  search(): void {
-    if (this.tittle !== ''){
-      this.labels = this.labels.filter(res => {
-        return res.title.toLowerCase().match(this.tittle.toLowerCase());
-      });
-    }
-    else if (this.tittle === ''){
-      this.retrieveLabels();
-    }
-  }
 
   closeModal(value: boolean): void {
     this.isModal = !value;
@@ -68,7 +58,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
     return el.uid;
   }
 
-  choseLabel(label, index): void{
+  choseLabel(label): void{
     this.currentLabel = label;
     const set = new Set(this.currentLabel.taskId);
     set.add(this.taskId);

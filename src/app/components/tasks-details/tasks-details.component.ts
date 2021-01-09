@@ -21,7 +21,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   currentTask: Task = null;
-  message: string = '';
   subscription: Subscription;
   currentUser = null;
   boardId: string;
@@ -36,7 +35,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.getUrlParam();
-    this.message = '';
     this.retrieveUsers();
     this.retrieveBoards();
   }
@@ -49,7 +47,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.message = '';
     this.currentTask = { ...this.task };
   }
 
@@ -59,7 +56,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.isChanged = true;
   }
 
-  updateTask(): void {
+  async updateTask(): Promise<void> {
     if (this.isChanged){
       let set: string[] = this.board[0].usernames;
       set = this.removeFirst(set, this.prevUserId);
@@ -70,19 +67,22 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
       this.isChanged = false;
     }
-    const data = {
-      ownerTask: this.currentTask.ownerTask,
-      doTask: this.currentTask.doTask,
-      createDate: this.currentTask.createDate,
-      dueDate: this.currentTask.dueDate,
-      title: this.currentTask.title,
-      content: this.currentTask.content,
-      order: this.currentTask.order,
-      comments: this.currentTask.comments,
-    };
-    this.taskService.updateTask(this.currentTask.id, data)
-      .then(() => this.message = 'The board was updated successfully!')
-      .catch(err => console.log(err));
+    await this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'}).subscribe((users: User[]) => {
+      this.currentTask.nameOfDeveloper = users[0].displayName;
+      const data = {
+        ownerTask: this.currentTask.ownerTask,
+        doTask: this.currentTask.doTask,
+        createDate: this.currentTask.createDate,
+        dueDate: this.currentTask.dueDate,
+        title: this.currentTask.title,
+        content: this.currentTask.content,
+        order: this.currentTask.order,
+        comments: this.currentTask.comments,
+        nameOfDeveloper: this.currentTask.nameOfDeveloper,
+      };
+      this.taskService.updateTask(this.currentTask.id, data)
+        .catch(err => console.log(err));
+    });
   }
 
   deleteTask(): void {
@@ -97,7 +97,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.taskService.deleteTask(this.currentTask.id)
       .then(() => {
         this.refreshList.emit();
-        this.message = 'The board was updated successfully!';
       })
       .catch(err => console.log(err));
   }

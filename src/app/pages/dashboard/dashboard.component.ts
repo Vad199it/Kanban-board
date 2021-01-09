@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { AuthService } from '../../services/auth.service';
 import Board from '../../models/board';
@@ -12,7 +12,6 @@ export class DashboardComponent implements OnInit {
 
   board: Board;
   public submitted: boolean = false;
-  // public addBoardImg = '../../../assets/add-board.png';
 
   constructor(private boardService: BoardService,
               private authService: AuthService) {}

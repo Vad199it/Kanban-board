@@ -1,6 +1,6 @@
 <div class="container">
   <div class="head">
-    <h2>KanbanBoard</h2>
+    <h2><a routerLink="/dashboard">KanbanBoard</a></h2>
     <div class="action" *ngIf="(users | async) as user">
       <div class="profile" (click)="changeActiveFont()">
         <img src="{{user.photoURL ? user.photoURL : this.userImg}}" alt="{{user.displayName}}">

@@ -5,7 +5,7 @@ import {TaskListService} from '../../services/task-list.service';
 @Component({
   selector: 'app-tasks-list-details',
   templateUrl: './tasks-list-details.component.html',
-  styleUrls: ['./tasks-list-details.component.css']
+  styleUrls: ['./tasks-list-details.component.scss']
 })
 export class TasksListDetailsComponent implements OnInit, OnChanges {
   @Input() boardId: string;
