@@ -37,6 +37,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.getUrlParam();
     this.retrieveUsers();
     this.retrieveBoards();
+    console.log(this.currentTask.doTask);
   }
 
   getUrlParam(): void{ // todo: ????

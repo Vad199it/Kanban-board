@@ -10,6 +10,19 @@
         name="title"
       />
     </div>
+
+    <div class="task-list-is-final-list">
+      <label for="check"><span>Final list</span></label>
+      <input
+        type="checkbox"
+        class="check-input"
+        id="check"
+        required
+        [checked]="currentTaskList.isFinalList"
+        (change)="currentTaskList.isFinalList = !currentTaskList.isFinalList"
+        name="check"
+      />
+    </div>
   </form>
 
   <div class="container-btn-delete-update-task-list">

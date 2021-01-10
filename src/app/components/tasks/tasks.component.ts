@@ -10,6 +10,8 @@ import Board from '../../models/board';
 import {BoardService} from '../../services/board.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
+import {TaskListService} from '../../services/task-list.service';
+import TaskList from '../../models/task-list';
 
 @Component({
   selector: 'app-tasks',
@@ -23,18 +25,23 @@ export class TasksComponent implements OnInit, OnDestroy {
   currentTask = null;
   title = '';
   subscription: Subscription;
+  subscription1: Subscription;
+  subscription2: Subscription;
   isModal = false;
   boardName: string;
+  isFinalList: boolean;
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
               private boardService: BoardService,
+              private taskListService: TaskListService,
               private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getUrlParam();
     this.retrieveTasks();
     this.retrieveBoards();
+    this.retrieveTaskLists();
   }
 
   getUrlParam(): void{
@@ -56,20 +63,28 @@ export class TasksComponent implements OnInit, OnDestroy {
       });
   }
 
+  retrieveTaskLists(): void {
+    this.subscription1 = this.taskListService.getTaskListsById(this.taskListId).valueChanges({idField: 'id'})
+      .subscribe((data: TaskList[]) => {
+        this.isFinalList = data[0].isFinalList;
+      });
+  }
+
   retrieveTasks(): void {
-    this.subscription = this.taskService.getTasks(this.taskListId).valueChanges({idField: 'id'})
+    this.subscription2 = this.taskService.getTasks(this.taskListId).valueChanges({idField: 'id'})
       .subscribe((data: Task[]) => {
         this.tasks = data;
       });
   }
   setActiveTask(task): void {
     this.currentTask = task;
-    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   trackByMethod(index: number, el: any): number {

@@ -23,6 +23,20 @@
           name="title"
         />
       </div>
+
+      <div class="task-list-is-final-list">
+        <label for="check"><span>Final list</span></label>
+        <input
+          type="checkbox"
+          class="check-input"
+          id="check"
+          required
+          [checked]="isFinalList"
+          (change)="isFinalList = !isFinalList"
+          name="check"
+        />
+      </div>
+
       <div class="container-btn-save-task-list">
       <button (click)="saveTaskList()" class="btn-save-task-list">Create</button>
       </div>

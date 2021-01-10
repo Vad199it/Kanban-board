@@ -6,10 +6,10 @@
         *ngFor="let label of labels; trackBy: trackByMethod"
         [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
       >
-        {{ label.title }}
-        <div class="update-button"
+        <p [title]="label.title">{{ label.title }}</p>
+        <span class="update-button"
              (click)="deleteLabelFromTask(label)"
-        ></div>
+        ></span>
       </div>
     </div>
   </div>

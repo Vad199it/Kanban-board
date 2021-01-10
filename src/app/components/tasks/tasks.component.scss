@@ -9,12 +9,16 @@
       box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
       padding: 3%;
       justify-content: flex-start;
+      .date{
+        color: red;
+        margin-bottom: 3%;
+      }
 
       .task-title{
         font-weight: 600;
       }
       .name-of-developer-container{
-        margin-top: 2%;
+        margin: 2% 0 2% 0;
         span{
           &:first-child{
             color: #808080;

@@ -1,98 +1,108 @@
 <div class="submit-form">
-  <div *ngIf="submitted">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="task.title"
-        name="title"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="content">Content</label>
-      <input
-        class="form-control"
-        id="content"
-        required
-        [(ngModel)]="task.content"
-        name="content"
-      />
-    </div>
-
-    <div class="form-group">
-      <label>Develop
-        <select class="form-control" name="develop"
-                [(ngModel)]="task.doTask">
-          <option [ngValue]="undefined" hidden>Select develop:</option>
-          <option *ngFor="let user of users" [value]="user.uid"
-          >
-            {{user.displayName}}
-          </option>
-        </select>
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label for="createDate">Created date</label>
-      <input
-        type="date"
-        class="form-control"
-        id="createDate"
-        required
-        [(ngModel)]="task.createDate"
-        name="createDate"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="dueDate">Due date</label>
-      <input
-        type="date"
-        class="form-control"
-        id="dueDate"
-        required
-        [(ngModel)]="task.dueDate"
-        name="dueDate"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="order">Order</label>
-      <input
-        class="form-control"
-        id="order"
-        required
-        [(ngModel)]="task.order"
-        name="order"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="comments">Comments</label>
-      <input
-        class="form-control"
-        id="comments"
-        required
-        [(ngModel)]="task.comments"
-        name="comments"
-      />
-    </div>
-
-    <div>
-      <div class="fileForm">
-        <app-file-form [taskId]="task.uid"></app-file-form>
+  <div class="create-task" *ngIf="submitted">
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-task">Create task</p>
+        <span
+          class="close"
+          (click)="submitted = !submitted"
+        >&times;</span>
+      </div>
+      <div class="task-title">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="title-input"
+          id="title"
+          required
+          [(ngModel)]="task.title"
+          name="title"
+        />
       </div>
 
-      <div class="fileList">
-        <app-file-list [taskId]="task.uid"></app-file-list>
+      <div class="task-content">
+        <label for="content">Content</label>
+        <input
+          class="content-input"
+          id="content"
+          required
+          [(ngModel)]="task.content"
+          name="content"
+        />
+      </div>
+
+      <div class="task-develop">
+        <label>Develop
+          <select class="develop-select" name="develop"
+                  [(ngModel)]="task.doTask">
+            <option [ngValue]="undefined" hidden>Select develop:</option>
+            <option *ngFor="let user of users" [value]="user.uid"
+            >
+              {{user.displayName}}
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <div class="task-create-date">
+        <label for="createDate">Created date</label>
+        <input
+          type="date"
+          class="create-date-input"
+          id="createDate"
+          required
+          [(ngModel)]="task.createDate"
+          name="createDate"
+        />
+      </div>
+
+      <div class="task-due-date">
+        <label for="dueDate">Due date</label>
+        <input
+          type="date"
+          class="due-date-input"
+          id="dueDate"
+          required
+          [(ngModel)]="task.dueDate"
+          name="dueDate"
+        />
+      </div>
+
+      <div class="task-order">
+        <label for="order">Order</label>
+        <input
+          class="order-input"
+          id="order"
+          required
+          [(ngModel)]="task.order"
+          name="order"
+        />
+      </div>
+
+      <div class="task-comments">
+        <label for="comments">Comments</label>
+        <input
+          class="comments-input"
+          id="comments"
+          required
+          [(ngModel)]="task.comments"
+          name="comments"
+        />
+      </div>
+
+      <div>
+        <div class="fileForm">
+          <app-file-form [taskId]="task.uid"></app-file-form>
+        </div>
+
+        <div class="fileList">
+          <app-file-list [taskId]="task.uid"></app-file-list>
+        </div>
+      </div>
+      <div class="container-btn-save-task">
+      <button (click)="saveTask()" class="btn-save-task">Create</button>
       </div>
     </div>
-
-    <button (click)="saveTask()" class="btn-success">Submit</button>
   </div>
 
 </div>

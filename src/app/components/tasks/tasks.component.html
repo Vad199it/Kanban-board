@@ -9,18 +9,18 @@
              (click)="setActiveTask(task)"
         ></div>
       </div>
+      <div
+        class="date"
+        [ngStyle]="{'display': (changeDoDateInSec(task.dueDate) < changeDateInSec(getCurrentData())) && !isFinalList ? 'block' : 'none'}"
+      >
+        &#9832; Date expired
+      </div>
       <span class="task-title">{{ task.title }}</span>
       <div class="name-of-developer-container">
         <span>Assignee: </span>
         <span>{{task.nameOfDeveloper}}</span>
       </div>
       <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
-      <div
-        class="date"
-        [ngStyle]="{'display': changeDoDateInSec(task.dueDate) < changeDateInSec(getCurrentData()) ? 'block' : 'none'}"
-      >
-        Date expired
-      </div>
     </div>
   </div>
   <div

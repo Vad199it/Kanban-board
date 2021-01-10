@@ -103,10 +103,11 @@
       }
     }
 
-    .task-list-title {
+    .task-list-title,
+    .task-list-is-final-list{
       display: flex;
       label{
-        width: 50px;
+        width: 70px;
         display: flex;
         align-items: center;
         color: #808080;
@@ -116,7 +117,8 @@
     .task-list-title{
       margin-bottom: 4%;
     }
-    .title-input{
+    .title-input,
+    .check-input{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;

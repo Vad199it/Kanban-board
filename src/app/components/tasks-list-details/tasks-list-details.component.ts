@@ -14,6 +14,7 @@ export class TasksListDetailsComponent implements OnInit, OnChanges {
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   currentTaskList: TaskList = null;
   message: string = '';
+  isFinalList: boolean;
 
   constructor(private taskListService: TaskListService) { }
 
@@ -29,9 +30,12 @@ export class TasksListDetailsComponent implements OnInit, OnChanges {
   updateTaskList(): void {
     const data = {
       title: this.currentTaskList.title,
+      isFinalList: this.currentTaskList.isFinalList,
     };
     this.taskListService.updateTaskList(this.currentTaskList.id, data)
-      .then(() => this.message = 'The board was updated successfully!')
+      .then(() => {
+        this.message = 'The board was updated successfully!';
+      })
       .catch(err => console.log(err));
   }
 

@@ -2,56 +2,39 @@
   margin: 0;
 
   .list-group {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: repeat(auto-fill, minmax(5px, 1fr) );
-    background-color: #fff;
-    color: #444;
 
     .list-group-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #444;
-      color: #fff;
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 50%;
-      min-height: 5px;
-      word-wrap: break-word;
-      cursor: grabbing;
+      display: inline-flex;
+      border-radius: 3px;
+      color: white;
+      padding: 1% 2%;
+      margin: 0 5px 5px 0;
+
+      p{
+        max-width: 189px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 5px;
+      }
 
       .update-button {
-        position: relative;
-        top: -1em;
-        right: -3em;
-        width: 10px;
-        height: 10px;
         color: #000000;
         border-radius: 50%;
 
         &:hover {
-          transform: scale(1.05);
-          transition: 0.1s;
-          cursor: pointer;
         }
 
         &:after {
-          content: '•••';
-          position: absolute;
-          top: 50%;
-          left: 50%;
+          content: '×';
           transform: translate(-50%, -50%) rotate(90deg);
-          font-size: 10px;
-          letter-spacing: 4px;
-          margin-top: 2px;
+          font-size: 14px;
+          color: white;
+          height: 100%;
         }
       }
 
       &:hover {
-        transform: scale(1.1);
-        transition: 0.5s;
-        box-shadow: 0 0 10px #030303;
       }
     }
   }

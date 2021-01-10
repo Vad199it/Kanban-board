@@ -17,6 +17,7 @@ export class BoardComponent implements OnInit{
   taskList: TaskList;
 
   public submitted: boolean = false;
+  isFinalList: boolean = false;
   id: string;
   boards: Observable<Board[]>;
   constructor(private activateRoute: ActivatedRoute,
@@ -44,9 +45,11 @@ export class BoardComponent implements OnInit{
     const date = new Date();
     this.taskList.id = this.id;
     this.taskList.order = +date;
+    this.taskList.isFinalList = this.isFinalList;
     this.taskListService.createTaskList(this.taskList).then(() => {
       console.log('Created new board successfully!');
       this.submitted = false;
+      this.isFinalList = false;
     });
   }
 
