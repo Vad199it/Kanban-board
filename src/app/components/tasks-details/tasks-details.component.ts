@@ -37,7 +37,6 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.getUrlParam();
     this.retrieveUsers();
     this.retrieveBoards();
-    console.log(this.currentTask.doTask);
   }
 
   getUrlParam(): void{ // todo: ????
@@ -49,25 +48,28 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.currentTask = { ...this.task };
+    this.prevUserId = this.currentTask.doTask;
   }
 
   changeUserInBoard(newValue: string): void {
-    this.prevUserId = this.currentTask.doTask;
     this.currentTask.doTask = newValue;
     this.isChanged = true;
   }
 
   async updateTask(): Promise<void> {
-    if (this.isChanged){
-      let set: string[] = this.board[0].usernames;
-      set = this.removeFirst(set, this.prevUserId);
-      set.push(this.currentTask.doTask);
-      const boardData = {
-        usernames: [...set],
-      };
-      this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
-      this.isChanged = false;
+    if (this.isChanged) {
+      if (this.prevUserId !== this.currentTask.doTask) {
+        let set: string[] = this.board[0].usernames;
+        set = this.removeFirst(set, this.prevUserId);
+        set.push(this.currentTask.doTask);
+        const boardData = {
+          usernames: [...set],
+        };
+        this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
+        this.isChanged = false;
+      }
     }
+    this.prevUserId = this.currentTask.doTask;
     await this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'}).subscribe((users: User[]) => {
       this.currentTask.nameOfDeveloper = users[0].displayName;
       const data = {
