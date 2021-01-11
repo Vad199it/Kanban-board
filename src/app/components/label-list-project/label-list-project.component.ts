@@ -13,22 +13,23 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
   @Input() taskId: string;
   labels: Label[];
+  taskLabels: Label[];
   currentLabel = null;
-  // currentIndex = -1;
   title = '';
   subscription: Subscription;
+  subscription1: Subscription;
   tittle: string;
   isModal: boolean = false;
 
   constructor(private labelService: LabelService) { }
 
   ngOnInit(): void {
+    this.retrieveTaskLabels();
     this.retrieveLabels();
   }
 
   refreshList(): void {
     this.currentLabel = null;
-    // this.currentIndex = -1;
     this.retrieveLabels();
   }
 
@@ -39,9 +40,15 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
       });
   }
 
+  retrieveTaskLabels(): void {
+    this.subscription1 = this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
+      .subscribe((data: Label[]) => {
+        this.taskLabels = data;
+      });
+  }
+
   setActiveLabel(label): void {
     this.currentLabel = label;
-    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 
@@ -67,5 +74,15 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
     };
     this.labelService.updateLabel(this.currentLabel.uid, labelData)
       .catch(err => console.log(err));
+  }
+
+  labelIncludeInTaskLabel(label: Label): boolean {
+    let isEqual: boolean = false;
+    this.taskLabels.forEach((taskLabel: Label): void => {
+      if (taskLabel.uid === label.uid){
+        isEqual = true;
+      }
+    });
+    return isEqual;
   }
 }

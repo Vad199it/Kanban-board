@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-file-list',
   templateUrl: './file-list.component.html',
-  styleUrls: ['./file-list.component.css']
+  styleUrls: ['./file-list.component.scss']
 })
 export class FileListComponent implements OnInit, OnDestroy, OnChanges {
   @Input() taskId: string;

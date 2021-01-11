@@ -1,0 +1,86 @@
+.task-label-container{
+  display: flex;
+  justify-content: space-between;
+
+  .task-title,
+  .task-content,
+  .task-develop,
+  .task-createDate,
+  .task-order,
+  .task-dueDate,
+  .task-comments,
+  {
+    display: flex;
+    margin-bottom: 2%;
+    label{
+      width: 100px;
+      display: flex;
+      align-items: center;
+      color: #808080;
+    }
+
+    .scrollable{
+      .develop-input{
+      }
+    }
+
+    .title-input,
+    .content-input,
+    .develop-input,
+    .createDate-input,
+    .order-input,
+    .dueDate-input,
+    .comments-input{
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 236px;
+    }
+  }
+
+  .container-btn-delete-update-task {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+
+    .btn-delete-task,
+    .btn-update-task {
+      margin: 0;
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(9, 30, 66, .08);
+      border: 1px solid transparent;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+
+      &:hover {
+        background-color: rgba(9, 30, 66, 0.1);
+      }
+    }
+
+    .btn-update-task {
+      margin-right: 10px;
+    }
+  }
+
+  .file-form{
+    margin-bottom: 10px;
+  }
+
+}

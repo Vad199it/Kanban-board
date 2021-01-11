@@ -12,7 +12,7 @@ import Board from '../../models/board';
 @Component({
   selector: 'app-tasks-details',
   templateUrl: './tasks-details.component.html',
-  styleUrls: ['./tasks-details.component.css']
+  styleUrls: ['./tasks-details.component.scss']
 })
 export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 

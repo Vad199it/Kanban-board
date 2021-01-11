@@ -1,4 +1,4 @@
-<input type="text" [(ngModel)]="tittle" >
+<input type="text" [(ngModel)]="tittle">
 <div class="list">
   <div class="col">
     <div class="list-group">
@@ -8,7 +8,8 @@
         [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
         (click)="choseLabel(label)"
       >
-        {{ label.title }}
+        <div *ngIf="labelIncludeInTaskLabel(label)">&</div>
+          {{ label.title }}
         <div class="update-button"
              (click)="setActiveLabel(label)"
         ></div>
@@ -27,7 +28,7 @@
       <app-label-list-project-details
         (refreshList)="refreshList()"
         [label]="currentLabel"
-        (isModal)= "this.closeModal($event)"
+        (isModal)="this.closeModal($event)"
       ></app-label-list-project-details>
     </div>
   </div>

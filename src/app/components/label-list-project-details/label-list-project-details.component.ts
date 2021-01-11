@@ -5,7 +5,7 @@ import {LabelService} from '../../services/label.service';
 @Component({
   selector: 'app-label-list-project-details',
   templateUrl: './label-list-project-details.component.html',
-  styleUrls: ['./label-list-project-details.component.css']
+  styleUrls: ['./label-list-project-details.component.scss']
 })
 export class LabelListProjectDetailsComponent implements OnInit, OnChanges {
   @Input() label: Label;

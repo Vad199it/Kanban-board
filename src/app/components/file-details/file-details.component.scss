@@ -1,0 +1,33 @@
+.file-container {
+  display: flex;
+  justify-content: space-between;
+
+  a{
+    color: darkslateblue;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &:visited{
+      color: darkslateblue;
+    }
+  }
+  .btn-delete-file {
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid transparent;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #808080;
+    outline: none;
+    background: transparent;
+  }
+
+  .file-container {
+    padding: 2px;
+  }
+}

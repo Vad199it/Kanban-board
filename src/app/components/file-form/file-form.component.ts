@@ -5,13 +5,13 @@ import FileData from '../../models/fileData';
 @Component({
   selector: 'app-file-form',
   templateUrl: './file-form.component.html',
-  styleUrls: ['./file-form.component.css']
+  styleUrls: ['./file-form.component.scss']
 })
 export class FileFormComponent implements OnInit {
   @Input() taskId: string;
   selectedFiles?: FileList;
   currentFileUpload?: FileData;
-  percentage = 0;
+  percentage: number = 0;
 
   constructor(private uploadService: FileDataService) { }
 
@@ -20,6 +20,7 @@ export class FileFormComponent implements OnInit {
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    this.percentage = 0;
   }
 
   upload(): void {
