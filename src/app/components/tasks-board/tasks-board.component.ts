@@ -11,6 +11,7 @@ import {BoardService} from '../../services/board.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import TaskList from '../../models/task-list';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-tasks-board',
@@ -93,6 +94,10 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       .subscribe((data: User[]) => {
         this.users = data;
       });
+  }
+
+  getCurrentDate(): string{
+    return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 
   ngOnDestroy(): void {

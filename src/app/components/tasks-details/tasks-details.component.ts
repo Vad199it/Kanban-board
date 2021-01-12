@@ -8,6 +8,7 @@ import { ActivatedRoute} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {BoardService} from '../../services/board.service';
 import Board from '../../models/board';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-tasks-details',
@@ -121,6 +122,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     const index = src.indexOf(element);
     if (index === -1) { return src; }
     return [...src.slice(0, index), ...src.slice(index + 1)];
+  }
+
+  getCurrentDate(): string{
+    return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 
   ngOnDestroy(): void {

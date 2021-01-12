@@ -52,6 +52,7 @@
           required
           [(ngModel)]="task.createDate"
           name="createDate"
+          [min]="getCurrentDate()"
         />
       </div>
 
@@ -64,6 +65,7 @@
           required
           [(ngModel)]="task.dueDate"
           name="dueDate"
+          [min]="getCurrentDate()"
         />
       </div>
 
