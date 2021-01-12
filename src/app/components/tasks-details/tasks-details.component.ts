@@ -85,6 +85,9 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         nameOfDeveloper: this.currentTask.nameOfDeveloper,
       };
       this.taskService.updateTask(this.currentTask.id, data)
+        .then(() => {
+          this.isModal.emit(true);
+        })
         .catch(err => console.log(err));
     });
   }

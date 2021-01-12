@@ -34,7 +34,7 @@ export class TasksListDetailsComponent implements OnInit, OnChanges {
     };
     this.taskListService.updateTaskList(this.currentTaskList.id, data)
       .then(() => {
-        this.message = 'The board was updated successfully!';
+        this.isModal.emit(true);
       })
       .catch(err => console.log(err));
   }

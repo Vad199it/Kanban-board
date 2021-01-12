@@ -29,6 +29,9 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       color: this.currentBoard.color || 'black'
     };
     this.boardService.updateBoard(this.currentBoard.id, data)
+      .then(() => {
+        this.isModal.emit(true);
+      })
       .catch(err => console.log(err));
   }
 

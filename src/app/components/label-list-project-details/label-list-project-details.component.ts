@@ -30,7 +30,9 @@ export class LabelListProjectDetailsComponent implements OnInit, OnChanges {
       color: this.currentLabel.color
     };
     this.labelService.updateLabel(this.currentLabel.uid, data)
-      .then(() => this.message = 'The board was updated successfully!')
+      .then(() => {
+        this.isModal.emit(true);
+      })
       .catch(err => console.log(err));
   }
 
