@@ -32,16 +32,15 @@
       </div>
 
       <div class="task-develop">
-        <label>Develop
+        <label for="develop">Develop</label>
           <select class="develop-select" name="develop"
-                  [(ngModel)]="task.doTask">
+                  id="develop" [(ngModel)]="task.doTask">
             <option [ngValue]="undefined" hidden>Select develop:</option>
             <option *ngFor="let user of users" [value]="user.uid"
             >
               {{user.displayName}}
             </option>
           </select>
-        </label>
       </div>
 
       <div class="task-create-date">
@@ -91,11 +90,11 @@
       </div>
 
       <div>
-        <div class="fileForm">
+        <div class="file-form">
           <app-file-form [taskId]="task.uid"></app-file-form>
         </div>
 
-        <div class="fileList">
+        <div class="file-list">
           <app-file-list [taskId]="task.uid"></app-file-list>
         </div>
       </div>

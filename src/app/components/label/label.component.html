@@ -1,35 +1,45 @@
 <div class="submit-form">
-  <div *ngIf="submitted">
+  <div class="create-label" *ngIf="submitted">
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-label">Create label</p>
+        <span
+          class="close"
+          (click)="submitted = !submitted"
+        >&times;</span>
+      </div>
+      <div class="label-title">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="title-input"
+          id="title"
+          required
+          [(ngModel)]="label.title"
+          name="title"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="label.title"
-        name="title"
-      />
+      <div class="label-color">
+        <label for="color">Color</label>
+        <input
+          class="color-input"
+          id="color"
+          type="color"
+          required
+          [(ngModel)]="label.color"
+          name="color"
+        />
+      </div>
+      <div class="container-btn-save-label">
+        <button (click)="saveLabel()" class="btn-save-label">Create</button>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="color">Color</label>
-      <input
-        class="form-control"
-        id="color"
-        type="color"
-        required
-        [(ngModel)]="label.color"
-        name="color"
-      />
-    </div>
-
-    <button (click)="saveLabel()" class="btn-success">Submit</button>
-  </div>
-
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newLabel()">
   </div>
 </div>
-<app-label-list-project [projectId]="id" [taskId]="taskId"></app-label-list-project>
+<div class="labels-container">
+  <app-label-list-project [projectId]="id" [taskId]="taskId"></app-label-list-project>
+  <div class="container-btn-add-label">
+  <button class="btn-add-label" (click)="newLabel()">+ New label</button>
+  </div>
+</div>

@@ -68,7 +68,12 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   choseLabel(label): void{
     this.currentLabel = label;
     const set = new Set(this.currentLabel.taskId);
-    set.add(this.taskId);
+    if (set.has(this.taskId)){
+      set.delete(this.taskId);
+    }
+    else{
+      set.add(this.taskId);
+    }
     const labelData = {
       taskId: [...set],
     };

@@ -13,7 +13,6 @@ export class LabelComponent implements OnInit {
   @Input() taskId: string;
   label: Label;
   public submitted: boolean = false;
-  public addBoardImg = '../../../assets/add-board.png';
   id: string;
   constructor(private activateRoute: ActivatedRoute,
               private labelService: LabelService) { }

@@ -1,18 +1,37 @@
-<input type="text" [(ngModel)]="tittle">
+<input type="text" [(ngModel)]="tittle" class="search" placeholder="Search">
 <div class="list">
   <div class="col">
     <div class="list-group">
       <div
         class="list-group-item"
         *ngFor="let label of labels | appFilter: tittle; trackBy: trackByMethod"
-        [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
-        (click)="choseLabel(label)"
       >
-        <div *ngIf="labelIncludeInTaskLabel(label)">&</div>
-          {{ label.title }}
-        <div class="update-button"
-             (click)="setActiveLabel(label)"
-        ></div>
+        <div class="label-container">
+          <div class="label-close-color-container">
+            <div class="check-mark-container">
+              <div
+                class="check-mark"
+                *ngIf="labelIncludeInTaskLabel(label)">
+                &#10004;
+              </div>
+            </div>
+            <div
+              class="label-color"
+              [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
+              (click)="choseLabel(label)"
+            ></div>
+          </div>
+          <p
+            [title]="label.title"
+            class="label-title"
+            (click)="choseLabel(label)">
+            {{ label.title }}
+          </p>
+          <div class="update-button"
+               (click)="setActiveLabel(label)"
+          >Edit
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,10 +40,13 @@
     [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
   >
     <div class="details" *ngIf="currentLabel">
-      <span
-        class="close"
-        (click)="this.isModal = !this.isModal"
-      >&times;</span>
+      <div class="option-container">
+        <p class="title-update-label">Update label</p>
+        <span
+          class="close"
+          (click)="this.isModal = !this.isModal"
+        >&times;</span>
+      </div>
       <app-label-list-project-details
         (refreshList)="refreshList()"
         [label]="currentLabel"
