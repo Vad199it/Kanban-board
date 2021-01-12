@@ -27,7 +27,7 @@ export class LabelListProjectDetailsComponent implements OnInit, OnChanges {
   updateLabel(): void {
     const data = {
       title: this.currentLabel.title,
-      color: this.currentLabel.color
+      color: this.currentLabel.color || 'black',
     };
     this.labelService.updateLabel(this.currentLabel.uid, data)
       .then(() => {

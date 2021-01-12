@@ -1,19 +1,25 @@
-<label for="choose-file">
-  <input
-    type="file"
-    class="choose-file"
-    id="choose-file"
-    (change)="selectFile($event)"
-  />
-</label>
+<div class="choose-upload-file-container">
+  <div class="choose-file-container">
+    <label for="choose-file">
+      <input
+        type="file"
+        class="choose-file"
+        id="choose-file"
+        (change)="selectFile($event)"
+      />
+    </label>
+  </div>
 
-<button
-  class="upload-file"
-  [disabled]="!selectedFiles"
-  (click)="upload()"
->
-  Upload
-</button>
+  <div class="upload-file-container">
+    <button
+      class="upload-file"
+      [disabled]="!selectedFiles"
+      (click)="upload()"
+    >
+      Upload
+    </button>
+  </div>
+</div>
 
 <div *ngIf="currentFileUpload" class="progress-container">
   <progress

@@ -15,13 +15,16 @@
 
       <div class="task-content">
         <label for="content">Content</label>
-        <input
-          class="content-input"
+        <textarea
+          class="content-textarea"
           id="content"
           required
+          rows="1"
+          cols="1"
+          wrap="hard"
           [(ngModel)]="currentTask.content"
           name="content"
-        />
+        ></textarea>
       </div>
 
       <div class="task-develop">

@@ -1,4 +1,4 @@
-.btn-add-task{
+.btn-add-task {
   margin: 0;
   padding: 4px 10px;
   box-sizing: border-box;
@@ -15,7 +15,7 @@
   outline: none;
   width: 100%;
 
-  &:hover{
+  &:hover {
     background-color: rgba(9, 30, 66, 0.1);
   }
 }
@@ -59,15 +59,21 @@
 
   .details {
     background-color: #fefefe;
-    margin: 100px auto;
+    margin: 65px auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 380px;
+    width: 450px;
     line-height: 16px;
     border-radius: 3px;
 
-    .file-form{
+    .file-form {
       margin-bottom: 10px;
+
+      ::ng-deep {
+        .choose-file {
+          width: 332px;
+        }
+      }
     }
 
     .option-container {
@@ -102,7 +108,6 @@
     }
 
     .title-input,
-    .content-input,
     .develop-select,
     .create-date-input,
     .due-date-input,
@@ -120,7 +125,23 @@
       color: darkslateblue;
       outline: none;
       border: 1px solid #cdcdcd;
-      width: 236px;
+      width: 308px;
+    }
+
+    .content-textarea{
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 308px;
+      height: 65px;
+      resize: none;
     }
 
     .close {
@@ -138,3 +159,4 @@
     }
   }
 }
+

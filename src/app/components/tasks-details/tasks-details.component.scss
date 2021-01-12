@@ -25,7 +25,6 @@
     }
 
     .title-input,
-    .content-input,
     .develop-input,
     .createDate-input,
     .order-input,
@@ -44,6 +43,22 @@
       outline: none;
       border: 1px solid #cdcdcd;
       width: 236px;
+    }
+
+    .content-textarea{
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 236px;
+      height: 65px;
+      resize: none;
     }
   }
 

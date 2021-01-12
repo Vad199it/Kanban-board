@@ -22,13 +22,16 @@
 
       <div class="task-content">
         <label for="content">Content</label>
-        <input
-          class="content-input"
+        <textarea
+          class="content-textarea"
           id="content"
           required
           [(ngModel)]="task.content"
           name="content"
-        />
+          rows="1"
+          cols="1"
+          wrap="hard"
+        ></textarea>
       </div>
 
       <div class="task-develop">
@@ -91,7 +94,7 @@
         />
       </div>
 
-      <div>
+      <div class="file-form-list-container">
         <div class="file-form">
           <app-file-form [taskId]="task.uid"></app-file-form>
         </div>
