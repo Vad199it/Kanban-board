@@ -41,7 +41,7 @@
   </div>
   <div
     class="container-details"
-    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
     <div *ngIf="currentLabel"
          class="details" >
