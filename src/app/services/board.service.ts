@@ -10,7 +10,7 @@ import {AppConst} from '../app.constants';
 })
 export class BoardService {
 
-  private dbPath = '/boards';
+  private readonly dbPath: string = '/boards';
   private boardsRef: AngularFirestoreCollection<Board>;
 
   constructor(private db: AngularFirestore,

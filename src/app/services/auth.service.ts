@@ -14,7 +14,7 @@ import Board from '../models/board';
 })
 
 export class AuthService {
-  private dbPath = '/users';
+  private readonly dbPath: string = '/users';
   private userDoc: AngularFirestoreDocument<User>;
   private user: Observable<User>;
 

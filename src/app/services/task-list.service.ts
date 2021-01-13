@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 export class TaskListService implements OnDestroy {
 
   private subscription: Subscription;
-  private dbPath = '/task-lists';
+  private readonly dbPath: string = '/task-lists';
   private taskListRef: AngularFirestoreCollection<TaskList>;
 
   constructor(private db: AngularFirestore,

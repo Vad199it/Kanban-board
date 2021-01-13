@@ -11,8 +11,8 @@ import Board from '../models/board';
 })
 export class TaskService implements OnDestroy {
 
-  private dbPath = '/tasks';
-  private dbPathBoard = '/boards';
+  private readonly dbPath: string = '/tasks';
+  private readonly dbPathBoard: string = '/boards';
   private taskRef: AngularFirestoreCollection<Task>;
   public board: Board[];
   private subscription: Subscription = new Subscription();

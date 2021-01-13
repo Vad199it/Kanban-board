@@ -10,7 +10,7 @@ import {AppConst} from '../app.constants';
 })
 export class LabelService  implements OnDestroy {
 
-  private dbPath = '/labels';
+  private readonly dbPath: string = '/labels';
   private subscription: Subscription;
   private labelsRef: AngularFirestoreCollection<Label>;
 
