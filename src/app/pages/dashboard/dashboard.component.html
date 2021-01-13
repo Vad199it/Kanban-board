@@ -1,47 +1,47 @@
 <app-navbar></app-navbar>
 <div class="submit-form">
-  <div class="create-board" *ngIf="submitted">
+  <div class="create-board"
+       *ngIf="submitted">
     <div class="details">
       <div class="option-container">
         <p class="title-create-board">Create board</p>
-        <span
-          class="close"
-          (click)="submitted = !submitted"
+        <span class="close"
+              (click)="submitted = !submitted"
         >&times;</span>
       </div>
       <div class="board-title">
         <label for="title"><span>Title</span></label>
-        <input
-          type="text"
-          class="title-input"
-          id="title"
-          required
-          [(ngModel)]="board.title"
-          name="title"
+        <input class="title-input"
+               [(ngModel)]="board.title"
+               type="text"
+               id="title"
+               name="title"
+               required
         />
       </div>
-
       <div class="board-color">
         <label for="color">Color</label>
-        <input
-          type="color"
-          class="color-input"
-          id="color"
-          value="#444"
-          required
-          [(ngModel)]="board.color"
-          name="color"
+        <input class="color-input"
+               [(ngModel)]="board.color"
+               type="color"
+               id="color"
+               value="#444"
+               name="color"
+               required
         />
       </div>
       <div class="container-btn-save-board">
-        <button (click)="saveBoard()" class="btn-save-board">Create</button>
+        <button class="btn-save-board"
+                (click)="saveBoard()"
+        >Create</button>
       </div>
     </div>
   </div>
-
   <div class="add-board-button-container">
     <span>Boards</span>
-    <button class="add-board-button" (click)="newBoard()">
+    <button class="add-board-button"
+            (click)="newBoard()"
+    >
       Create board
     </button>
   </div>

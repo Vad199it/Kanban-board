@@ -1,17 +1,17 @@
 <div class="task">
   <div class="col">
-    <div
-      *ngFor="let task of tasks; trackBy: trackByMethod"
-      class="task-group">
+    <div *ngFor="let task of tasks; trackBy: trackByMethod"
+         class="task-group"
+         draggable="true">
       <div class="task-header">
-        <span class="id-ticket">{{boardName?.split(' ').join('').substr(0, 3).toUpperCase()}}-{{task.idTicket}}</span>
+        <span class="id-ticket">{{correctIdTicket(task)}}</span>
         <div class="update-button"
              (click)="setActiveTask(task)"
         ></div>
       </div>
       <div
         class="date"
-        [ngStyle]="{'display': (changeDoDateInSec(task.dueDate) < changeDateInSec(getCurrentData())) && !isFinalList ? 'block' : 'none'}"
+        [ngStyle]="{'display': checkExpiredDate(task.dueDate) ? 'block' : 'none'}"
       >
         &#9832; Date expired
       </div>
@@ -27,18 +27,17 @@
     class="container-details"
     [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
-    <div class="details" *ngIf="currentTask">
+    <div *ngIf="currentTask"
+         class="details">
       <div class="option-container">
         <p class="title-update-task">Update task</p>
-        <span
-          class="close"
-          (click)="this.isModal = !this.isModal"
+        <span class="close"
+              (click)="this.isModal = !this.isModal"
         >&times;</span>
       </div>
-      <app-tasks-details
-        (refreshList)="refreshTask()"
-        [task]="currentTask"
-        (isModal)="this.closeModal($event)"
+      <app-tasks-details (refreshList)="refreshTask()"
+                         [task]="currentTask"
+                         (isModal)="this.closeModal($event)"
       ></app-tasks-details>
     </div>
   </div>

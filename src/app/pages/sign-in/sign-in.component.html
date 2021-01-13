@@ -5,10 +5,33 @@
       <div class="formBx">
         <form>
           <h2>Sign In</h2>
-          <input type="text" name="" placeholder="UserEmail" #userEmail required>
-          <input type="password" name="" placeholder="Password" #userPassword required>
-          <input type="button" name="" value="Login" (click)="authService.signIn(userEmail.value, userPassword.value)">
-          <input class="Google" type="button" name="" value="Login with Google" (click)="authService.googleAuth()">
+          <label>
+            <input type="text"
+                   name=""
+                   placeholder="UserEmail"
+                   #userEmail
+                   required
+            >
+          </label>
+          <label>
+            <input type="password"
+                   name=""
+                   placeholder="Password"
+                   #userPassword
+                   required
+            >
+          </label>
+          <input (click)="signIn(userEmail.value, userPassword.value)"
+                 type="button"
+                 name=""
+                 value="Login"
+          >
+          <input class="Google"
+                 (click)="googleAuth()"
+                 type="button"
+                 name=""
+                 value="Login with Google"
+          >
           <p class="signup">Don't have an account ? <a routerLink="/sign-up">Sign Up.</a></p>
           <p class="signup"><a routerLink="/forgot-password">Forgot Password ? </a></p>
         </form>

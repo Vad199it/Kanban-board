@@ -1,8 +1,7 @@
 <div class="taskList">
   <div class="col">
-    <div
-      *ngFor="let taskList of taskLists; trackBy: trackByMethod"
-      class="taskList-group">
+    <div *ngFor="let taskList of taskLists; trackBy: trackByMethod"
+         class="taskList-group">
       <div class="task-list-header">
         <span>{{ taskList.title }}</span>
         <div class="update-button"
@@ -16,7 +15,8 @@
     class="container-details"
     [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
-    <div class="details" *ngIf="currentTaskList">
+    <div *ngIf="currentTaskList"
+         class="details">
       <div class="option-container">
         <p class="title-update-task-list">Update task list</p>
         <span
@@ -24,11 +24,10 @@
           (click)="this.isModal = !this.isModal"
         >&times;</span>
       </div>
-      <app-tasks-list-details
-        [boardId]="projectId"
-        (refreshList)="refreshTaskList()"
-        [taskList]="currentTaskList"
-        (isModal)="this.closeModal($event)"
+      <app-tasks-list-details [boardId]="projectId"
+                              [taskList]="currentTaskList"
+                              (refreshList)="refreshTaskList()"
+                              (isModal)="this.closeModal($event)"
       ></app-tasks-list-details>
     </div>
   </div>

@@ -1,7 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import Label from '../models/label';
 import {Subscription} from 'rxjs';
+
+import Label from '../models/label';
 import {AppConst} from '../app.constants';
 
 @Injectable({

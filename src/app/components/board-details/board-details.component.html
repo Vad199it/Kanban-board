@@ -1,40 +1,35 @@
-<div *ngIf="currentBoard" class="edit-form">
-  <form>
+<div *ngIf="currentBoard"
+     class="board-details-edit-form-container">
+  <form class="board-details-edit-form">
     <div class="board-title">
       <label for="title"><span>Title</span></label>
-      <input
-        type="text"
-        class="title-input"
-        id="title"
-        [(ngModel)]="currentBoard.title"
-        name="title"
+      <input class="title-input"
+             [(ngModel)]="currentBoard.title"
+             id="title"
+             type="text"
+             name="title"
       />
     </div>
-
     <div class="board-color">
       <label for="color">Color</label>
-      <input
-        type="color"
-        class="color-input"
-        id="color"
-        value="{{currentBoard.color}}"
-        [(ngModel)]="currentBoard.color"
-        name="color"
+      <input class="color-input"
+             [(ngModel)]="currentBoard.color"
+             id="color"
+             type="color"
+             value="{{currentBoard.color}}"
+             name="color"
       />
     </div>
   </form>
   <div class="container-btn-delete-update-board">
-    <button type="submit" class="btn-update-board" (click)="updateBoard()">
+    <button class="btn-update-board"
+            (click)="updateBoard()"
+            type="submit">
       Update
     </button>
-
-    <button class="btn-delete-board" (click)="deleteBoard()">
+    <button class="btn-delete-board"
+            (click)="deleteBoard()">
       Delete
     </button>
   </div>
-</div>
-
-<div *ngIf="!currentBoard">
-  <br/>
-  <p>Cannot access this Board...</p>
 </div>

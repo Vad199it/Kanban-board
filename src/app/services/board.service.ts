@@ -15,7 +15,8 @@ export class BoardService {
 
   constructor(private db: AngularFirestore,
               private taskListService: TaskListService,
-              private labelService: LabelService) {
+              private labelService: LabelService)
+  {
     this.boardsRef = db.collection(this.dbPath);
   }
 

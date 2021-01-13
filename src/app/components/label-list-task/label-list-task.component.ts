@@ -1,9 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import { ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
 
 import {LabelService} from '../../services/label.service';
-import {switchMap} from 'rxjs/operators';
 import Label from '../../models/label';
 
 @Component({
@@ -14,57 +14,55 @@ import Label from '../../models/label';
 export class LabelListTaskComponent implements OnInit, OnDestroy {
 
   @Input() taskId: string;
-  labels: Label[];
-  currentLabel = null;
-  // currentIndex = -1;
-  title: string = '';
-  subscription: Subscription;
-  projectId: string;
+  public labels: Label[];
+  public currentLabel: Label = null;
+  private projectId: string;
+  private subscription: Subscription = new Subscription();
+
   constructor(private labelService: LabelService,
               private activateRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getUrlParam();
     this.retrieveLabels();
   }
 
-  getUrlParam(): void{
-    this.activateRoute.paramMap.pipe(
-      switchMap(params => params.getAll('uid'))
+  private getUrlParam(): void{
+    this.subscription.add(this.activateRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => params.getAll('uid'))
     )
-      .subscribe(data => this.projectId = data);
+      .subscribe((data: string) => this.projectId = data));
   }
 
-  refreshList(): void {
+  public refreshList(): void {
     this.currentLabel = null;
-    // this.currentIndex = -1;
     this.retrieveLabels();
   }
 
-  retrieveLabels(): void {
-    this.subscription = this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
+  private retrieveLabels(): void {
+    this.subscription.add(this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
       .subscribe((data: Label[]) => {
         this.labels = data;
-      });
+      }));
   }
 
-  deleteLabelFromTask(board): void {
+  public deleteLabelFromTask(board): void {
     this.currentLabel = board;
-    const set = new Set(this.currentLabel.taskId);
-    set.delete(this.taskId);
+    const labelSet = new Set(this.currentLabel.taskId);
+    labelSet.delete(this.taskId);
     const labelData = {
-      taskId: [...set],
+      taskId: [...labelSet],
     };
     this.labelService.updateLabel(this.currentLabel.uid, labelData)
       .catch(err => console.log(err));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  public trackByMethod(index: number, el: any): number {
+    return el.uid;
   }
 
-  trackByMethod(index: number, el: any): number {
-    return el.uid;
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {Component, Input, OnChanges, Output, EventEmitter, SimpleChanges} from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import Board from '../../models/board';
 
@@ -7,24 +7,22 @@ import Board from '../../models/board';
   templateUrl: './board-details.component.html',
   styleUrls: ['./board-details.component.scss']
 })
-export class BoardDetailsComponent implements OnInit, OnChanges {
-
+export class BoardDetailsComponent implements OnChanges {
   @Input() board: Board;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentBoard: Board = null;
+  public currentBoard: Board = null;
 
   constructor(private boardService: BoardService) { }
 
-  ngOnInit(): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.board && changes.board.currentValue) {
+      this.currentBoard = { ...this.board };
+    }
   }
 
-  ngOnChanges(): void {
-    this.currentBoard = { ...this.board };
-  }
-
-  updateBoard(): void {
-    const data = {
+  public updateBoard(): void {
+    const data: {title: string, color: string} = {
       title: this.currentBoard.title,
       color: this.currentBoard.color || 'black'
     };
@@ -35,7 +33,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       .catch(err => console.log(err));
   }
 
-  deleteBoard(): void {
+  public deleteBoard(): void {
     this.isModal.emit(true);
     this.boardService.deleteBoard(this.currentBoard.id)
       .then(() => {

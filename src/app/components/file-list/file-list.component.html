@@ -1,9 +1,8 @@
-<div class="card">
-  <div class="card-header">Uploaded files</div>
+<div class="uploaded-files-container">
+  <div class="uploaded-files">Uploaded files</div>
   <div class="list-files-container">
-    <ul
-      class="list-files"
-      *ngFor="let file of fileUploads"
+    <ul *ngFor="let file of fileUploads"
+        class="list-files"
     >
       <li class="list-files-item">
         <app-file-details [fileUpload]='file'></app-file-details>

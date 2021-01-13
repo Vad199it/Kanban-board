@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import Board from '../../../models/board';
 import { Router } from '@angular/router';
 
@@ -7,27 +7,23 @@ import { Router } from '@angular/router';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
   @Input() boards: Board[];
-  @Input() title: string;
   @Output() currentBoard: EventEmitter<Board> = new EventEmitter();
   @Output() isModal: EventEmitter<boolean> = new EventEmitter();
-
+  public title: string;
 
   constructor(private router: Router) { }
 
-  ngOnInit(): void {
-  }
-
-  trackByMethod(index: number, el: any): number {
+  public trackByMethod(index: number, el: any): number {
     return el.uid;
   }
 
-  navigateToBoard(id: string): void{
+  public navigateToBoard(id: string): void{
     this.router.navigate(['board' , id]);
   }
 
-  setActiveBoard(board): void {
+  public setActiveBoard(board): void {
     this.currentBoard.emit(board);
     this.isModal.emit(!this.isModal);
   }

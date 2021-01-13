@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+
 import Label from '../../models/label';
 import {LabelService} from '../../services/label.service';
 
@@ -7,25 +8,22 @@ import {LabelService} from '../../services/label.service';
   templateUrl: './label-list-project-details.component.html',
   styleUrls: ['./label-list-project-details.component.scss']
 })
-export class LabelListProjectDetailsComponent implements OnInit, OnChanges {
+export class LabelListProjectDetailsComponent implements OnChanges {
   @Input() label: Label;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentLabel: Label = null;
-  message: string = '';
+  public currentLabel: Label = null;
+
   constructor(private labelService: LabelService) { }
 
-  ngOnInit(): void {
-    this.message = '';
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.label && changes.label.currentValue) {
+      this.currentLabel = {...this.label};
+    }
   }
 
-  ngOnChanges(): void {
-    this.message = '';
-    this.currentLabel = { ...this.label };
-  }
-
-  updateLabel(): void {
-    const data = {
+  public updateLabel(): void {
+    const data: {title: string, color: string} = {
       title: this.currentLabel.title,
       color: this.currentLabel.color || 'black',
     };
@@ -36,12 +34,11 @@ export class LabelListProjectDetailsComponent implements OnInit, OnChanges {
       .catch(err => console.log(err));
   }
 
-  deleteLabel(): void {
+  public deleteLabel(): void {
     this.isModal.emit(true);
     this.labelService.deleteLabelFromBoard(this.currentLabel.uid)
       .then(() => {
         this.refreshList.emit();
-        this.message = 'The board was updated successfully!';
       })
       .catch(err => console.log(err));
   }

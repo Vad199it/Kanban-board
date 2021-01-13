@@ -1,14 +1,15 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-import Task from '../../models/task';
-import {TaskService} from '../../services/task.service';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {User} from '../../models/user';
-import {AuthService} from '../../services/auth.service';
-import { ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
-import {BoardService} from '../../services/board.service';
-import Board from '../../models/board';
 import {formatDate} from '@angular/common';
+
+import {User} from '../../models/user';
+import Task from '../../models/task';
+import Board from '../../models/board';
+import {TaskService} from '../../services/task.service';
+import {AuthService} from '../../services/auth.service';
+import {BoardService} from '../../services/board.service';
 
 @Component({
   selector: 'app-tasks-details',
@@ -18,62 +19,78 @@ import {formatDate} from '@angular/common';
 export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() task: Task;
-  users: User[];
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentTask: Task = null;
-  subscription: Subscription;
-  currentUser = null;
-  boardId: string;
-  prevUserId: string;
-  board: Board[];
-  isChanged: boolean = false;
+  public users: User[];
+  public board: Board[];
+  public currentTask: Task = null;
+  private boardId: string;
+  private prevUserId: string;
+  public isChanged: Boolean = false;
+  private subscription: Subscription = new Subscription();
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
               private activateRoute: ActivatedRoute,
               private boardService: BoardService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getUrlParam();
     this.retrieveUsers();
     this.retrieveBoards();
   }
 
-  getUrlParam(): void{ // todo: ????
-    this.activateRoute.paramMap.pipe(
-      switchMap(params => params.getAll('uid'))
+  private getUrlParam(): void{
+    this.subscription.add(this.activateRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => params.getAll('uid'))
     )
-      .subscribe(data => this.boardId = data);
+      .subscribe((data: string) => this.boardId = data));
   }
 
-  ngOnChanges(): void {
-    this.currentTask = { ...this.task };
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.task && changes.task.currentValue) {
+      this.currentTask = {...this.task};
+    }
     this.prevUserId = this.currentTask.doTask;
   }
 
-  changeUserInBoard(newValue: string): void {
+  public changeUserInBoard(newValue: string): void {
     this.currentTask.doTask = newValue;
     this.isChanged = true;
   }
 
-  async updateTask(): Promise<void> {
+  private changeUsername(prevUserId: string, currUserId: string): void{
+    let usernames: string[] = this.board[0].usernames;
+    usernames = this.removeFirst(usernames, prevUserId);
+    usernames.push(currUserId);
+    const boardData = {
+      usernames: [...usernames],
+    };
+    this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
+    this.isChanged = false;
+  }
+
+  public updateTask(): void {
     if (this.isChanged) {
       if (this.prevUserId !== this.currentTask.doTask) {
-        let set: string[] = this.board[0].usernames;
-        set = this.removeFirst(set, this.prevUserId);
-        set.push(this.currentTask.doTask);
-        const boardData = {
-          usernames: [...set],
-        };
-        this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
-        this.isChanged = false;
+        this.changeUsername(this.prevUserId, this.currentTask.doTask);
       }
     }
     this.prevUserId = this.currentTask.doTask;
-    await this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'}).subscribe((users: User[]) => {
+    this.subscription.add(this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'})
+      .subscribe((users: User[]) => {
       this.currentTask.nameOfDeveloper = users[0].displayName;
-      const data = {
+      const data: {
+        ownerTask: string,
+        doTask: string,
+        createDate: Date,
+        dueDate: Date,
+        title: string,
+        content: string,
+        order: number,
+        comments: string,
+        nameOfDeveloper: string
+      } = {
         ownerTask: this.currentTask.ownerTask,
         doTask: this.currentTask.doTask,
         createDate: this.currentTask.createDate,
@@ -89,15 +106,15 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.isModal.emit(true);
         })
         .catch(err => console.log(err));
-    });
+    }));
   }
 
-  deleteTask(): void {
+  public deleteTask(): void {
     this.isModal.emit(true);
-    let set: string[] = this.board[0].usernames;
-    set = this.removeFirst(set, this.currentTask.doTask);
+    let usernames: string[] = this.board[0].usernames;
+    usernames = this.removeFirst(usernames, this.currentTask.doTask);
     const boardData = {
-      usernames: [...set],
+      usernames: [...usernames],
     };
     this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
 
@@ -108,30 +125,31 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       .catch(err => console.log(err));
   }
 
-  retrieveBoards(): void {
-    this.subscription = this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
+  private retrieveBoards(): void {
+    this.subscription.add(this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
       .subscribe((data: Board[]) => {
         this.board = data;
-      });
-  }
-  retrieveUsers(): void {
-    this.subscription = this.authService.getUsers().valueChanges({idField: 'id'})
-      .subscribe((data: User[]) => {
-        this.users = data;
-      });
+      }));
   }
 
-  removeFirst(src: string[], element: string): string[] {
+  private retrieveUsers(): void {
+    this.subscription.add(this.authService.getUsers().valueChanges({idField: 'id'})
+      .subscribe((data: User[]) => {
+        this.users = data;
+      }));
+  }
+
+  public removeFirst(src: string[], element: string): string[] {
     const index = src.indexOf(element);
     if (index === -1) { return src; }
     return [...src.slice(0, index), ...src.slice(index + 1)];
   }
 
-  getCurrentDate(): string{
+  public getCurrentDate(): string{
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

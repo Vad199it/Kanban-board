@@ -1,112 +1,107 @@
-<div *ngIf="currentTask" class="task-label-container">
+<div *ngIf="currentTask"
+     class="task-label-container">
   <div class="task-details-container">
     <form>
       <div class="task-title">
         <label for="title">Title</label>
-        <input
-          type="text"
-          class="title-input"
-          id="title"
-          required
-          [(ngModel)]="currentTask.title"
-          name="title"
+        <input class="title-input"
+               [(ngModel)]="currentTask.title"
+               type="text"
+               id="title"
+               name="title"
+               required
         />
       </div>
-
       <div class="task-content">
         <label for="content">Content</label>
-        <textarea
-          class="content-textarea"
-          id="content"
-          required
-          rows="1"
-          cols="1"
-          wrap="hard"
-          [(ngModel)]="currentTask.content"
-          name="content"
+        <textarea class="content-textarea"
+                  [(ngModel)]="currentTask.content"
+                  id="content"
+                  rows="1"
+                  cols="1"
+                  wrap="hard"
+                  name="content"
+                  required
         ></textarea>
       </div>
-
       <div class="task-develop">
         <label for="develop">Develop</label>
         <div class="scrollable">
-          <select class="develop-input" name="develop"
-                  id="develop" size="1" autocomplete="off"
-                  [ngModel]="currentTask.doTask" #userId (ngModelChange)="changeUserInBoard(userId.value)">
-            <option *ngFor="let user of users" [value]="user.uid"
+          <select class="develop-input"
+                  [ngModel]="currentTask.doTask"
+                  (ngModelChange)="changeUserInBoard(userId.value)"
+                  #userId
+                  name="develop"
+                  id="develop"
+                  size="1"
+                  autocomplete="off"
+          >
+            <option *ngFor="let user of users"
+                    [value]="user.uid"
             >
               {{user.displayName}}
             </option>
           </select>
         </div>
       </div>
-
-
       <div class="task-createDate">
         <label for="createDate">Created date</label>
-        <input
-          type="date"
-          class="createDate-input"
-          id="createDate"
-          required
-          [(ngModel)]="currentTask.createDate"
-          name="createDate"
-          [min]="getCurrentDate()"
+        <input class="createDate-input"
+               [(ngModel)]="currentTask.createDate"
+               [min]="getCurrentDate()"
+               type="date"
+               id="createDate"
+               name="createDate"
+               required
         />
       </div>
-
-
       <div class="task-order">
         <label for="order">Order</label>
-        <input
-          class="order-input"
-          id="order"
-          required
-          [(ngModel)]="currentTask.order"
-          name="order"
+        <input class="order-input"
+               [(ngModel)]="currentTask.order"
+               id="order"
+               name="order"
+               required
         />
       </div>
-
       <div class="task-dueDate">
         <label for="dueDate">Due date</label>
-        <input
-          type="date"
-          class="dueDate-input"
-          id="dueDate"
-          required
-          [(ngModel)]="currentTask.dueDate"
-          name="dueDate"
-          [min]="getCurrentDate()"
+        <input class="dueDate-input"
+               [(ngModel)]="currentTask.dueDate"
+               [min]="getCurrentDate()"
+               type="date"
+               id="dueDate"
+               name="dueDate"
+               required
         />
       </div>
-
       <div class="task-comments">
         <label for="comments">Comments</label>
-        <input
-          class="comments-input"
-          id="comments"
-          required
-          [(ngModel)]="currentTask.comments"
-          name="comments"
-        />
+        <textarea class="comments-textarea"
+                  [(ngModel)]="currentTask.comments"
+                  id="comments"
+                  name="comments"
+                  required
+        ></textarea>
       </div>
-
       <div class="file-container">
         <div class="file-form">
           <app-file-form [taskId]="currentTask.uid"></app-file-form>
         </div>
-
         <div class="file-list">
           <app-file-list [taskId]="currentTask.uid"></app-file-list>
         </div>
       </div>
     </form>
     <div class="container-btn-delete-update-task">
-      <button type="submit" class="btn-update-task" (click)="updateTask()">
+      <button class="btn-update-task"
+              (click)="updateTask()"
+              type="submit"
+      >
         Update
       </button>
-
-      <button class="btn-delete-task" (click)="deleteTask()">
+      <button class="btn-delete-task"
+              (click)="deleteTask()">
         Delete
       </button>
     </div>

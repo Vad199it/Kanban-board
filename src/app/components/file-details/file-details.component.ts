@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+
 import { FileDataService } from '../../services/file-data.service';
 import FileData from '../../models/fileData';
 
@@ -7,15 +8,17 @@ import FileData from '../../models/fileData';
   templateUrl: './file-details.component.html',
   styleUrls: ['./file-details.component.scss']
 })
-export class FileDetailsComponent implements OnInit {
+export class FileDetailsComponent {
   @Input() fileUpload!: FileData;
+
   constructor(private uploadService: FileDataService) { }
 
-  ngOnInit(): void {
+  public deleteFileUpload(fileData: FileData): void {
+    this.uploadService.deleteFile(fileData);
   }
 
-  deleteFileUpload(fileData: FileData): void {
-    this.uploadService.deleteFile(fileData);
+  public correctFileName(fileName: string): string{
+    return fileName.split('.')[0] + '.' + fileName.split('.')[1].substr(0, 3);
   }
 
 }

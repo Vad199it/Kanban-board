@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -6,11 +6,16 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.scss']
 })
-export class VerifyEmailComponent implements OnInit {
+export class VerifyEmailComponent {
 
-  constructor(public authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
+  public getUser(): any {
+    return this.authService.getUser();
+  }
+
+  public sendVerificationMail(): void {
+    this.authService.sendVerificationMail();
   }
 
 }

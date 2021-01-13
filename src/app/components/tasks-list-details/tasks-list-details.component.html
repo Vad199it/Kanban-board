@@ -1,42 +1,37 @@
-<div *ngIf="currentTaskList" class="edit-form">
+<div *ngIf="currentTaskList"
+     class="edit-form">
   <form>
     <div class="task-list-title">
       <label for="title"><span>Title</span></label>
-      <input
-        type="text"
-        class="title-input"
-        id="title"
-        [(ngModel)]="currentTaskList.title"
-        name="title"
+      <input class="title-input"
+             [(ngModel)]="currentTaskList.title"
+             type="text"
+             id="title"
+             name="title"
       />
     </div>
-
     <div class="task-list-is-final-list">
       <label for="check"><span>Final list</span></label>
-      <input
-        type="checkbox"
-        class="check-input"
-        id="check"
-        required
-        [checked]="currentTaskList.isFinalList"
-        (change)="currentTaskList.isFinalList = !currentTaskList.isFinalList"
-        name="check"
+      <input class="check-input"
+             [checked]="currentTaskList.isFinalList"
+             (change)="currentTaskList.isFinalList = !currentTaskList.isFinalList"
+             type="checkbox"
+             id="check"
+             name="check"
+             required
       />
     </div>
   </form>
-
   <div class="container-btn-delete-update-task-list">
-    <button type="submit" class="btn-update-task-list" (click)="updateTaskList()">
+    <button class="btn-update-task-list"
+            (click)="updateTaskList()"
+            type="submit"
+    >
       Update
     </button>
-
-    <button class="btn-delete-task-list" (click)="deleteTaskList()">
+    <button class="btn-delete-task-list"
+            (click)="deleteTaskList()">
       Delete
     </button>
   </div>
-</div>
-
-<div *ngIf="!currentTaskList">
-  <br/>
-  <p>Cannot access this Board...</p>
 </div>

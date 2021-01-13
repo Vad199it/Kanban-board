@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+
 import { FileDataService } from '../../services/file-data.service';
 import FileData from '../../models/fileData';
 
@@ -7,23 +8,20 @@ import FileData from '../../models/fileData';
   templateUrl: './file-form.component.html',
   styleUrls: ['./file-form.component.scss']
 })
-export class FileFormComponent implements OnInit {
+export class FileFormComponent {
   @Input() taskId: string;
-  selectedFiles?: FileList;
-  currentFileUpload?: FileData;
-  percentage: number = 0;
+  public selectedFiles?: FileList;
+  public currentFileUpload?: FileData;
+  public percentage: number = 0;
 
   constructor(private uploadService: FileDataService) { }
 
-  ngOnInit(): void {
-  }
-
-  selectFile(event: any): void {
+  public selectFile(event: any): void {
     this.selectedFiles = event.target.files;
     this.percentage = 0;
   }
 
-  upload(): void {
+  public upload(): void {
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;

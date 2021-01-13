@@ -1,37 +1,34 @@
-<div class="list-container">
-  <div class="list">
-    <p class="name-list-boards">My boards</p>
-    <app-table [boards]="boards" [title]="tittle"
+<div class="board-lists-container">
+  <div class="board-lists">
+    <p class="name-board-lists">My boards</p>
+    <app-table [boards]="boards"
                (isModal)="this.closeModal($event)"
                (currentBoard)="setActiveBoard($event)">
     </app-table>
   </div>
-
-  <div class="list">
-    <p class="name-list-boards">Assigned boards </p>
-    <app-table [boards]="otherBoards" [title]="tittleOther"
+  <div class="board-lists">
+    <p class="name-board-lists">Assigned boards </p>
+    <app-table [boards]="otherBoards"
                (isModal)="this.closeModal($event)"
                (currentBoard)="setActiveBoard($event)">
     </app-table>
   </div>
 </div>
-
 <div
-  class="container-details"
+  class="container-board-lists-details-container"
   [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
 >
-  <div class="details" *ngIf="currentBoard">
+  <div *ngIf="currentBoard"
+       class="container-board-lists-details">
     <div class="option-container">
       <p class="title-update-board">Update board</p>
-      <span
-        class="close"
-        (click)="this.isModal = !this.isModal"
+      <span class="close"
+            (click)="this.isModal = !this.isModal"
       >&times;</span>
     </div>
-    <app-board-details
-      (refreshList)="refreshList()"
-      [board]="currentBoard"
-      (isModal)="this.closeModal($event)"
+    <app-board-details [board]="currentBoard"
+                       (refreshList)="refreshList()"
+                       (isModal)="this.closeModal($event)"
     ></app-board-details>
   </div>
 </div>

@@ -1,17 +1,16 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {switchMap} from 'rxjs/operators';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {formatDate} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 import Task from '../../models/task';
+import {User} from '../../models/user';
+import Board from '../../models/board';
 import {TaskService} from '../../services/task.service';
 import {AuthService} from '../../services/auth.service';
-import {User} from '../../models/user';
-import {Observable, Subscription} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
-import Board from '../../models/board';
 import {BoardService} from '../../services/board.service';
-import {switchMap} from 'rxjs/operators';
-import {ActivatedRoute} from '@angular/router';
-import TaskList from '../../models/task-list';
-import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-tasks-board',
@@ -20,14 +19,13 @@ import {formatDate} from '@angular/common';
 })
 export class TasksBoardComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
-  users: User[];
-  currentUser = null;
-  task: Task;
+  public users: User[];
+  public currentUser: User = null;
+  public task: Task;
+  public board: Board[];
+  private boardId: string;
   public submitted: boolean = false;
-  id: string;
-  subscription: Subscription;
-  board: Board[];
-  boardId: string;
+  private subscription: Subscription = new Subscription();
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
@@ -35,28 +33,28 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
               private boardService: BoardService,
               private activateRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.retrieveUsers();
     this.getUrlParam();
     this.retrieveBoards();
   }
 
-  getUrlParam(): void{
-    this.activateRoute.paramMap.pipe(
-      switchMap(params => params.getAll('uid'))
+  private getUrlParam(): void{
+    this.subscription.add(this.activateRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => params.getAll('uid'))
     )
-      .subscribe(data => this.boardId = data);
+      .subscribe((data: string) => this.boardId = data));
   }
 
-  async saveTask(): Promise<void> {
-    const set: string[] = this.board[0].usernames;
-    set.push(this.task.doTask);
+  public saveTask(): void {
+    const usernames: string[] = this.board[0].usernames;
+    usernames.push(this.task.doTask);
     const boardData = {
-      usernames: [...set],
+      usernames: [...usernames],
     };
     this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
     this.task.id = this.taskListId;
-    await this.authService.getAllUsers(this.task.doTask).valueChanges({idField: 'id'}).subscribe((data: User[]) => {
+    this.authService.getAllUsers(this.task.doTask).valueChanges({idField: 'id'}).subscribe((data: User[]) => {
       this.task.nameOfDeveloper = data[0].displayName;
       this.task.ownerTask = this.authService.getUser().displayName;
       this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
@@ -65,13 +63,14 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       });
     });
   }
-  newTask(): void {
+
+  public newTask(): void {
     this.submitted = true;
     this.task = new Task();
     this.task.uid = this.db.createId();
   }
 
-  generationKey(str: string): number {
+  public generationKey(str: string): number {
     let hash = 0, i, chr, len;
     if (str.length === 0) return hash;
     for (i = 0, len = str.length; i < len; i++) {
@@ -82,25 +81,25 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     return hash;
   }
 
-  retrieveBoards(): void {
-    this.subscription = this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
+  private retrieveBoards(): void {
+    this.subscription.add(this.boardService.getAllBoards(this.boardId).valueChanges({idField: 'uid'})
       .subscribe((data: Board[]) => {
         this.board = data;
-      });
+      }));
   }
 
-  retrieveUsers(): void {
-    this.subscription = this.authService.getUsers().valueChanges({idField: 'id'})
+  private retrieveUsers(): void {
+    this.subscription.add(this.authService.getUsers().valueChanges({idField: 'id'})
       .subscribe((data: User[]) => {
         this.users = data;
-      });
+      }));
   }
 
-  getCurrentDate(): string{
+  public getCurrentDate(): string{
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

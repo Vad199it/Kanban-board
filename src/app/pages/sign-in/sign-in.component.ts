@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
@@ -7,10 +8,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
 
   myForm: FormGroup;
-  constructor(public authService: AuthService) {
+  constructor(private authService: AuthService) {
     /* this.myForm = new FormGroup({
 
       'userName': new FormControl('Tom', Validators.required),
@@ -26,7 +27,12 @@ export class SignInComponent implements OnInit {
     console.log(this.myForm);
   }*/
 
-  ngOnInit(): void {
+  public signIn(userEmail: string, userPassword: string): void{
+    this.authService.signIn(userEmail, userPassword);
+  }
+
+  public googleAuth(): void{
+    this.authService.googleAuth();
   }
 
 }

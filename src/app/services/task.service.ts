@@ -11,12 +11,11 @@ import Board from '../models/board';
 })
 export class TaskService implements OnDestroy {
 
-  private subscription: Subscription;
-  private subscription1: Subscription;
   private dbPath = '/tasks';
   private dbPathBoard = '/boards';
   private taskRef: AngularFirestoreCollection<Task>;
-  private board: Board[];
+  public board: Board[];
+  private subscription: Subscription = new Subscription();
 
   constructor(private db: AngularFirestore,
               private fileDataService: FileDataService) {
@@ -29,7 +28,6 @@ export class TaskService implements OnDestroy {
   }
 
   public createTask(task: Task, id: string): Promise<void> {
-    // const id = this.db.createId();
     const taskRef: AngularFirestoreDocument<any> = this.db.doc(`tasks/${id}`);
     return taskRef.set({... task}, {
       merge: true
@@ -47,14 +45,14 @@ export class TaskService implements OnDestroy {
 
   public deleteAllTaskFromTaskList(taskListId: string, boardId?: string): Subscription{
     if (boardId) {
-      this.subscription1 = this.db.collection(this.dbPathBoard, ref => ref
+      this.subscription.add(this.db.collection(this.dbPathBoard, ref => ref
         .where('uid', '==', boardId)).valueChanges({idField: 'uid'})
         .subscribe((data: Board[]) => {
           this.board = data;
-        });
+        }));
     }
 
-    return this.subscription = this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskListId))
+    return this.subscription.add(this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskListId))
       .get().subscribe((querySnapshot) => {
         let set: string[];
         if (boardId) {
@@ -71,7 +69,7 @@ export class TaskService implements OnDestroy {
           }
           doc.ref.delete();
         });
-      });
+      }));
   }
 
   removeFirst(src: string[], element: string): string[] {
@@ -82,6 +80,5 @@ export class TaskService implements OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.subscription1.unsubscribe();
   }
 }

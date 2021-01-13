@@ -11,47 +11,43 @@ import TaskList from '../../models/task-list';
 })
 export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
-  taskLists: TaskList[];
-  currentTaskList = null;
-  // currentIndex = -1;
-  title = '';
-  subscription: Subscription;
-  isModal: boolean = false;
+  public taskLists: TaskList[];
+  public currentTaskList: TaskList = null;
+  public isModal: boolean = false;
+  private subscription: Subscription;
 
   constructor(private taskListService: TaskListService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.retrieveTaskLists();
   }
 
-  refreshTaskList(): void {
+  public refreshTaskList(): void {
     this.currentTaskList = null;
-    // this.currentIndex = -1;
     this.retrieveTaskLists();
   }
 
-  retrieveTaskLists(): void {
+  private retrieveTaskLists(): void {
     this.subscription = this.taskListService.getTaskLists(this.projectId).valueChanges({idField: 'id'})
       .subscribe((data: TaskList[]) => {
         this.taskLists = data;
       });
   }
 
-  setActiveTaskList(taskList): void {
+  public setActiveTaskList(taskList: TaskList): void {
     this.currentTaskList = taskList;
-    // this.currentIndex = index;
     this.isModal = !this.isModal;
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  trackByMethod(index: number, el: any): number {
+  public trackByMethod(index: number, el: any): number {
     return el.uid;
   }
 
-  closeModal(value: boolean): void {
+  public closeModal(value: boolean): void {
     this.isModal = !value;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

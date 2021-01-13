@@ -1,0 +1,141 @@
+$log-out-img-path: '../../../assets/log-out.png';
+$user-img-path: '../../../assets/person-icon.png';
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  background: #f4f5f7;
+  width: 100%;
+  height: 40px;
+  box-shadow: 0 4px 8px -2px rgba(9, 30, 66, .25), 0 0 1px rgba(9, 30, 66, .31);
+
+  .header {
+    width: 98%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .action {
+
+    .profile {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+
+      .profile-img-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: no-repeat center/100% url($user-img-path);
+
+        .profile-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .menu {
+      position: absolute;
+      top: 120px;
+      right: 1%;
+      padding: 5px 10px;
+      background: #ffffff;
+      width: 155px;
+      box-shadow: 0 4px 8px -2px rgba(9, 30, 66, .25), 0 0 1px rgba(9, 30, 66, .31);
+      border-radius: 3px;
+      transition: 0.5s;
+      visibility: hidden;
+      opacity: 0;
+
+      &.active {
+        top: 36px;
+        visibility: visible;
+        opacity: 1;
+      }
+
+      h3 {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        padding: 20px 0;
+        font-weight: 500;
+        color: #555;
+        line-height: 1.2em;
+
+        span {
+          font-size: 12px;
+          color: #cecece;
+          font-weight: 400;
+        }
+      }
+
+      ul {
+        li {
+          list-style: none;
+          padding: 10px 0 10px 22px;
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            a {
+              color: #ff5d94;
+            }
+          }
+
+          a {
+            display: inline-block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.5s;
+            cursor: pointer;
+            font-size: 14px;
+          }
+
+          &:hover {
+            .log-out-img {
+              opacity: 1;
+            }
+          }
+
+          .log-out-img {
+            width: 17px;
+            height: 17px;
+            margin-right: 10px;
+            opacity: 0.5;
+            transition: 0.5s;
+            background: no-repeat center/100% url($log-out-img-path);
+          }
+        }
+      }
+    }
+  }
+
+  h2 {
+    color: darkslateblue;
+    font-size: 20px;
+
+    a {
+      text-decoration: none;
+
+      &:visited {
+        color: darkslateblue;
+      }
+    }
+  }
+}
+

@@ -1,99 +1,91 @@
-<div class="submit-form">
-  <div class="create-task" *ngIf="submitted">
+<div class="create-board-submit-form">
+  <div *ngIf="submitted"
+       class="create-task"
+  >
     <div class="details">
       <div class="option-container">
         <p class="title-create-task">Create task</p>
-        <span
-          class="close"
-          (click)="submitted = !submitted"
+        <span class="close"
+              (click)="submitted = !submitted"
         >&times;</span>
       </div>
       <div class="task-title">
         <label for="title">Title</label>
-        <input
-          type="text"
-          class="title-input"
-          id="title"
-          required
-          [(ngModel)]="task.title"
-          name="title"
+        <input class="title-input"
+               [(ngModel)]="task.title"
+               type="text"
+               id="title"
+               name="title"
+               required
         />
       </div>
-
       <div class="task-content">
         <label for="content">Content</label>
-        <textarea
-          class="content-textarea"
-          id="content"
-          required
-          [(ngModel)]="task.content"
-          name="content"
-          rows="1"
-          cols="1"
-          wrap="hard"
+        <textarea class="content-textarea"
+                  [(ngModel)]="task.content"
+                  id="content"
+                  name="content"
+                  rows="1"
+                  cols="1"
+                  wrap="hard"
+                  required
         ></textarea>
       </div>
-
       <div class="task-develop">
         <label for="develop">Develop</label>
-          <select class="develop-select" name="develop"
-                  id="develop" [(ngModel)]="task.doTask">
+          <select class="develop-select"
+                  [(ngModel)]="task.doTask"
+                  name="develop"
+                  id="develop"
+          >
             <option [ngValue]="undefined" hidden>Select develop:</option>
-            <option *ngFor="let user of users" [value]="user.uid"
+            <option *ngFor="let user of users"
+                    [value]="user.uid"
             >
               {{user.displayName}}
             </option>
           </select>
       </div>
-
       <div class="task-create-date">
         <label for="createDate">Created date</label>
-        <input
-          type="date"
-          class="create-date-input"
-          id="createDate"
-          required
-          [(ngModel)]="task.createDate"
-          name="createDate"
-          [min]="getCurrentDate()"
+        <input class="create-date-input"
+               [(ngModel)]="task.createDate"
+               [min]="getCurrentDate()"
+               type="date"
+               id="createDate"
+               name="createDate"
+               required
         />
       </div>
-
       <div class="task-due-date">
         <label for="dueDate">Due date</label>
-        <input
-          type="date"
-          class="due-date-input"
-          id="dueDate"
-          required
-          [(ngModel)]="task.dueDate"
-          name="dueDate"
-          [min]="getCurrentDate()"
+        <input class="due-date-input"
+               [(ngModel)]="task.dueDate"
+               [min]="getCurrentDate()"
+               type="date"
+               id="dueDate"
+               name="dueDate"
+               required
         />
       </div>
-
       <div class="task-order">
         <label for="order">Order</label>
-        <input
-          class="order-input"
-          id="order"
-          required
-          [(ngModel)]="task.order"
-          name="order"
+        <input class="order-input"
+               [(ngModel)]="task.order"
+               id="order"
+               name="order"
+               required
         />
       </div>
-
       <div class="task-comments">
         <label for="comments">Comments</label>
-        <input
-          class="comments-input"
-          id="comments"
-          required
-          [(ngModel)]="task.comments"
-          name="comments"
-        />
+        <textarea class="comments-textarea"
+                  [(ngModel)]="task.comments"
+                  id="comments"
+                  name="comments"
+                  required
+        ></textarea>
       </div>
-
       <div class="file-form-list-container">
         <div class="file-form">
           <app-file-form [taskId]="task.uid"></app-file-form>
@@ -104,14 +96,16 @@
         </div>
       </div>
       <div class="container-btn-save-task">
-      <button (click)="saveTask()" class="btn-save-task">Create</button>
+      <button class="btn-save-task"
+              (click)="saveTask()"
+      >Create</button>
       </div>
     </div>
   </div>
-
 </div>
-
 <div class="taskList-group-item">
   <app-tasks [taskListId]="taskListId"></app-tasks>
-  <button class="btn-add-task" (click)="newTask()">+ Add another task</button>
+  <button class="btn-add-task"
+          (click)="newTask()"
+  >+ Add another task</button>
 </div>

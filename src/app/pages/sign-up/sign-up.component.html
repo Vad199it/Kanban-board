@@ -4,12 +4,38 @@
       <div class="formBx">
         <form>
           <h2>Create an account</h2>
-          <input type="text" name="" placeholder="Username" #userName required>
-          <input type="email" name="" placeholder="Email Address" #userEmail required>
-          <input type="password" name="" placeholder="Create Password" #userPwd required>
-          <input type="password" name="" placeholder="Confirm Password">
-          <input type="button" name="" value="Sign Up" (click)="authService.signUp(userName.value, userEmail.value, userPwd.value)">
-          <input class="Google" type="button" name="" value="Continue with Google" (click)="authService.googleAuth()">
+          <input type="text"
+                 name=""
+                 placeholder="Username"
+                 #userName
+                 required
+          >
+          <input type="email"
+                 name=""
+                 placeholder="Email Address"
+                 #userEmail
+                 required
+          >
+          <input type="password"
+                 name=""
+                 placeholder="Create Password"
+                 #userPwd
+                 required
+          >
+          <input type="password"
+                 name=""
+                 placeholder="Confirm Password"
+          >
+          <input (click)="signUp(userName.value, userEmail.value, userPwd.value)"
+                 type="button"
+                 name=""
+                 value="Sign Up"
+          >
+          <input (click)="googleAuth()"
+                 class="Google"
+                 type="button"
+                 name="" value="Continue with Google"
+          >
           <p class="signup">Already have an account ? <a routerLink="/sign-in">Sign in.</a></p>
         </form>
       </div>

@@ -1,46 +1,52 @@
-import {Component, Input, OnInit} from '@angular/core';
-import Label from '../../models/label';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {switchMap} from 'rxjs/operators';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {Subscription} from 'rxjs';
+
 import {LabelService} from '../../services/label.service';
+import Label from '../../models/label';
 
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss']
 })
-export class LabelComponent implements OnInit {
+export class LabelComponent implements OnInit, OnDestroy {
   @Input() taskId: string;
-  label: Label;
+  public id: string;
+  public label: Label;
   public submitted: boolean = false;
-  id: string;
+  private subscription: Subscription;
+
   constructor(private activateRoute: ActivatedRoute,
               private labelService: LabelService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getUrlParam();
   }
 
-  getUrlParam(): void{
-    this.activateRoute.paramMap.pipe(
-      switchMap(params => params.getAll('uid'))
+  private getUrlParam(): void{
+    this.subscription = this.activateRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => params.getAll('uid'))
     )
-      .subscribe(data => this.id = data);
+      .subscribe((data: string) => this.id = data);
   }
 
-  saveLabel(): void {
+  public saveLabel(): void {
     this.label.projectId = this.id;
-    const date = new Date();
+    const date: Date = new Date();
     this.label.order = +date;
     this.labelService.createLabel(this.label).then(() => {
-      console.log('Created new board successfully!');
       this.submitted = false;
     });
   }
 
-  newLabel(): void {
+  public newLabel(): void {
     this.submitted = true;
     this.label = new Label();
   }
 
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

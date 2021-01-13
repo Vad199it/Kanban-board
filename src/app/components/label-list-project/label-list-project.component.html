@@ -1,30 +1,34 @@
-<input type="text" [(ngModel)]="tittle" class="search" placeholder="Search">
+<label>
+  <input class="search"
+         [(ngModel)]="title"
+         type="text"
+         placeholder="Search">
+</label>
 <div class="list">
   <div class="col">
     <div class="list-group">
       <div
+        *ngFor="let label of labels | appFilter: title; trackBy: trackByMethod"
         class="list-group-item"
-        *ngFor="let label of labels | appFilter: tittle; trackBy: trackByMethod"
       >
         <div class="label-container">
           <div class="label-close-color-container">
             <div class="check-mark-container">
-              <div
-                class="check-mark"
-                *ngIf="labelIncludeInTaskLabel(label)">
+              <div *ngIf="labelIncludeInTaskLabel(label)"
+                   class="check-mark"
+              >
                 &#10004;
               </div>
             </div>
-            <div
-              class="label-color"
-              [ngStyle]="{'background-color': label.color == null ? 'default' : label.color}"
-              (click)="choseLabel(label)"
+            <div class="label-color"
+                 (click)="choseLabel(label)"
+                 [style.background-color]="label.color"
             ></div>
           </div>
-          <p
-            [title]="label.title"
-            class="label-title"
-            (click)="choseLabel(label)">
+          <p class="label-title"
+             (click)="choseLabel(label)"
+             [title]="label.title"
+          >
             {{ label.title }}
           </p>
           <div class="update-button"
@@ -39,18 +43,17 @@
     class="container-details"
     [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
   >
-    <div class="details" *ngIf="currentLabel">
+    <div *ngIf="currentLabel"
+         class="details" >
       <div class="option-container">
         <p class="title-update-label">Update label</p>
-        <span
-          class="close"
-          (click)="this.isModal = !this.isModal"
+        <span class="close"
+              (click)="this.isModal = !this.isModal"
         >&times;</span>
       </div>
-      <app-label-list-project-details
-        (refreshList)="refreshList()"
-        [label]="currentLabel"
-        (isModal)="this.closeModal($event)"
+      <app-label-list-project-details (refreshList)="refreshList()"
+                                      [label]="currentLabel"
+                                      (isModal)="this.closeModal($event)"
       ></app-label-list-project-details>
     </div>
   </div>

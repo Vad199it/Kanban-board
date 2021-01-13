@@ -111,8 +111,7 @@
     .develop-select,
     .create-date-input,
     .due-date-input,
-    .order-input,
-    .comments-input {
+    .order-input {
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -128,7 +127,8 @@
       width: 308px;
     }
 
-    .content-textarea{
+    .content-textarea,
+    .comments-textarea{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;

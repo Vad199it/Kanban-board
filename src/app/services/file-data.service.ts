@@ -1,10 +1,9 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-
-
 import {Observable} from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
 import FileData from '../models/fileData';
 
 @Injectable({

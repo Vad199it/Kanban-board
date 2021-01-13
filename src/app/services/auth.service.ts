@@ -18,11 +18,10 @@ export class AuthService {
   private userDoc: AngularFirestoreDocument<User>;
   private user: Observable<User>;
 
-  constructor(
-    public afs: AngularFirestore,   // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
-    public router: Router,
-    public ngZone: NgZone,
+  constructor(private afs: AngularFirestore,
+              private afAuth: AngularFireAuth,
+              private router: Router,
+              private ngZone: NgZone,
   ) {}
 
   public getUser(): any{
@@ -43,12 +42,10 @@ export class AuthService {
   public signUp(name: string, email: string, password: string): Promise<void> {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificationMail() function when new user sign
-        up and returns promise */
         this.sendVerificationMail();
         this.setUserData(result.user, name);
-      }).catch((error) => {
-        window.alert(error.message);
+      }).catch((error: any) => {
+        window.alert(error.message); // :todo write modal
       });
   }
 
@@ -60,7 +57,7 @@ export class AuthService {
     });
   }
 
-  public forgotPassword(passwordResetEmail): Promise<void> {
+  public forgotPassword(passwordResetEmail: string): Promise<void> {
     return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');

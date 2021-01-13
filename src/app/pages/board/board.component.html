@@ -1,9 +1,11 @@
 <app-navbar></app-navbar>
-<div *ngFor="let board of boards | async" class="name-task-list-container">
+<div *ngFor="let board of boards | async"
+     class="name-task-list-container">
   <span>{{board.title}}</span>
 </div>
 <div class="submit-form">
-  <div class="create-task-list" *ngIf="submitted">
+  <div *ngIf="submitted"
+       class="create-task-list">
     <div class="details">
       <div class="option-container">
         <p class="title-create-task-list">Create task list</p>
@@ -14,36 +16,36 @@
       </div>
       <div class="task-list-title">
         <label for="title"><span>Title</span></label>
-        <input
-          type="text"
-          class="title-input"
-          id="title"
-          required
-          [(ngModel)]="taskList.title"
-          name="title"
+        <input class="title-input"
+               [(ngModel)]="taskList.title"
+               type="text"
+               id="title"
+               name="title"
+               required
         />
       </div>
-
       <div class="task-list-is-final-list">
         <label for="check"><span>Final list</span></label>
-        <input
-          type="checkbox"
-          class="check-input"
-          id="check"
-          required
-          [checked]="isFinalList"
-          (change)="isFinalList = !isFinalList"
-          name="check"
+        <input class="check-input"
+               [checked]="isFinalList"
+               (change)="isFinalList = !isFinalList"
+               type="checkbox"
+               id="check"
+               name="check"
+               required
         />
       </div>
-
       <div class="container-btn-save-task-list">
-      <button (click)="saveTaskList()" class="btn-save-task-list">Create</button>
+      <button class="btn-save-task-list"
+              (click)="saveTaskList()"
+      >Create</button>
       </div>
     </div>
   </div>
 </div>
 <div class="task-list-container">
   <app-tasks-list [projectId]="id"></app-tasks-list>
-  <button class="btn-add-task-list" (click)="newTaskList()">+ New task list</button>
+  <button class="btn-add-task-list"
+          (click)="newTaskList()"
+  >+ New task list</button>
 </div>

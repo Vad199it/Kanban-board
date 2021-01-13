@@ -28,8 +28,7 @@
     .develop-input,
     .createDate-input,
     .order-input,
-    .dueDate-input,
-    .comments-input{
+    .dueDate-input{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -45,7 +44,8 @@
       width: 236px;
     }
 
-    .content-textarea{
+    .content-textarea,
+    .comments-textarea{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;

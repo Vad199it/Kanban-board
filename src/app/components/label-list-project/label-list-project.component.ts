@@ -12,76 +12,69 @@ import Label from '../../models/label';
 export class LabelListProjectComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
   @Input() taskId: string;
-  labels: Label[];
-  taskLabels: Label[];
-  currentLabel = null;
-  title = '';
-  subscription: Subscription;
-  subscription1: Subscription;
-  tittle: string;
-  isModal: boolean = false;
+  public title: string;
+  public labels: Label[];
+  public taskLabels: Label[];
+  public currentLabel: Label = null;
+  public isModal: boolean = false;
+  private subscription: Subscription = new Subscription();
 
   constructor(private labelService: LabelService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.retrieveTaskLabels();
     this.retrieveLabels();
   }
 
-  refreshList(): void {
+  public refreshList(): void {
     this.currentLabel = null;
     this.retrieveLabels();
   }
 
-  retrieveLabels(): void {
-    this.subscription = this.labelService.getLabelsFromProject(this.projectId).valueChanges({idField: 'id'})
+  private retrieveLabels(): void {
+    this.subscription.add(this.labelService.getLabelsFromProject(this.projectId).valueChanges({idField: 'id'})
       .subscribe((data: Label[]) => {
         this.labels = data;
-      });
+      }));
   }
 
-  retrieveTaskLabels(): void {
-    this.subscription1 = this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
+  private retrieveTaskLabels(): void {
+    this.subscription.add(this.labelService.getLabelsFromTask(this.taskId, this.projectId).valueChanges({idField: 'id'})
       .subscribe((data: Label[]) => {
         this.taskLabels = data;
-      });
+      }));
   }
 
-  setActiveLabel(label): void {
+  public setActiveLabel(label): void {
     this.currentLabel = label;
     this.isModal = !this.isModal;
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-
-  closeModal(value: boolean): void {
+  public closeModal(value: boolean): void {
     this.isModal = !value;
   }
 
-  trackByMethod(index: number, el: any): number {
+  public trackByMethod(index: number, el: any): number {
     return el.uid;
   }
 
-  choseLabel(label): void{
+  public choseLabel(label): void{
     this.currentLabel = label;
-    const set = new Set(this.currentLabel.taskId);
-    if (set.has(this.taskId)){
-      set.delete(this.taskId);
+    const labelSet = new Set(this.currentLabel.taskId);
+    if (labelSet.has(this.taskId)){
+      labelSet.delete(this.taskId);
     }
     else{
-      set.add(this.taskId);
+      labelSet.add(this.taskId);
     }
     const labelData = {
-      taskId: [...set],
+      taskId: [...labelSet],
     };
     this.labelService.updateLabel(this.currentLabel.uid, labelData)
       .catch(err => console.log(err));
   }
 
-  labelIncludeInTaskLabel(label: Label): boolean {
+  public labelIncludeInTaskLabel(label: Label): boolean {
     let isEqual: boolean = false;
     this.taskLabels.forEach((taskLabel: Label): void => {
       if (taskLabel.uid === label.uid){
@@ -89,5 +82,9 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
       }
     });
     return isEqual;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

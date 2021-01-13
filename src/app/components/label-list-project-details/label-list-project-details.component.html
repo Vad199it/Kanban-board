@@ -1,41 +1,37 @@
-<div *ngIf="currentLabel" class="label-details-container">
+<div *ngIf="currentLabel"
+     class="label-details-container">
   <div class="label-details"></div>
   <form>
     <div class="label-title">
       <label for="title">Title</label>
-      <input
-        type="text"
-        class="title-input"
-        id="title"
-        [(ngModel)]="currentLabel.title"
-        name="title"
+      <input class="title-input"
+             [(ngModel)]="currentLabel.title"
+             type="text"
+             id="title"
+             name="title"
       />
     </div>
     <div class="label-color">
       <label for="color">Color</label>
-      <input
-        type="color"
-        class="color-input"
-        id="color"
-        value="{{currentLabel.color}}"
-        [(ngModel)]="currentLabel.color"
-        name="color"
+      <input class="color-input"
+             [(ngModel)]="currentLabel.color"
+             type="color"
+             id="color"
+             value="{{currentLabel.color}}"
+             name="color"
       />
     </div>
   </form>
-
   <div class="container-btn-delete-update-label">
-    <button type="submit" class="btn-update-label" (click)="updateLabel()">
+    <button class="btn-update-label"
+            (click)="updateLabel()"
+            type="submit"
+    >
       Update
     </button>
-
-    <button class="btn-delete-label" (click)="deleteLabel()">
+    <button class="btn-delete-label"
+            (click)="deleteLabel()">
       Delete
     </button>
   </div>
-</div>
-
-<div *ngIf="!currentLabel">
-  <br/>
-  <p>Cannot access this Board...</p>
 </div>

@@ -1,7 +1,7 @@
 <div class="file-container">
-  <a href="{{ fileUpload.url }}">{{ fileUpload.name.split('.')[0] + '.' + fileUpload.name.split('.')[1].substr(0, 3)}}</a>
-  <button (click)="deleteFileUpload(fileUpload)"
-          class="btn-delete-file">
+  <a href="{{ fileUpload.url }}">{{ correctFileName(fileUpload.name) }}</a>
+  <button class="btn-delete-file"
+          (click)="deleteFileUpload(fileUpload)">
     Delete
   </button>
 </div>
