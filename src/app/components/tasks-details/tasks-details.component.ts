@@ -23,7 +23,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public users: User[];
   public board: Board[];
-  public currentTask: Task = null;
+  public currentTask: Task;
   private boardId: string;
   private prevUserId: string;
   public isChanged: Boolean = false;

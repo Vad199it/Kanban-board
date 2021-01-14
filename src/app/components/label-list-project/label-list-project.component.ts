@@ -15,7 +15,7 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   public title: string;
   public labels: Label[];
   public taskLabels: Label[];
-  public currentLabel: Label = null;
+  public currentLabel: Label;
   public isModal: boolean = false;
   private subscription: Subscription = new Subscription();
 

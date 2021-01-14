@@ -11,7 +11,7 @@ export class BoardDetailsComponent implements OnChanges {
   @Input() board: Board;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  public currentBoard: Board = null;
+  public currentBoard: Board;
 
   constructor(private boardService: BoardService) { }
 

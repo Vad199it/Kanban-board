@@ -15,7 +15,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
 
   @Input() taskId: string;
   public labels: Label[];
-  public currentLabel: Label = null;
+  public currentLabel: Label;
   private projectId: string;
   private subscription: Subscription = new Subscription();
 

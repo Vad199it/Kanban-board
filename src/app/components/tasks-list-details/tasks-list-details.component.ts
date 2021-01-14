@@ -13,7 +13,7 @@ export class TasksListDetailsComponent implements OnChanges {
   @Input() taskList: TaskList;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  public currentTaskList: TaskList = null;
+  public currentTaskList: TaskList;
   public isFinalList: boolean;
 
   constructor(private taskListService: TaskListService) { }

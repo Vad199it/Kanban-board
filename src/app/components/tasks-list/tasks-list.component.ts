@@ -12,7 +12,7 @@ import TaskList from '../../models/task-list';
 export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
   public taskLists: TaskList[];
-  public currentTaskList: TaskList = null;
+  public currentTaskList: TaskList;
   public isModal: boolean = false;
   private subscription: Subscription;
 

@@ -20,7 +20,7 @@ import {BoardService} from '../../services/board.service';
 export class TasksBoardComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
   public users: User[];
-  public currentUser: User = null;
+  public currentUser: User;
   public task: Task;
   public board: Board[];
   private boardId: string;

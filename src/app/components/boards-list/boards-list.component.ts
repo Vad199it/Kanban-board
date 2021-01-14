@@ -13,7 +13,7 @@ import Board from '../../models/board';
 export class BoardsListComponent implements OnInit, OnDestroy {
   public boards: Board[];
   public otherBoards: Board[];
-  public currentBoard: Board = null;
+  public currentBoard: Board;
   public isModal: boolean = false;
   private subscription: Subscription = new Subscription();
 

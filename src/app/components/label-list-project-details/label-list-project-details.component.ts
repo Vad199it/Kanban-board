@@ -12,7 +12,7 @@ export class LabelListProjectDetailsComponent implements OnChanges {
   @Input() label: Label;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  public currentLabel: Label = null;
+  public currentLabel: Label;
 
   constructor(private labelService: LabelService) { }
 

@@ -22,7 +22,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   private projectId: string;
   public boardName: string;
   public tasks: Task[];
-  public currentTask: Task = null;
+  public currentTask: Task;
   public isModal: Boolean = false;
   public isFinalList: boolean;
   subscription: Subscription = new Subscription();
