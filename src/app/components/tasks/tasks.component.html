@@ -1,8 +1,11 @@
 <div class="task">
-  <div class="col">
-    <div *ngFor="let task of tasks; trackBy: trackByMethod"
+  <div class="task-col">
+    <div *ngFor="let task of tasks | appFilterTasks: tasksId; trackBy: trackByMethod"
          class="task-group"
-         draggable="true">
+         [id]="task.uid"
+         (dragstart)="startDrag($event)"
+         draggable="true"
+    >
       <div class="task-header">
         <span class="id-ticket">{{correctIdTicket(task)}}</span>
         <div class="update-button"
@@ -35,8 +38,9 @@
               (click)="this.isModal = !this.isModal"
         >&times;</span>
       </div>
-      <app-tasks-details (refreshList)="refreshTask()"
-                         [task]="currentTask"
+      <app-tasks-details [task]="currentTask"
+                         [taskListId]="taskListId"
+                         (refreshList)="refreshTask()"
                          (isModal)="this.closeModal($event)"
       ></app-tasks-details>
     </div>

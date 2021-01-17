@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {from, Subscription} from 'rxjs';
 
 import {LabelService} from '../../services/label.service';
 import Label from '../../models/label';
@@ -75,13 +75,15 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   }
 
   public labelIncludeInTaskLabel(label: Label): boolean {
-    let isEqual: boolean = false;
-    this.taskLabels.forEach((taskLabel: Label): void => {
-      if (taskLabel.uid === label.uid){
-        isEqual = true;
-      }
-    });
-    return isEqual;
+    if (this.taskLabels) {
+      let isEqual: boolean = false;
+      this.taskLabels.forEach((taskLabel: Label): void => {
+        if (taskLabel.uid === label.uid) {
+          isEqual = true;
+        }
+      });
+      return isEqual;
+    }
   }
 
   public ngOnDestroy(): void {

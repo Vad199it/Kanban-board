@@ -46,17 +46,6 @@
             </option>
           </select>
       </div>
-      <div class="task-create-date">
-        <label for="createDate">Created date</label>
-        <input class="create-date-input"
-               [(ngModel)]="task.createDate"
-               [min]="getCurrentDate()"
-               type="date"
-               id="createDate"
-               name="createDate"
-               required
-        />
-      </div>
       <div class="task-due-date">
         <label for="dueDate">Due date</label>
         <input class="due-date-input"
@@ -68,15 +57,6 @@
                required
         />
       </div>
-      <div class="task-order">
-        <label for="order">Order</label>
-        <input class="order-input"
-               [(ngModel)]="task.order"
-               id="order"
-               name="order"
-               required
-        />
-      </div>
       <div class="task-comments">
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
@@ -85,6 +65,10 @@
                   name="comments"
                   required
         ></textarea>
+      </div>
+      <div class="label-container">
+        <p>Labels</p>
+        <app-label [taskId]="task.uid"></app-label>
       </div>
       <div class="file-form-list-container">
         <div class="file-form">

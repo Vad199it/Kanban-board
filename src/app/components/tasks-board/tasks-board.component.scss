@@ -66,6 +66,37 @@
     line-height: 16px;
     border-radius: 3px;
 
+    .label-container{
+      display: flex;
+      margin-bottom: 10px;
+      p{
+        display: flex;
+        align-items: center;
+        color: #808080;
+        width: 100px;
+      }
+
+      ::ng-deep{
+        .list-group{
+          height: 60px;
+
+          .update-button{
+            display: none;
+          }
+        }
+
+        .labels-container{
+          .search{
+            width: 308px;
+          }
+
+          .container-btn-add-label{
+            display: none;
+          }
+        }
+      }
+    }
+
     .file-form {
       margin-bottom: 10px;
 

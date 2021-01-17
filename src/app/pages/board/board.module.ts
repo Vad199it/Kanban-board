@@ -17,6 +17,7 @@ import { LabelListTaskComponent } from '../../components/label-list-task/label-l
 import { FileFormComponent } from '../../components/file-form/file-form.component';
 import { FileListComponent } from '../../components/file-list/file-list.component';
 import { FileDetailsComponent } from '../../components/file-details/file-details.component';
+import {FilterTasksPipe} from '../../pipes/filterTasks.pipe';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { FileDetailsComponent } from '../../components/file-details/file-details
     LabelListTaskComponent,
     FileFormComponent,
     FileListComponent,
-    FileDetailsComponent
+    FileDetailsComponent,
+    FilterTasksPipe
   ],
   imports: [
     CommonModule,

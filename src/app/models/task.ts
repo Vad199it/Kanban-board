@@ -3,11 +3,10 @@ export default class Task {
   ownerTask: string; //
   doTask: string;
   nameOfDeveloper: string;
-  createDate: Date;
+  createDate: string;
   dueDate: Date;
   title: string;
   content: string;
-  order: number;
   comments: string;
   idTicket: string;
   uid: string; //

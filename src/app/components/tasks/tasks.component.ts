@@ -21,6 +21,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
   private projectId: string;
   public boardName: string;
+  public tasksId: string[];
   public tasks: Task[];
   public currentTask: Task;
   public isModal: Boolean = false;
@@ -35,7 +36,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.getUrlParam();
-    this.retrieveTasks();
+    // this.retrieveTasks();
     this.retrieveBoards();
     this.retrieveTaskLists();
   }
@@ -49,7 +50,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   public refreshTask(): void {
     this.currentTask = null;
-    this.retrieveTasks();
+    this.retrieveTaskLists();
   }
 
   private retrieveBoards(): void {
@@ -63,6 +64,8 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.subscription.add(this.taskListService.getTaskListsById(this.taskListId).valueChanges({idField: 'id'})
       .subscribe((data: TaskList[]) => {
         this.isFinalList = data[0].isFinalList;
+        this.tasksId = data[0].tasksId;
+        this.retrieveTasks();
       }));
   }
 
@@ -72,6 +75,14 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.tasks = data;
       }));
   }
+
+  /*private retrieveTasks(tasksId: string[]): void {
+    this.subscription.add(this.taskService.getTasksFromTaskList(tasksId).valueChanges({idField: 'id'})
+      .subscribe((data: Task[]) => {
+        this.tasks = data;
+      }));
+  }*/
+
   public setActiveTask(task: Task): void {
     this.currentTask = task;
     this.isModal = !this.isModal;
@@ -106,6 +117,11 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   public checkExpiredDate(dueDate: string): boolean{
     return ((this.changeDoDateInSec(dueDate) < this.changeDateInSec(this.getCurrentData())) && !this.isFinalList);
+  }
+
+  public startDrag(ev: any): void{
+    ev.currentTarget.style.border = 'dashed';
+    ev.dataTransfer.setData('text/plain', ev.target.id + '-' + ev.target.closest('.taskList-group').id);
   }
 
   public ngOnDestroy(): void {

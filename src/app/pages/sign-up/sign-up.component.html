@@ -2,40 +2,50 @@
   <div class="container">
     <div class="user">
       <div class="formBx">
-        <form>
+        <form class="sign-up-form"
+              [formGroup]="userForm"
+              novalidate>
           <h2>Create an account</h2>
           <input type="text"
+                 formControlName="name"
                  name=""
                  placeholder="Username"
                  #userName
                  required
           >
           <input type="email"
+                 formControlName="email"
                  name=""
                  placeholder="Email Address"
                  #userEmail
                  required
           >
           <input type="password"
+                 formControlName="password"
                  name=""
                  placeholder="Create Password"
                  #userPwd
                  required
           >
           <input type="password"
+                 formControlName="confirmPassword"
                  name=""
                  placeholder="Confirm Password"
           >
-          <input (click)="signUp(userName.value, userEmail.value, userPwd.value)"
-                 type="button"
-                 name=""
-                 value="Sign Up"
-          >
-          <input (click)="googleAuth()"
-                 class="Google"
-                 type="button"
-                 name="" value="Continue with Google"
-          >
+          <div class="btn-container">
+            <input class="btn-sign-up"
+                   [disabled]="!userForm.valid"
+                   (click)="signUp(userName.value, userEmail.value, userPwd.value)"
+                   type="button"
+                   name=""
+                   value="Sign Up"
+            >
+            <input (click)="googleAuth()"
+                   class="Google"
+                   type="button"
+                   name="" value="Continue with Google"
+            >
+          </div>
           <p class="signup">Already have an account ? <a routerLink="/sign-in">Sign in.</a></p>
         </form>
       </div>

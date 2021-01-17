@@ -4,4 +4,5 @@ export default class TaskList {
   id: string;
   uid: string;
   isFinalList: boolean;
+  tasksId: string[] = [' '];
 }

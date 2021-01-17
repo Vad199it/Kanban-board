@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
-import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,23 +8,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
+  userForm: FormGroup;
 
-  myForm: FormGroup;
-  constructor(private authService: AuthService) {
-    /* this.myForm = new FormGroup({
-
-      'userName': new FormControl('Tom', Validators.required),
-      'userEmail': new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
-      'userPhone': new FormControl('', Validators.pattern('[0-9]{10}'))
-    });*/
+  constructor(private authService: AuthService,
+              private formBuilder: FormBuilder) {
+    this.userForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
   }
-
-  /*submit(){
-    console.log(this.myForm);
-  }*/
 
   public signIn(userEmail: string, userPassword: string): void{
     this.authService.signIn(userEmail, userPassword);

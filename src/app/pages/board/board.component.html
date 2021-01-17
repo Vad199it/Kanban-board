@@ -36,16 +36,20 @@
         />
       </div>
       <div class="container-btn-save-task-list">
-      <button class="btn-save-task-list"
-              (click)="saveTaskList()"
-      >Create</button>
+        <button class="btn-save-task-list"
+                (click)="saveTaskList()"
+        >Create
+        </button>
       </div>
     </div>
   </div>
 </div>
 <div class="task-list-container">
   <app-tasks-list [projectId]="id"></app-tasks-list>
-  <button class="btn-add-task-list"
-          (click)="newTaskList()"
-  >+ New task list</button>
+  <div class="btn-add-task-list-container">
+    <button class="btn-add-task-list"
+            (click)="newTaskList()"
+    >+ New task list
+    </button>
+  </div>
 </div>

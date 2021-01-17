@@ -47,21 +47,12 @@
       <div class="task-createDate">
         <label for="createDate">Created date</label>
         <input class="createDate-input"
-               [(ngModel)]="currentTask.createDate"
+               [value]="currentTask.createDate"
                [min]="getCurrentDate()"
                type="date"
                id="createDate"
                name="createDate"
-               required
-        />
-      </div>
-      <div class="task-order">
-        <label for="order">Order</label>
-        <input class="order-input"
-               [(ngModel)]="currentTask.order"
-               id="order"
-               name="order"
-               required
+               disabled
         />
       </div>
       <div class="task-dueDate">

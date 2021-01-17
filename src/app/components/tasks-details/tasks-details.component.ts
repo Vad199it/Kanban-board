@@ -10,6 +10,8 @@ import Board from '../../models/board';
 import {TaskService} from '../../services/task.service';
 import {AuthService} from '../../services/auth.service';
 import {BoardService} from '../../services/board.service';
+import {TaskListService} from '../../services/task-list.service';
+import TaskList from '../../models/task-list';
 
 @Component({
   selector: 'app-tasks-details',
@@ -19,10 +21,12 @@ import {BoardService} from '../../services/board.service';
 export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() task: Task;
+  @Input() taskListId: string;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public users: User[];
   public board: Board[];
+  public tasksId: string[];
   public currentTask: Task;
   private boardId: string;
   private prevUserId: string;
@@ -32,12 +36,14 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private taskService: TaskService,
               private authService: AuthService,
               private activateRoute: ActivatedRoute,
-              private boardService: BoardService) { }
+              private boardService: BoardService,
+              private taskListService: TaskListService) { }
 
   public ngOnInit(): void {
     this.getUrlParam();
     this.retrieveUsers();
     this.retrieveBoards();
+    this.retrieveTaskLists();
   }
 
   private getUrlParam(): void{
@@ -83,21 +89,17 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       const data: {
         ownerTask: string,
         doTask: string,
-        createDate: Date,
         dueDate: Date,
         title: string,
         content: string,
-        order: number,
         comments: string,
         nameOfDeveloper: string
       } = {
         ownerTask: this.currentTask.ownerTask,
         doTask: this.currentTask.doTask,
-        createDate: this.currentTask.createDate,
         dueDate: this.currentTask.dueDate,
         title: this.currentTask.title,
         content: this.currentTask.content,
-        order: this.currentTask.order,
         comments: this.currentTask.comments,
         nameOfDeveloper: this.currentTask.nameOfDeveloper,
       };
@@ -109,15 +111,28 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }));
   }
 
-  public deleteTask(): void {
-    this.isModal.emit(true);
+  private deleteUsernameFromBoard(): void{
     let usernames: string[] = this.board[0].usernames;
     usernames = this.removeFirst(usernames, this.currentTask.doTask);
     const boardData = {
       usernames: [...usernames],
     };
     this.boardService.updateBoard(this.boardId, boardData).catch(err => console.log(err));
+  }
 
+  private deleteTaskIdFromTaskList(): void {
+    const tasksId = new Set(this.tasksId);
+    tasksId.delete(this.currentTask.id);
+    const taskListData = {
+      tasksId: [...tasksId],
+    };
+    this.taskListService.updateTaskList(this.taskListId, taskListData).catch(err => console.log(err));
+  }
+
+  public deleteTask(): void {
+    this.isModal.emit(true);
+    this.deleteUsernameFromBoard();
+    this.deleteTaskIdFromTaskList();
     this.taskService.deleteTask(this.currentTask.id)
       .then(() => {
         this.refreshList.emit();
@@ -136,6 +151,13 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription.add(this.authService.getUsers().valueChanges({idField: 'id'})
       .subscribe((data: User[]) => {
         this.users = data;
+      }));
+  }
+
+  private retrieveTaskLists(): void {
+    this.subscription.add(this.taskListService.getTaskListsById(this.taskListId).valueChanges({idField: 'id'})
+      .subscribe((data: TaskList[]) => {
+        this.tasksId = data[0].tasksId;
       }));
   }
 

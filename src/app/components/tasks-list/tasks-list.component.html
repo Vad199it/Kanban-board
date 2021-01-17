@@ -1,7 +1,11 @@
 <div class="taskList">
-  <div class="col">
+  <div class="task-list-col">
     <div *ngFor="let taskList of taskLists; trackBy: trackByMethod"
-         class="taskList-group">
+         class="taskList-group"
+         [id]="taskList.uid"
+         (drop)="drop($event)"
+         (dragover)="overDrag($event)"
+    >
       <div class="task-list-header">
         <span>{{ taskList.title }}</span>
         <div class="update-button"

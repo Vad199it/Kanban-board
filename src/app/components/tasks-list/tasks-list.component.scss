@@ -4,7 +4,8 @@
 
 .taskList {
 
-  .col {
+  .task-list-col {
+    white-space: nowrap;
 
     .taskList-group {
 
@@ -21,6 +22,7 @@
       padding: 10px;
       display: inline-block;
       vertical-align: top;
+      white-space: normal;
 
       .taskList-group-item{
 

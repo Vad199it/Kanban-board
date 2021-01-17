@@ -45,6 +45,9 @@ section
 
         form
         {
+          .btn-sign-up[disabled]{
+            color: #cdcdcd;
+          }
           h2
           {
             color: #545454;

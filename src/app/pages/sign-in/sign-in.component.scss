@@ -43,8 +43,20 @@ section
           align-items: center;
           padding: 40px;
 
-            form
+          .sign-in-form
             {
+            width: 100%;
+            .btn-container{
+              margin-top: 10px;
+            }
+              .btn-sign-in[disabled]{
+                color: #cdcdcd;
+              }
+              .alert-danger{
+                color: red;
+                font-size: 12px;
+                height: 14px;
+              }
               h2
               {
                 color: #545454;
