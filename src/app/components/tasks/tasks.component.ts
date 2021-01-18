@@ -120,8 +120,12 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   public startDrag(ev: any): void{
-    ev.currentTarget.style.border = 'dashed';
-    ev.dataTransfer.setData('text/plain', ev.target.id + '-' + ev.target.closest('.taskList-group').id);
+    ev.target.querySelector('.task-group').style.border = 'dashed';
+    ev.dataTransfer.setData('text/plain', ev.currentTarget.id + '-' + ev.target.closest('.taskList-group').id);
+  }
+
+  public endDrag(ev: any): void{
+    ev.target.querySelector('.task-group').style.border = 'none';
   }
 
   public ngOnDestroy(): void {

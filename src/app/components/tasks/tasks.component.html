@@ -1,29 +1,32 @@
 <div class="task">
   <div class="task-col">
     <div *ngFor="let task of tasks | appFilterTasks: tasksId; trackBy: trackByMethod"
-         class="task-group"
+         class="task-group-container"
          [id]="task.uid"
          (dragstart)="startDrag($event)"
+         (dragend)="endDrag($event)"
          draggable="true"
     >
-      <div class="task-header">
-        <span class="id-ticket">{{correctIdTicket(task)}}</span>
-        <div class="update-button"
-             (click)="setActiveTask(task)"
-        ></div>
+      <div class="task-group">
+        <div class="task-header">
+          <span class="id-ticket">{{correctIdTicket(task)}}</span>
+          <div class="update-button"
+               (click)="setActiveTask(task)"
+          ></div>
+        </div>
+        <div
+          class="date"
+          [ngStyle]="{'display': checkExpiredDate(task.dueDate) ? 'block' : 'none'}"
+        >
+          &#9832; Date expired
+        </div>
+        <span class="task-title">{{ task.title }}</span>
+        <div class="name-of-developer-container">
+          <span>Assignee: </span>
+          <span>{{task.nameOfDeveloper}}</span>
+        </div>
+        <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
       </div>
-      <div
-        class="date"
-        [ngStyle]="{'display': checkExpiredDate(task.dueDate) ? 'block' : 'none'}"
-      >
-        &#9832; Date expired
-      </div>
-      <span class="task-title">{{ task.title }}</span>
-      <div class="name-of-developer-container">
-        <span>Assignee: </span>
-        <span>{{task.nameOfDeveloper}}</span>
-      </div>
-      <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
     </div>
   </div>
   <div

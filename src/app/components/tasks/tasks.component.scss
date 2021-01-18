@@ -1,8 +1,11 @@
 .task {
 
+  .task-group-container{
+    padding: 4% 4% 4% 4%;
+  }
   .task-group {
     background-color: #f4f5f7;
-    margin: 2% 1% 6% 1%;
+    // margin: 2% 1% 6% 1%;
     border-radius: 3px;
     box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
     padding: 3%;

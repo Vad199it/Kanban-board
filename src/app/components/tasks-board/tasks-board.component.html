@@ -33,18 +33,18 @@
       </div>
       <div class="task-develop">
         <label for="develop">Develop</label>
-          <select class="develop-select"
-                  [(ngModel)]="task.doTask"
-                  name="develop"
-                  id="develop"
+        <select class="develop-select"
+                [(ngModel)]="task.doTask"
+                name="develop"
+                id="develop"
+        >
+          <option [ngValue]="undefined" hidden>Select develop:</option>
+          <option *ngFor="let user of users"
+                  [value]="user.uid"
           >
-            <option [ngValue]="undefined" hidden>Select develop:</option>
-            <option *ngFor="let user of users"
-                    [value]="user.uid"
-            >
-              {{user.displayName}}
-            </option>
-          </select>
+            {{user.displayName}}
+          </option>
+        </select>
       </div>
       <div class="task-due-date">
         <label for="dueDate">Due date</label>
@@ -80,16 +80,20 @@
         </div>
       </div>
       <div class="container-btn-save-task">
-      <button class="btn-save-task"
-              (click)="saveTask()"
-      >Create</button>
+        <button class="btn-save-task"
+                (click)="saveTask()"
+        >Create
+        </button>
       </div>
     </div>
   </div>
 </div>
 <div class="taskList-group-item">
   <app-tasks [taskListId]="taskListId"></app-tasks>
-  <button class="btn-add-task"
-          (click)="newTask()"
-  >+ Add another task</button>
+  <div class="btn-add-task-container">
+    <button class="btn-add-task"
+            (click)="newTask()"
+    >+ Add another task
+    </button>
+  </div>
 </div>

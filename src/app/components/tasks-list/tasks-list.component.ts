@@ -16,7 +16,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   private dropTasksId: string[];
   public taskLists: TaskList[];
   public currentTaskList: TaskList;
-  public isModal: boolean = false;
+  public isModal: Boolean = false;
   private subscription: Subscription = new Subscription();
 
   constructor(private taskListService: TaskListService,
@@ -94,8 +94,27 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.updateTask(newTasklistId, taskId); // обновление id таски(новое значение uid TaskList)
     // this.putTaskId(newTasklistId, taskId);
     // this.deleteTaskId(prevTaskListId, taskId);
-    const taskCol = content.querySelector('.task-col');
-    taskCol.appendChild(document.getElementById(taskId));
+    const elem = ev.target.closest('.task-group-container');
+    const dragElem = document.getElementById(taskId);
+    if (elem){
+      const c = elem.getBoundingClientRect();
+      const scrolltop = +document.body.scrollTop + +c.top;
+      const scrollbottom = +scrolltop + +elem.offsetHeight;
+      if (((+scrolltop + +scrollbottom) / 2) >= ev.clientY){
+        elem.before(dragElem);
+      }
+      else{
+        elem.after(dragElem);
+      }
+    }
+    else if (ev.target.closest('.btn-add-task-container')){
+      const taskCol = content.querySelector('.task-col');
+      taskCol.append(dragElem);
+    }
+    else {
+      const taskCol = content.querySelector('.task-col');
+      taskCol.prepend(dragElem);
+    }
     ev.dataTransfer.clearData();
   }
 
