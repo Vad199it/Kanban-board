@@ -120,12 +120,12 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   public startDrag(ev: any): void{
-    ev.target.querySelector('.task-group').style.border = 'dashed';
+    ev.target.querySelector('.task-group').style.backgroundColor = 'rgba(9, 30, 66, 0.08)';
     ev.dataTransfer.setData('text/plain', ev.currentTarget.id + '-' + ev.target.closest('.taskList-group').id);
   }
 
   public endDrag(ev: any): void{
-    ev.target.querySelector('.task-group').style.border = 'none';
+    ev.target.querySelector('.task-group').style.backgroundColor = '#f4f5f7';
   }
 
   public ngOnDestroy(): void {

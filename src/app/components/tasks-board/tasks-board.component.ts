@@ -62,7 +62,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
 
   private updateTasksIdInTaskList(): void{
     const tasksId: string[] = this.tasksId;
-    tasksId.push(this.task.uid);
+    tasksId.unshift(this.task.uid);
     const taskListData = {
       tasksId: [...tasksId],
     };
@@ -99,7 +99,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       hash  = ((hash << 5) - hash) + chr;
       hash |= 0; // Convert to 32bit integer
     }
-    return hash;
+    return Math.abs(hash);
   }
 
   private retrieveBoards(): void {

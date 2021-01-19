@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { TaskListService } from '../../services/task-list.service';
 import TaskList from '../../models/task-list';
 import {TaskService} from '../../services/task.service';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
-  styleUrls: ['./tasks-list.component.scss']
+  styleUrls: ['./tasks-list.component.scss'],
 })
 export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: string;
@@ -20,7 +21,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private taskListService: TaskListService,
-              private taskService: TaskService) { }
+              private taskService: TaskService, ) { }
 
   public ngOnInit(): void {
     this.retrieveTaskLists();
@@ -51,21 +52,62 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.isModal = !value;
   }
 
-  private deleteTaskId(prevTaskListId: string, taskId: string): void {
-    this.subscription.add(this.taskListService.getTaskListsById(prevTaskListId).valueChanges({idField: 'id'})
+  private retrieveTaskListsById(id: string): void {
+    this.subscription.add(this.taskListService.getTaskLists(id).valueChanges({idField: 'id'})
       .subscribe((data: TaskList[]) => {
-        this.dragTasksId = this.removeFirst(data[0].tasksId, taskId);
-        this.updateTasksId(prevTaskListId, this.dragTasksId);
+        const dataTaskList = data;
       }));
   }
 
-  private putTaskId(currTaskListId: string, taskId: string): void {
-    this.subscription.add(this.taskListService.getTaskListsById(currTaskListId).valueChanges({idField: 'id'})
-      .subscribe((data: TaskList[]) => {
-        this.dropTasksId = data[0].tasksId;
-        this.dropTasksId.push(taskId);
-        this.updateTasksId(currTaskListId, this.dropTasksId);
-      }));
+  private deleteTaskId(prevTaskListId: string, taskId: string): void {
+    this.taskListService.getTaskListsById(prevTaskListId).valueChanges({idField: 'id'})
+      .pipe(
+        take(1)
+      ).subscribe((data: TaskList[]) => {
+        const dragTasksId = this.removeFirst(data[0].tasksId, taskId);
+        this.updateTasksId(prevTaskListId, dragTasksId);
+     });
+  }
+
+  private putTaskId(currTaskListId: string, dragTaskId: string, value: string, currTaskId?: string): void {
+    let dropTasksId;
+    this.taskListService.getTaskListsById(currTaskListId).valueChanges({idField: 'id'})
+      .pipe(
+        take(1)
+      )
+     .subscribe((data: TaskList[]) => {
+       if (currTaskId){
+          dropTasksId = this.updateTasksIdArray(data[0].tasksId, dragTaskId, value, currTaskId);
+        }
+        else{
+          dropTasksId = this.updateTasksIdArray(data[0].tasksId, dragTaskId, value);
+        }
+       this.updateTasksId(currTaskListId, dropTasksId);
+       });
+  }
+
+  public updateTasksIdArray(tasksId: string[], dragTaskId: string, value: string, currTaskId?: string): string[]{
+    let index;
+    if (currTaskId){
+      index = tasksId.indexOf(currTaskId);
+    }
+    switch (value){
+      case 'beforeElem':
+        tasksId.splice(index, 0, dragTaskId);
+        return tasksId;
+      case 'afterElem':
+        tasksId.splice(index + 1, 0, dragTaskId);
+        return tasksId;
+      case 'top':
+        tasksId.unshift(dragTaskId);
+        return tasksId;
+      case 'bottom':
+        tasksId.push(dragTaskId);
+        return tasksId;
+      default:
+        tasksId.unshift(dragTaskId);
+        return tasksId;
+    }
   }
 
   private updateTasksId(taskListId: string, data: string[]): void {
@@ -85,15 +127,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   public drop(ev: any): void{
-    ev.preventDefault();
     const data = ev.dataTransfer.getData('text');
     const taskId = data.split('-')[0];
     const prevTaskListId = data.split('-')[1];
     const content = ev.target.closest('.taskList-group');
     const newTasklistId = content.id;
-    this.updateTask(newTasklistId, taskId); // обновление id таски(новое значение uid TaskList)
-    // this.putTaskId(newTasklistId, taskId);
-    // this.deleteTaskId(prevTaskListId, taskId);
+    this.updateTask(newTasklistId, taskId);
+    this.deleteTaskId(prevTaskListId, taskId);
     const elem = ev.target.closest('.task-group-container');
     const dragElem = document.getElementById(taskId);
     if (elem){
@@ -102,18 +142,22 @@ export class TasksListComponent implements OnInit, OnDestroy {
       const scrollbottom = +scrolltop + +elem.offsetHeight;
       if (((+scrolltop + +scrollbottom) / 2) >= ev.clientY){
         elem.before(dragElem);
+        this.putTaskId(newTasklistId, taskId, 'beforeElem', elem.id);
       }
       else{
         elem.after(dragElem);
+        this.putTaskId(newTasklistId, taskId, 'afterElem', elem.id);
       }
     }
     else if (ev.target.closest('.btn-add-task-container')){
       const taskCol = content.querySelector('.task-col');
       taskCol.append(dragElem);
+      this.putTaskId(newTasklistId, taskId, 'bottom');
     }
     else {
       const taskCol = content.querySelector('.task-col');
       taskCol.prepend(dragElem);
+      this.putTaskId(newTasklistId, taskId, 'top');
     }
     ev.dataTransfer.clearData();
   }
