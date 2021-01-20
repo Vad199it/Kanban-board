@@ -21,6 +21,7 @@ import {TaskListService} from '../../services/task-list.service';
 })
 export class TasksBoardComponent implements OnInit, OnDestroy {
   @Input() taskListId: string;
+  @Input() taskListIsFinalList: boolean;
   public users: User[];
   public currentUser: User;
   public task: Task;

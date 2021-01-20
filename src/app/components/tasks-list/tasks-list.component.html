@@ -7,12 +7,15 @@
          (dragover)="overDrag($event)"
     >
       <div class="task-list-header">
-        <span>{{ taskList.title }}</span>
+        <span><span *ngIf="taskList.isFinalList">&#9672; </span>{{ taskList.title }}</span>
         <div class="update-button"
              (click)="setActiveTaskList(taskList)"
         ></div>
       </div>
-      <app-tasks-board [taskListId]="taskList.uid.toString()"></app-tasks-board>
+      <app-tasks-board
+        [taskListId]="taskList.uid.toString()"
+        [taskListIsFinalList]="taskList.isFinalList"
+      ></app-tasks-board>
     </div>
   </div>
   <div

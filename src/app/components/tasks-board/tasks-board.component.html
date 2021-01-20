@@ -92,6 +92,7 @@
   <app-tasks [taskListId]="taskListId"></app-tasks>
   <div class="btn-add-task-container">
     <button class="btn-add-task"
+            *ngIf="!taskListIsFinalList"
             (click)="newTask()"
     >+ Add another task
     </button>
