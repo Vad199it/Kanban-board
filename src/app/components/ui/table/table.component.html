@@ -7,9 +7,27 @@
   <table class="boards-table">
     <thead>
     <tr>
-      <th>Icon</th>
-      <th>Board name</th>
-      <th>Owner name</th>
+      <th (click)="filterBoards('icon')">Icon
+        <span *ngIf="arrayFilterButtons[0].active;else icon">
+          <span *ngIf="arrayFilterButtons[0].filterButtons;else iconBut">&#8593;</span>
+          <ng-template #iconBut><span>&#8595;</span></ng-template>
+        </span>
+        <ng-template #icon><span>&#8597;</span></ng-template>
+      </th>
+      <th (click)="filterBoards('boardName')">Board name
+        <span *ngIf="arrayFilterButtons[1].active;else boardName">
+          <span *ngIf="arrayFilterButtons[1].filterButtons;else boardNameBut">&#8593;</span>
+          <ng-template #boardNameBut><span>&#8595;</span></ng-template>
+        </span>
+        <ng-template #boardName><span>&#8597;</span></ng-template>
+      </th>
+      <th (click)="filterBoards('ownerName')">Owner name
+        <span *ngIf="arrayFilterButtons[2].active;else ownerName">
+        <span *ngIf="arrayFilterButtons[2].filterButtons;else ownerNameBut">&#8593;</span>
+          <ng-template #ownerNameBut><span>&#8595;</span></ng-template>
+        </span>
+        <ng-template #ownerName><span>&#8597;</span></ng-template>
+      </th>
       <th></th>
     </tr>
     </thead>

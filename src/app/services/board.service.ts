@@ -20,16 +20,16 @@ export class BoardService {
     this.boardsRef = db.collection(this.dbPath);
   }
 
-  public getBoards(userId: string): AngularFirestoreCollection<Board> {
+  public getBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc'): AngularFirestoreCollection<Board> {
     return this.db.collection(this.dbPath, ref => ref
       .where(AppConst.ID, '==', userId)
-      .orderBy(AppConst.ORDER, 'asc'));
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc'));
   }
 
-  public getOtherBoards(userId: string): AngularFirestoreCollection<Board> {
+  public getOtherBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc'): AngularFirestoreCollection<Board> {
     return this.db.collection(this.dbPath, ref => ref
       .where('usernames', 'array-contains', userId)
-      .orderBy(AppConst.ORDER, 'asc'));
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc'));
   }
 
   public createBoard(board: Board): Promise<void> {

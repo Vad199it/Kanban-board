@@ -2,15 +2,20 @@
   <div class="board-lists">
     <p class="name-board-lists">My boards</p>
     <app-table [boards]="boards"
+               [tableId]="'myBoards'"
                (isModal)="this.closeModal($event)"
-               (currentBoard)="setActiveBoard($event)">
+               (currentBoard)="setActiveBoard($event)"
+               (filter)="retrieveBoardsByFilter($event)"
+    >
     </app-table>
   </div>
   <div class="board-lists">
     <p class="name-board-lists">Assigned boards </p>
     <app-table [boards]="otherBoards"
+               [tableId]="'assignedBoards'"
                (isModal)="this.closeModal($event)"
-               (currentBoard)="setActiveBoard($event)">
+               (currentBoard)="setActiveBoard($event)"
+    >
     </app-table>
   </div>
 </div>
