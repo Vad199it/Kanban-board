@@ -8,18 +8,11 @@
   <div class="col">
     <div class="list-group">
       <div
-        *ngFor="let label of labels | appFilter: title; trackBy: trackByMethod"
+        *ngFor="let label of labels | appLabelFilter: taskLabels | appFilter: title; trackBy: trackByMethod"
         class="list-group-item"
       >
         <div class="label-container">
           <div class="label-close-color-container">
-            <div class="check-mark-container">
-              <div *ngIf="labelIncludeInTaskLabel(label)"
-                   class="check-mark"
-              >
-                &#10004;
-              </div>
-            </div>
             <div class="label-color"
                  (click)="choseLabel(label)"
                  [style.background-color]="label.color"

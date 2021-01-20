@@ -80,18 +80,6 @@ export class LabelListProjectComponent implements OnInit, OnDestroy, OnChanges {
       .catch(err => console.log(err));
   }
 
-  public labelIncludeInTaskLabel(label: Label): boolean {
-    if (this.taskLabels) {
-      let isEqual: boolean = false;
-      this.taskLabels.forEach((taskLabel: Label): void => {
-        if (taskLabel.uid === label.uid) {
-          isEqual = true;
-        }
-      });
-      return isEqual;
-    }
-  }
-
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
