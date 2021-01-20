@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {from, Subscription} from 'rxjs';
 
 import {LabelService} from '../../services/label.service';
@@ -9,7 +9,7 @@ import Label from '../../models/label';
   templateUrl: './label-list-project.component.html',
   styleUrls: ['./label-list-project.component.scss']
 })
-export class LabelListProjectComponent implements OnInit, OnDestroy {
+export class LabelListProjectComponent implements OnInit, OnDestroy, OnChanges {
   @Input() projectId: string;
   @Input() taskId: string;
   public title: string;
@@ -20,6 +20,12 @@ export class LabelListProjectComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private labelService: LabelService) { }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.taskId && changes.taskId.currentValue) {
+      this.retrieveTaskLabels();
+    }
+  }
 
   public ngOnInit(): void {
     this.retrieveTaskLabels();

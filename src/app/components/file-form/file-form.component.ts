@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 import { FileDataService } from '../../services/file-data.service';
 import FileData from '../../models/fileData';
@@ -8,13 +8,20 @@ import FileData from '../../models/fileData';
   templateUrl: './file-form.component.html',
   styleUrls: ['./file-form.component.scss']
 })
-export class FileFormComponent {
+export class FileFormComponent implements OnChanges{
   @Input() taskId: string;
   public selectedFiles?: FileList;
   public currentFileUpload?: FileData;
   public percentage: number = 0;
 
   constructor(private uploadService: FileDataService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.taskId && changes.taskId.currentValue) {
+      this.percentage = 0;
+      this.selectedFiles = null;
+    }
+  }
 
   public selectFile(event: any): void {
     this.selectedFiles = event.target.files;

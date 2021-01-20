@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 
 import { FileDataService } from '../../services/file-data.service';
@@ -16,8 +16,10 @@ export class FileListComponent implements OnDestroy, OnChanges {
 
   constructor(private uploadService: FileDataService) { }
 
-  public ngOnChanges(): void {
-    this.retrieveBoards();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.taskId && changes.taskId.currentValue) {
+      this.retrieveBoards();
+    }
   }
 
   private retrieveBoards(): void {
