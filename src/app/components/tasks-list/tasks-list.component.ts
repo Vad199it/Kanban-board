@@ -87,6 +87,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   public updateTasksIdArray(tasksId: string[], dragTaskId: string, value: string, currTaskId?: string): string[]{
+    console.log(tasksId);
     let index;
     if (currTaskId){
       index = tasksId.indexOf(currTaskId);
@@ -94,27 +95,27 @@ export class TasksListComponent implements OnInit, OnDestroy {
     switch (value){
       case 'beforeElem':
         tasksId.splice(index, 0, dragTaskId);
-        return tasksId;
+        return [... new Set(tasksId)];
       case 'afterElem':
         tasksId.splice(index + 1, 0, dragTaskId);
-        return tasksId;
+        return [... new Set(tasksId)];
       case 'top':
         tasksId.unshift(dragTaskId);
-        return tasksId;
+        return [... new Set(tasksId)];
       case 'bottom':
         tasksId.push(dragTaskId);
-        return tasksId;
+        return [... new Set(tasksId)];
       default:
         tasksId.unshift(dragTaskId);
-        return tasksId;
+        return [... new Set(tasksId)];
     }
   }
 
-  private updateTasksId(taskListId: string, data: string[]): void {
+  private updateTasksId(taskListId: string, data: string[]): Promise<void> {
     const taskListData: {tasksId: string[]} = {
       tasksId: [...data],
     };
-    this.taskListService.updateTaskList(taskListId, taskListData)
+    return this.taskListService.updateTaskList(taskListId, taskListData)
       .catch(err => console.log(err));
   }
 
@@ -132,8 +133,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
     const prevTaskListId = data.split('-')[1];
     const content = ev.target.closest('.taskList-group');
     const newTasklistId = content.id;
-    this.updateTask(newTasklistId, taskId);
     this.deleteTaskId(prevTaskListId, taskId);
+    this.updateTask(newTasklistId, taskId);
     const elem = ev.target.closest('.task-group-container');
     const dragElem = document.getElementById(taskId);
     if (elem){
