@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import Label from '../../models/label';
   templateUrl: './label-list-task.component.html',
   styleUrls: ['./label-list-task.component.scss']
 })
-export class LabelListTaskComponent implements OnInit, OnDestroy {
+export class LabelListTaskComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() taskId: string;
   public labels: Label[];
@@ -25,6 +25,12 @@ export class LabelListTaskComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getUrlParam();
     this.retrieveLabels();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.taskId && changes.taskId.currentValue) {
+      this.retrieveLabels();
+    }
   }
 
   private getUrlParam(): void{
