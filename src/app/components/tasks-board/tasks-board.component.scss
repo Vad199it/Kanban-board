@@ -1,5 +1,6 @@
 .btn-add-task-container {
   padding: 4%;
+
   .btn-add-task {
     margin: 0;
     padding: 4px 10px;
@@ -62,41 +63,44 @@
 
   .details {
     background-color: #fefefe;
-    margin: 4% auto;
+    margin: 1px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 450px;
     line-height: 16px;
     border-radius: 3px;
 
-    .label-container{
+    .label-container {
       display: flex;
       margin-bottom: 10px;
-      p{
+
+      p {
         display: flex;
         align-items: center;
         color: #808080;
         width: 100px;
       }
 
-      ::ng-deep{
-        .list-group{
+      ::ng-deep {
+        .list-group {
           height: 60px;
 
-          .update-button{
+          .update-button {
             display: none;
           }
         }
 
-        .labels-container{
-          .app-label-list-task-container{
+        .labels-container {
+          .app-label-list-task-container {
             width: 308px;
+            height: 72px;
           }
-          .search{
+
+          .search {
             width: 308px;
           }
 
-          .container-btn-add-label{
+          .container-btn-add-label {
             display: none;
           }
         }
@@ -165,7 +169,7 @@
     }
 
     .content-textarea,
-    .comments-textarea{
+    .comments-textarea {
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -197,3 +201,33 @@
   }
 }
 
+@media(max-width: 620px) {
+  .create-task {
+    .details {
+      width: 375px;
+      margin: 25px auto;
+      .file-form{
+        ::ng-deep{
+          .choose-file{
+            width: 256px;
+          }
+        }
+      }
+      .label-container {
+        ::ng-deep{
+          .labels-container {
+            .search{
+              width: 252px;
+            }
+            .app-label-list-task-container {
+              width: 252px;
+            }
+          }
+        }
+        p{
+          margin-right: 35px;
+        }
+      }
+    }
+  }
+}

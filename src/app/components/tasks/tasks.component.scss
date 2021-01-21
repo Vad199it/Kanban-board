@@ -114,4 +114,15 @@
   }
 }
 
+@media(max-width: 620px) {
+  .task {
+    .container-details {
+      .details {
+        margin: 1px auto; // todo: Убрать important
+        width: 375px;
+      }
+    }
+  }
+}
+
 

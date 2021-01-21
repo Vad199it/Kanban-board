@@ -103,3 +103,34 @@
   }
 
 }
+
+@media(max-width: 620px){
+  .task-label-container{
+    flex-direction: column;
+  }
+
+  .container-btn-delete-update-task{
+    margin: 2% 0;
+  }
+
+  .label-container{
+    ::ng-deep{
+      .list-group{
+        max-height: 88px;
+      }
+      .search{
+        width: 334px;
+      }
+      .app-label-list-task-container{
+        width: 334px;
+      }
+    }
+  }
+  .file-form{
+    ::ng-deep{
+      .upload-file{
+        margin-left: 0;
+      }
+    }
+  }
+}

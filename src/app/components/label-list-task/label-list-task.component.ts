@@ -29,6 +29,7 @@ export class LabelListTaskComponent implements OnInit, OnDestroy, OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.taskId && changes.taskId.currentValue) {
+      this.getUrlParam();
       this.retrieveLabels();
     }
   }

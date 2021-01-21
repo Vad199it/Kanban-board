@@ -68,3 +68,14 @@
     }
   }
 
+@media(max-width: 770px){
+  .board-lists-container{
+    flex-direction: column;
+
+    .board-lists{
+      margin-bottom: 50px;
+      width: 100%;
+    }
+  }
+}
+
