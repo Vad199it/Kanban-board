@@ -1,9 +1,12 @@
-<label>
-  <input class="search"
-         [(ngModel)]="title"
-         type="text"
-         placeholder="Search">
-</label>
+<div class="app-label-list-task-container">
+  <app-label-list-task [taskId]="taskId"></app-label-list-task>
+</div>
+  <label>
+    <input class="search"
+           [(ngModel)]="title"
+           type="text"
+           placeholder="Search">
+  </label>
 <div class="list">
   <div class="col">
     <div class="list-group">
@@ -37,7 +40,7 @@
     [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
     <div *ngIf="currentLabel"
-         class="details" >
+         class="details">
       <div class="option-container">
         <p class="title-update-label">Update label</p>
         <span class="close"
