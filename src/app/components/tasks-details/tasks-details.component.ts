@@ -33,7 +33,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private prevUserId: string;
   public isChanged: Boolean = false;
   private subscription: Subscription = new Subscription();
-  public taskDetailsForm: FormGroup;
+  public taskForm: FormGroup;
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
@@ -41,11 +41,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
               private boardService: BoardService,
               private taskListService: TaskListService,
               private formBuilder: FormBuilder) {
-    this.taskDetailsForm = this.formBuilder.group({
-      name: [[Validators.required, Validators.minLength(3)]],
-      content: [[Validators.required]],
-      develop: [[Validators.required]],
-      dueDate: [[Validators.required]]
+    this.taskForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      content: ['', [Validators.required]],
+      dueDate: ['', [Validators.required]]
     });
   }
 

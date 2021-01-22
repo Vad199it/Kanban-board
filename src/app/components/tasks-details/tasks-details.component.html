@@ -1,7 +1,7 @@
 <div *ngIf="currentTask"
      class="task-label-container">
   <div class="task-details-container">
-    <form [formGroup]="taskDetailsForm"
+    <form [formGroup]="taskForm"
           novalidate
     >
       <div class="task-title">
@@ -12,7 +12,6 @@
                type="text"
                id="title"
                name="title"
-               required
         />
       </div>
       <div class="task-content">
@@ -25,7 +24,6 @@
                   cols="1"
                   wrap="hard"
                   name="content"
-                  required
         ></textarea>
       </div>
       <div class="task-develop">
@@ -33,7 +31,7 @@
         <div class="scrollable">
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
-                  [ngModelOptions]= "{standalone: true}"
+                  formControlName="develop"
                   (ngModelChange)="changeUserInBoard(userId.value)"
                   #userId
                   name="develop"
@@ -70,7 +68,6 @@
                type="date"
                id="dueDate"
                name="dueDate"
-               required
         />
       </div>
       <div class="task-comments">
@@ -80,7 +77,6 @@
                   [ngModelOptions]= "{standalone: true}"
                   id="comments"
                   name="comments"
-                  required
         ></textarea>
       </div>
       <div class="file-container">
@@ -94,14 +90,14 @@
     </form>
     <div class="container-btn-delete-update-task">
       <button class="btn-update-task"
-              [disabled]="!taskDetailsForm.valid"
+              [disabled]="!taskForm.valid"
               (click)="updateTask()"
               type="submit"
       >
         Update
       </button>
       <button class="btn-delete-task"
-              [disabled]="!taskDetailsForm.valid"
+              [disabled]="!taskForm.valid"
               (click)="deleteTask()">
         Delete
       </button>
