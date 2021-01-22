@@ -1,3 +1,12 @@
+form{
+  .alert-danger{
+    color: red;
+    font-size: 12px;
+    height: 14px;
+    margin-left: 70px;
+  }
+}
+
 .task-list-title,
 .task-list-is-final-list{
   display: flex;
@@ -50,6 +59,10 @@
 
     &:hover {
       background-color: rgba(9, 30, 66, 0.1);
+    }
+
+    &[disabled]{
+      color: #cdcdcd;
     }
   }
 

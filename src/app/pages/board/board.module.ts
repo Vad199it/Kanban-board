@@ -5,7 +5,7 @@ import { BoardRoutingModule } from './board-routing.module';
 import { BoardComponent } from './board.component';
 import { TasksListComponent } from '../../components/tasks-list/tasks-list.component';
 import {DashboardModule} from '../dashboard/dashboard.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TasksListDetailsComponent } from '../../components/tasks-list-details/tasks-list-details.component';
 import { TasksComponent } from '../../components/tasks/tasks.component';
 import { TasksDetailsComponent } from '../../components/tasks-details/tasks-details.component';
@@ -39,11 +39,12 @@ import {LabelFilterPipe} from '../../pipes/labelFilter.pipe';
     FilterTasksPipe,
     LabelFilterPipe
   ],
-  imports: [
-    CommonModule,
-    BoardRoutingModule,
-    DashboardModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        BoardRoutingModule,
+        DashboardModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class BoardModule { }

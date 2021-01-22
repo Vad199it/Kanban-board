@@ -1,11 +1,14 @@
 <div *ngIf="currentTask"
      class="task-label-container">
   <div class="task-details-container">
-    <form>
+    <form [formGroup]="taskDetailsForm"
+          novalidate
+    >
       <div class="task-title">
         <label for="title">Title</label>
         <input class="title-input"
                [(ngModel)]="currentTask.title"
+               formControlName="name"
                type="text"
                id="title"
                name="title"
@@ -16,6 +19,7 @@
         <label for="content">Content</label>
         <textarea class="content-textarea"
                   [(ngModel)]="currentTask.content"
+                  formControlName="content"
                   id="content"
                   rows="1"
                   cols="1"
@@ -29,6 +33,7 @@
         <div class="scrollable">
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
+                  [ngModelOptions]= "{standalone: true}"
                   (ngModelChange)="changeUserInBoard(userId.value)"
                   #userId
                   name="develop"
@@ -60,6 +65,8 @@
         <input class="dueDate-input"
                [(ngModel)]="currentTask.dueDate"
                [min]="getCurrentDate()"
+               (keydown)="stopWrite()"
+               formControlName="dueDate"
                type="date"
                id="dueDate"
                name="dueDate"
@@ -70,6 +77,7 @@
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
                   [(ngModel)]="currentTask.comments"
+                  [ngModelOptions]= "{standalone: true}"
                   id="comments"
                   name="comments"
                   required
@@ -86,12 +94,14 @@
     </form>
     <div class="container-btn-delete-update-task">
       <button class="btn-update-task"
+              [disabled]="!taskDetailsForm.valid"
               (click)="updateTask()"
               type="submit"
       >
         Update
       </button>
       <button class="btn-delete-task"
+              [disabled]="!taskDetailsForm.valid"
               (click)="deleteTask()">
         Delete
       </button>

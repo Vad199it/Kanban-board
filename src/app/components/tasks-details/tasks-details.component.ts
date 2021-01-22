@@ -12,6 +12,7 @@ import {AuthService} from '../../services/auth.service';
 import {BoardService} from '../../services/board.service';
 import {TaskListService} from '../../services/task-list.service';
 import TaskList from '../../models/task-list';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-tasks-details',
@@ -32,12 +33,21 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private prevUserId: string;
   public isChanged: Boolean = false;
   private subscription: Subscription = new Subscription();
+  public taskDetailsForm: FormGroup;
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
               private activateRoute: ActivatedRoute,
               private boardService: BoardService,
-              private taskListService: TaskListService) { }
+              private taskListService: TaskListService,
+              private formBuilder: FormBuilder) {
+    this.taskDetailsForm = this.formBuilder.group({
+      name: [[Validators.required, Validators.minLength(3)]],
+      content: [[Validators.required]],
+      develop: [[Validators.required]],
+      dueDate: [[Validators.required]]
+    });
+  }
 
   public ngOnInit(): void {
     this.getUrlParam();
@@ -100,7 +110,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         dueDate: this.currentTask.dueDate,
         title: this.currentTask.title,
         content: this.currentTask.content,
-        comments: this.currentTask.comments,
+        comments: this.currentTask.comments || '',
         nameOfDeveloper: this.currentTask.nameOfDeveloper,
       };
       this.taskService.updateTask(this.currentTask.id, data)
@@ -169,6 +179,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   public getCurrentDate(): string{
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
+  }
+
+  public stopWrite(): boolean{
+    return false;
   }
 
   public ngOnDestroy(): void {

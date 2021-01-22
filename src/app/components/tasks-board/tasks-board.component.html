@@ -6,85 +6,95 @@
       <div class="option-container">
         <p class="title-create-task">Create task</p>
         <span class="close"
-              (click)="submitted = !submitted"
+              (click)="closeModal()"
         >&times;</span>
       </div>
-      <div class="task-title">
-        <label for="title">Title</label>
-        <input class="title-input"
-               [(ngModel)]="task.title"
-               type="text"
-               id="title"
-               name="title"
-               required
-        />
-      </div>
-      <div class="task-content">
-        <label for="content">Content</label>
-        <textarea class="content-textarea"
-                  [(ngModel)]="task.content"
-                  id="content"
-                  name="content"
-                  rows="1"
-                  cols="1"
-                  wrap="hard"
-                  required
-        ></textarea>
-      </div>
-      <div class="task-develop">
-        <label for="develop">Develop</label>
-        <select class="develop-select"
-                [(ngModel)]="task.doTask"
-                name="develop"
-                id="develop"
-        >
-          <option [ngValue]="undefined" hidden>Select develop:</option>
-          <option *ngFor="let user of users"
-                  [value]="user.uid"
+      <form [formGroup]="taskForm"
+            novalidate
+      >
+        <div class="task-title">
+          <label for="title">Title</label>
+          <input class="title-input"
+                 [(ngModel)]="task.title"
+                 formControlName="name"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="task-content">
+          <label for="content">Content</label>
+          <textarea class="content-textarea"
+                    [(ngModel)]="task.content"
+                    formControlName="content"
+                    id="content"
+                    name="content"
+                    rows="1"
+                    cols="1"
+                    wrap="hard"
+                    required
+          ></textarea>
+        </div>
+        <div class="task-develop">
+          <label for="develop">Develop</label>
+          <select class="develop-select"
+                  [(ngModel)]="task.doTask"
+                  formControlName="develop"
+                  name="develop"
+                  id="develop"
           >
-            {{user.displayName}}
-          </option>
-        </select>
-      </div>
-      <div class="task-due-date">
-        <label for="dueDate">Due date</label>
-        <input class="due-date-input"
-               [(ngModel)]="task.dueDate"
-               [min]="getCurrentDate()"
-               type="date"
-               id="dueDate"
-               name="dueDate"
-               required
-        />
-      </div>
-      <div class="task-comments">
-        <label for="comments">Comments</label>
-        <textarea class="comments-textarea"
-                  [(ngModel)]="task.comments"
-                  id="comments"
-                  name="comments"
-                  required
-        ></textarea>
-      </div>
-      <div class="label-container">
-        <p>Labels</p>
-        <app-label [taskId]="task.uid"></app-label>
-      </div>
-      <div class="file-form-list-container">
-        <div class="file-form">
-          <app-file-form [taskId]="task.uid"></app-file-form>
+            <option [ngValue]="undefined" hidden>Select develop:</option>
+            <option *ngFor="let user of users"
+                    [value]="user.uid"
+            >
+              {{user.displayName}}
+            </option>
+          </select>
         </div>
+        <div class="task-due-date">
+          <label for="dueDate">Due date</label>
+          <input class="due-date-input"
+                 [(ngModel)]="task.dueDate"
+                 [min]="getCurrentDate()"
+                 (keydown)="stopWrite()"
+                 formControlName="dueDate"
+                 type="date"
+                 id="dueDate"
+                 name="dueDate"
+                 required
+          />
+        </div>
+        <div class="task-comments">
+          <label for="comments">Comments</label>
+          <textarea class="comments-textarea"
+                    [(ngModel)]="task.comments"
+                    [ngModelOptions]= "{standalone: true}"
+                    id="comments"
+                    name="comments"
+          ></textarea>
+        </div>
+        <div class="label-container">
+          <p>Labels</p>
+          <app-label [taskId]="task.uid"></app-label>
+        </div>
+        <div class="file-form-list-container">
+          <div class="file-form">
+            <app-file-form [taskId]="task.uid"></app-file-form>
+          </div>
 
-        <div class="file-list">
-          <app-file-list [taskId]="task.uid"></app-file-list>
+          <div class="file-list">
+            <app-file-list [taskId]="task.uid"></app-file-list>
+          </div>
         </div>
-      </div>
-      <div class="container-btn-save-task">
-        <button class="btn-save-task"
-                (click)="saveTask()"
-        >Create
-        </button>
-      </div>
+        <div class="container-btn-save-task">
+          <button class="btn-save-task"
+                  [disabled]="!taskForm.valid"
+                  (click)="saveTask()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

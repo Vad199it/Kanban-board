@@ -1,3 +1,10 @@
+.alert-danger{
+  color: red;
+  font-size: 12px;
+  height: 14px;
+  margin-left: 50px;
+}
+
 .board-color,
 .board-title {
   display: flex;
@@ -26,6 +33,10 @@
   }
 }
 
+.board-color{
+  margin-top: 10px;
+}
+
 .container-btn-delete-update-board {
   display: flex;
   justify-content: flex-end;
@@ -49,6 +60,10 @@
 
     &:hover {
       background-color: rgba(9, 30, 66, 0.1);
+    }
+
+    &[disabled]{
+      color: #cdcdcd;
     }
   }
 

@@ -91,6 +91,10 @@
       &:hover {
         background-color: rgba(9, 30, 66, 0.1);
       }
+
+      &[disabled]{
+        color: #cdcdcd;
+      }
     }
 
     .btn-update-task {

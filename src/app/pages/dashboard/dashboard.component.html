@@ -6,35 +6,47 @@
       <div class="option-container">
         <p class="title-create-board">Create board</p>
         <span class="close"
-              (click)="submitted = !submitted"
+              (click)="closeModal()"
         >&times;</span>
       </div>
-      <div class="board-title">
-        <label for="title"><span>Title</span></label>
-        <input class="title-input"
-               [(ngModel)]="board.title"
-               type="text"
-               id="title"
-               name="title"
-               required
-        />
-      </div>
-      <div class="board-color">
-        <label for="color">Color</label>
-        <input class="color-input"
-               [(ngModel)]="board.color"
-               type="color"
-               id="color"
-               value="#444"
-               name="color"
-               required
-        />
-      </div>
-      <div class="container-btn-save-board">
-        <button class="btn-save-board"
-                (click)="saveBoard()"
-        >Create</button>
-      </div>
+      <form [formGroup]="boardForm"
+            novalidate
+      >
+        <div class="board-title">
+          <label for="title"><span>Title</span></label>
+          <input class="title-input"
+                 [(ngModel)]="board.title"
+                 formControlName="name"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="boardForm.controls['name'].invalid && boardForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="board-color">
+          <label for="color">Color</label>
+          <input class="color-input"
+                 [(ngModel)]="board.color"
+                 [ngModelOptions]= "{standalone: true}"
+                 type="color"
+                 id="color"
+                 value="#444"
+                 name="color"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-board">
+          <button class="btn-save-board"
+                  [disabled]="!boardForm.valid"
+                  (click)="saveBoard()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <div class="add-board-button-container">

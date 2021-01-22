@@ -1,14 +1,21 @@
 <div *ngIf="currentTaskList"
      class="edit-form">
-  <form>
+  <form [formGroup]="taskListForm"
+        novalidate
+  >
     <div class="task-list-title">
       <label for="title"><span>Title</span></label>
       <input class="title-input"
              [(ngModel)]="currentTaskList.title"
+             formControlName="name"
              type="text"
              id="title"
              name="title"
       />
+    </div>
+    <div class="alert-danger">
+            <span *ngIf="taskListForm.controls['name'].invalid && taskListForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
     </div>
     <div class="task-list-is-final-list">
       <label for="check"><span>Final list</span></label>
@@ -24,13 +31,16 @@
   </form>
   <div class="container-btn-delete-update-task-list">
     <button class="btn-update-task-list"
+            [disabled]="!taskListForm.valid"
             (click)="updateTaskList()"
             type="submit"
     >
       Update
     </button>
     <button class="btn-delete-task-list"
-            (click)="deleteTaskList()">
+            [disabled]="!taskListForm.valid"
+            (click)="deleteTaskList()"
+    >
       Delete
     </button>
   </div>

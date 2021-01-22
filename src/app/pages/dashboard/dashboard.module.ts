@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { BoardsListComponent } from '../../components/boards-list/boards-list.component';
 import { BoardDetailsComponent } from '../../components/board-details/board-details.component';
@@ -27,7 +27,8 @@ import { TableComponent } from '../../components/ui/table/table.component';
     imports: [
         CommonModule,
         DashboardRoutingModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class DashboardModule { }

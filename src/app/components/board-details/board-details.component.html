@@ -1,19 +1,29 @@
 <div *ngIf="currentBoard"
      class="board-details-edit-form-container">
-  <form class="board-details-edit-form">
+  <form class="board-details-edit-form"
+        [formGroup]="boardForm"
+        novalidate
+  >
     <div class="board-title">
       <label for="title"><span>Title</span></label>
       <input class="title-input"
              [(ngModel)]="currentBoard.title"
+             formControlName="name"
              id="title"
              type="text"
              name="title"
       />
     </div>
+    <div class="alert-danger">
+            <span *ngIf="boardForm.controls['name'].invalid && boardForm.controls['name'].touched"
+            >
+              Incorrect name(>3)</span>
+    </div>
     <div class="board-color">
       <label for="color">Color</label>
       <input class="color-input"
              [(ngModel)]="currentBoard.color"
+             [ngModelOptions]="{standalone: true}"
              id="color"
              type="color"
              value="{{currentBoard.color}}"
@@ -23,11 +33,13 @@
   </form>
   <div class="container-btn-delete-update-board">
     <button class="btn-update-board"
+            [disabled]="!boardForm.valid"
             (click)="updateBoard()"
             type="submit">
       Update
     </button>
     <button class="btn-delete-board"
+            [disabled]="!boardForm.valid"
             (click)="deleteBoard()">
       Delete
     </button>

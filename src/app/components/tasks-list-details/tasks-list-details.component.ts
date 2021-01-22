@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, Output, EventEmitter, SimpleChanges} from '
 
 import TaskList from '../../models/task-list';
 import {TaskListService} from '../../services/task-list.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-tasks-list-details',
@@ -15,8 +16,14 @@ export class TasksListDetailsComponent implements OnChanges {
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public currentTaskList: TaskList;
   public isFinalList: boolean;
+  public taskListForm: FormGroup;
 
-  constructor(private taskListService: TaskListService) { }
+  constructor(private taskListService: TaskListService,
+              private formBuilder: FormBuilder) {
+    this.taskListForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.taskList && changes.taskList.currentValue) {

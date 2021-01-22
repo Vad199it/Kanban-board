@@ -79,6 +79,10 @@
       &:hover {
         background-color: rgba(9, 30, 66, 0.1);
       }
+
+      &[disabled]{
+        color: #cdcdcd;
+      }
     }
   }
 
@@ -90,6 +94,15 @@
     width: 350px;
     line-height: 16px;
     border-radius: 3px;
+
+    form{
+      .alert-danger{
+        color: red;
+        font-size: 12px;
+        height: 14px;
+        margin-left: 70px;
+      }
+    }
 
     .option-container{
       display: flex;
@@ -116,7 +129,7 @@
     }
 
     .task-list-title{
-      margin-bottom: 4%;
+      margin-bottom: 2%;
     }
     .title-input,
     .check-input{

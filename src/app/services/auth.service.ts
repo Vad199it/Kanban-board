@@ -1,10 +1,10 @@
 import {Injectable, NgZone} from '@angular/core';
-import { User } from '../models/user';
+import {User} from '../models/user';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {AppConst} from '../app.constants';
 import {Observable} from 'rxjs';
 import Board from '../models/board';
@@ -22,11 +22,13 @@ export class AuthService {
               private afAuth: AngularFireAuth,
               private router: Router,
               private ngZone: NgZone,
-  ) {}
+  ) {
+  }
 
-  public getUser(): any{
+  public getUser(): any {
     return firebase.auth().currentUser;
   }
+
   public signIn(email: string, password: string): Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -96,8 +98,7 @@ export class AuthService {
       return userRef.set(userData, {
         merge: true
       });
-    }
-    catch (err){
+    } catch (err) {
       console.log(err);
     }
   }
@@ -112,7 +113,7 @@ export class AuthService {
     return this.afs.collection(this.dbPath);
   }
 
-  public getUserById(id: string): Observable<User>{
+  public getUserById(id: string): Observable<User> {
     this.userDoc = this.afs.doc<User>(`users/${id}`);
     return this.user = this.userDoc.valueChanges();
   }

@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, Output, EventEmitter, SimpleChanges} from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import Board from '../../models/board';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-board-details',
@@ -12,8 +13,14 @@ export class BoardDetailsComponent implements OnChanges {
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public currentBoard: Board;
+  public boardForm: FormGroup;
 
-  constructor(private boardService: BoardService) { }
+  constructor(private boardService: BoardService,
+              private formBuilder: FormBuilder) {
+    this.boardForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.board && changes.board.currentValue) {

@@ -7,6 +7,7 @@ import TaskList from '../../models/task-list';
 import {TaskListService} from '../../services/task-list.service';
 import {BoardService} from '../../services/board.service';
 import Board from '../../models/board';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -20,10 +21,15 @@ export class BoardComponent implements OnInit, OnDestroy{
   public isFinalList: boolean = false;
   public id: string;
   private subscription: Subscription;
+  public taskListForm: FormGroup;
 
   constructor(private activateRoute: ActivatedRoute,
               private taskListService: TaskListService,
-              private boardService: BoardService) {
+              private boardService: BoardService,
+              private formBuilder: FormBuilder) {
+    this.taskListForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
   }
 
   public ngOnInit(): void {
@@ -48,14 +54,20 @@ export class BoardComponent implements OnInit, OnDestroy{
     this.taskList.order = +date;
     this.taskList.isFinalList = this.isFinalList;
     this.taskListService.createTaskList(this.taskList).then(() => {
-      this.submitted = false;
       this.isFinalList = false;
     });
+    this.submitted = false;
+    this.taskListForm.markAsUntouched();
   }
 
   public newTaskList(): void {
     this.submitted = true;
     this.taskList = new TaskList();
+  }
+
+  public closeModal(): void {
+    this.submitted = !this.submitted;
+    this.taskListForm.markAsUntouched();
   }
 
   public ngOnDestroy(): void {

@@ -8,13 +8,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
-  userForm: FormGroup;
+  public userForm: FormGroup;
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder) {
     this.userForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 

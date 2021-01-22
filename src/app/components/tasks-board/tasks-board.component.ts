@@ -13,6 +13,7 @@ import {AuthService} from '../../services/auth.service';
 import {BoardService} from '../../services/board.service';
 import TaskList from '../../models/task-list';
 import {TaskListService} from '../../services/task-list.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-tasks-board',
@@ -30,13 +31,22 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   private boardId: string;
   public submitted: boolean = false;
   private subscription: Subscription = new Subscription();
+  public taskForm: FormGroup;
 
   constructor(private taskService: TaskService,
               private authService: AuthService,
               private db: AngularFirestore,
               private boardService: BoardService,
               private activateRoute: ActivatedRoute,
-              private taskListService: TaskListService) { }
+              private taskListService: TaskListService,
+              private formBuilder: FormBuilder) {
+    this.taskForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      content: ['', [Validators.required]],
+      develop: ['', [Validators.required]],
+      dueDate: ['', [Validators.required]]
+    });
+  }
 
   public ngOnInit(): void {
     this.retrieveUsers();
@@ -81,9 +91,10 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       this.task.ownerTask = this.authService.getUser().displayName;
       this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
       this.taskService.createTask(this.task, this.task.uid).then(() => {
-        this.submitted = false;
       });
     });
+    this.submitted = false;
+    this.taskForm.markAsUntouched();
   }
 
   public newTask(): void {
@@ -126,6 +137,15 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
 
   public getCurrentDate(): string{
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
+  }
+
+  public closeModal(): void {
+    this.submitted = !this.submitted;
+    this.taskForm.markAsUntouched();
+  }
+
+  public stopWrite(): boolean{
+    return false;
   }
 
   public ngOnDestroy(): void {

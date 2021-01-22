@@ -11,36 +11,46 @@
         <p class="title-create-task-list">Create task list</p>
         <span
           class="close"
-          (click)="submitted = !submitted"
+          (click)="closeModal()"
         >&times;</span>
       </div>
-      <div class="task-list-title">
-        <label for="title"><span>Title</span></label>
-        <input class="title-input"
-               [(ngModel)]="taskList.title"
-               type="text"
-               id="title"
-               name="title"
-               required
-        />
-      </div>
-      <div class="task-list-is-final-list">
-        <label for="check"><span>Final list</span></label>
-        <input class="check-input"
-               [checked]="isFinalList"
-               (change)="isFinalList = !isFinalList"
-               type="checkbox"
-               id="check"
-               name="check"
-               required
-        />
-      </div>
-      <div class="container-btn-save-task-list">
-        <button class="btn-save-task-list"
-                (click)="saveTaskList()"
-        >Create
-        </button>
-      </div>
+      <form [formGroup]="taskListForm"
+            novalidate
+      >
+        <div class="task-list-title">
+          <label for="title"><span>Title</span></label>
+          <input class="title-input"
+                 [(ngModel)]="taskList.title"
+                 formControlName="name"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="taskListForm.controls['name'].invalid && taskListForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="task-list-is-final-list">
+          <label for="check"><span>Final list</span></label>
+          <input class="check-input"
+                 [checked]="isFinalList"
+                 (change)="isFinalList = !isFinalList"
+                 type="checkbox"
+                 id="check"
+                 name="check"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-task-list">
+          <button class="btn-save-task-list"
+                  [disabled]="!taskListForm.valid"
+                  (click)="saveTaskList()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

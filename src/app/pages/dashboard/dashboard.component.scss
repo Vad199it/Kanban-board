@@ -31,6 +31,10 @@
       &:hover {
         background-color: rgba(9, 30, 66, 0.1);
       }
+
+      &[disabled]{
+        color: #cdcdcd;
+      }
     }
   }
 
@@ -42,6 +46,15 @@
     width: 350px;
     line-height: 16px;
     border-radius: 3px;
+
+    form{
+      .alert-danger{
+        color: red;
+        font-size: 12px;
+        height: 14px;
+        margin-left: 50px;
+      }
+    }
 
     .option-container{
       display: flex;
@@ -65,6 +78,10 @@
         align-items: center;
         color: #808080;
       }
+    }
+
+    .board-color {
+      margin-top: 10px;
     }
 
     .board-title{
