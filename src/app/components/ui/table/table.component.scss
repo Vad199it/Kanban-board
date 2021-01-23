@@ -1,23 +1,68 @@
-.search {
-  margin-bottom: 2%;
-  padding: 4px;
-  box-sizing: border-box;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: 400;
-  background-color: rgb(255, 255, 255);
-  text-decoration: none;
-  height: 30px;
-  white-space: nowrap;
-  color: darkslateblue;
-  outline: none;
-  border: 1px solid #cdcdcd;
-  width: 35%;
+.search-container {
+  position: relative;
+
+  .search {
+    margin-bottom: 2%;
+    padding: 4px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: rgb(255, 255, 255);
+    text-decoration: none;
+    height: 30px;
+    white-space: nowrap;
+    color: darkslateblue;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    width: 35%;
+
+    @media(max-width: 620px) {
+      width: 100%;
+    }
+  }
+
+  .search-results{
+    z-index: 2;
+    position: absolute;
+    max-height: 133px;
+    min-height: 30px;
+    width: 35%;
+    background-color: white;
+    top: 31px;
+    border-radius: 3px;
+    border: 1px solid #cdcdcd;
+    overflow: auto;
+
+    @media(max-width: 620px) {
+      width: 100%;
+    }
+
+    .search-value-container{
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #cdcdcd;
+      border-radius: 3px;
+      color: darkslateblue;
+      padding: 5px;
+      margin: 2px;
+
+      .search-board-icon{
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 }
 
 .boards-table-container {
-  overflow-y: auto;
-  max-height: 65vh;
+  height: 65vh;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #cdcdcd;
+  margin-bottom: 10px;
+  border-radius: 3px;
+
   .boards-table {
     display: grid;
     border-collapse: collapse;
@@ -27,6 +72,12 @@
       minmax(50px, 1.67fr)
       minmax(50px, 1.67fr)
       minmax(50px, 0.8fr);
+
+    tbody tr:nth-child(odd) {
+      td{
+        background-color: white;
+      }
+    }
 
     thead,
     tbody,
@@ -56,6 +107,7 @@
         background-color: #f4f5f7;
         padding: 10px 0;
         cursor: pointer;
+        border-top: 2px solid #cdcdcd;
 
         &:last-child {
 
@@ -77,6 +129,7 @@
       width: 16px;
       height: 16px;
       cursor: pointer;
+      margin-left: 5px;
     }
 
     .board-title {
@@ -96,3 +149,4 @@
     }
   }
 }
+

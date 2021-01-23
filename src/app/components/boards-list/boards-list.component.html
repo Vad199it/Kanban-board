@@ -8,6 +8,14 @@
                (filter)="retrieveBoardsByFilter($event)"
     >
     </app-table>
+    <div class="prev-next-btn-container">
+      <button [disabled]="!disablePrev"
+              (click)="prevPage()">prev
+      </button>
+      <button [disabled]="!disableNext"
+              (click)="nextPage()">next
+      </button>
+    </div>
   </div>
   <div class="board-lists">
     <p class="name-board-lists">Assigned boards </p>
@@ -15,8 +23,17 @@
                [tableId]="'assignedBoards'"
                (isModal)="this.closeModal($event)"
                (currentBoard)="setActiveBoard($event)"
+               (filter)="retrieveBoardsByFilter($event)"
     >
     </app-table>
+    <div class="prev-next-btn-container">
+      <button [disabled]="!disablePrevOther"
+              (click)="prevPageOther()">prev
+      </button>
+      <button [disabled]="!disableNextOther"
+              (click)="nextPageOther()">next
+      </button>
+    </div>
   </div>
 </div>
 <div

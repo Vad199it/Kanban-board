@@ -31,7 +31,7 @@
         <div class="scrollable">
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
-                  formControlName="develop"
+                  [ngModelOptions]= "{standalone: true}"
                   (ngModelChange)="changeUserInBoard(userId.value)"
                   #userId
                   name="develop"

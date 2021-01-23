@@ -5,11 +5,37 @@
   border-radius: 3px;
   box-shadow: 0 4px 8px -2px rgba(9, 30, 66, .25), 0 0 1px rgba(9, 30, 66, .31);
   min-height: 84%;
-  padding: 2%;
+  padding: 1%;
   justify-content: space-between;
 
   .board-lists {
     width: 48%;
+
+    .prev-next-btn-container{
+      display: flex;
+      justify-content: center;
+
+      button{
+        margin-right: 40px;
+        padding: 4px 10px;
+        box-sizing: border-box;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        background-color: rgba(9, 30, 66, 0.08);
+        border: 1px solid transparent;
+        text-decoration: none;
+        height: 30px;
+        white-space: nowrap;
+        color: darkslateblue;
+        outline: none;
+
+        &[disabled]{
+          color: #cdcdcd;
+        }
+      }
+    }
 
     .name-board-lists {
       color: darkslateblue;

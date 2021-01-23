@@ -1,8 +1,26 @@
-<input class="search"
-       [(ngModel)]="title"
-       type="text"
-       placeholder="Search"
-       autofocus>
+<div class="search-container">
+  <input class="search"
+         [(ngModel)]="title"
+         (input)="searchResults(searchText.value)"
+         type="text"
+         placeholder="Search"
+         #searchText
+  >
+  <div class="search-results"
+       [hidden]="isVisible"
+  >
+    <div *ngFor="let searchBoard of searchingBoards; trackBy: trackByMethod">
+      <div class="search-value-container"
+           (click)="navigateToBoard(searchBoard.uid)"
+      >
+        <div class="search-board-icon"
+             [style.background-color]="searchBoard.color"></div>
+        <div>{{searchBoard.title}}</div>
+        <div>{{searchBoard.ownerUsername}}</div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="boards-table-container">
   <table class="boards-table">
     <thead>
@@ -34,7 +52,7 @@
     <tbody>
     <tr
       class="list-group-item"
-      *ngFor="let board of boards | appFilter: title; trackBy: trackByMethod">
+      *ngFor="let board of boards; trackBy: trackByMethod">
       <td>
         <div class="board-icon"
              (click)="navigateToBoard(board.uid)"

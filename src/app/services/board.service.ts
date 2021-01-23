@@ -21,15 +21,55 @@ export class BoardService {
   }
 
   public getBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc'): AngularFirestoreCollection<Board> {
-    return this.db.collection(this.dbPath, ref => ref
+    return this.db.collection(this.dbPath, (ref) => ref
       .where(AppConst.ID, '==', userId)
-      .orderBy(field || AppConst.ORDER, directionStr || 'asc'));
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .limit(11));
+  }
+
+  public getNextPageOfBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc', lastInResponse?: any)
+    : AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where(AppConst.ID, '==', userId)
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .startAfter(lastInResponse)
+      .limit(11));
+  }
+
+  public getPrevPageOfBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc', firstInResponse?: any, prevStartAt?: any)
+    : AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where(AppConst.ID, '==', userId)
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .startAt(prevStartAt)
+      .endBefore(firstInResponse)
+      .limit(11));
   }
 
   public getOtherBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc'): AngularFirestoreCollection<Board> {
-    return this.db.collection(this.dbPath, ref => ref
+    return this.db.collection(this.dbPath, (ref) => ref
       .where('usernames', 'array-contains', userId)
-      .orderBy(field || AppConst.ORDER, directionStr || 'asc'));
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .limit(11));
+  }
+
+  public getNextPageOfOtherBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc', lastInResponse?: any)
+    : AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where('usernames', 'array-contains', userId)
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .startAfter(lastInResponse)
+      .limit(11));
+  }
+
+  public getPrevPageOfOtherBoards(userId: string, field?: string, directionStr?: 'asc' | 'desc', firstInResponse?: any, prevStartAt?: any)
+    : AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where('usernames', 'array-contains', userId)
+      .orderBy(field || AppConst.ORDER, directionStr || 'asc')
+      .startAt(prevStartAt)
+      .endBefore(firstInResponse)
+      .limit(11));
   }
 
   public createBoard(board: Board): Promise<void> {
@@ -53,6 +93,24 @@ export class BoardService {
   public getAllBoards(id: string): AngularFirestoreCollection<Board> {
     return this.db.collection(this.dbPath, ref => ref
       .where('uid', '==', id));
+  }
+
+  public getBoardsBySearch(userId: string, searchText: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where(AppConst.ID, '==', userId)
+      .where('title', '>=' , searchText)
+      .where('title', '<=' , searchText + '\uf8ff')
+      .orderBy('title', 'asc')
+      .limit(5));
+  }
+
+  public getOtherBoardsBySearch(userId: string, searchText: string): AngularFirestoreCollection<Board> {
+    return this.db.collection(this.dbPath, (ref) => ref
+      .where('usernames', 'array-contains', userId)
+      .where('title', '>=' , searchText)
+      .where('title', '<=' , searchText + '\uf8ff')
+      .orderBy('title', 'asc')
+      .limit(5));
   }
 
 }
