@@ -72,12 +72,15 @@
 
   .container-btn-delete-update-task {
     display: flex;
-    position: absolute;
     justify-content: center;
     margin-top: 4%;
-    bottom: 10px;
-    top: 682px;
-    left: 96px;
+
+    @media(max-width: 620px){
+      position: absolute;
+      bottom: 10px;
+      top: 682px;
+      left: 96px;
+    }
 
     .btn-delete-task,
     .btn-update-task {

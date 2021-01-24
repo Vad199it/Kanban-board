@@ -34,9 +34,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   private retrieveTaskLists(): void {
     this.subscription.add(this.taskListService.getTaskLists(this.projectId).valueChanges({idField: 'id'})
-      .subscribe((data: TaskList[]) => {
-        this.taskLists = data;
-      }));
+      .subscribe((data: TaskList[]) =>
+        this.taskLists = data
+      ));
   }
 
   public setActiveTaskList(taskList: TaskList): void {
