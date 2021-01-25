@@ -1,4 +1,4 @@
-.upload-file{
+.upload-file {
   padding: 4px 10px;
   box-sizing: border-box;
   border-radius: 3px;
@@ -13,11 +13,17 @@
   color: darkslateblue;
   outline: none;
   margin-left: 10px;
+
+  &[disabled] {
+    color: #cdcdcd;
+  }
 }
+
 .choose-upload-file-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .choose-file {
     border: 1px solid #cdcdcd;
     border-radius: 3px;
@@ -47,10 +53,16 @@
   }
 }
 
-.progress-container{
-  .progress-bar{
+.progress-container {
+  .progress-bar {
     &::-webkit-progress-value {
       background: darkslateblue;
     }
   }
+}
+
+.message-big-file {
+  color: red;
+  font-size: 12px;
+  height: 14px;
 }

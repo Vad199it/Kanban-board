@@ -32,9 +32,7 @@ export class AuthService {
   public signIn(email: string, password: string): Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate([`${AppConst.TASKS}`]);
-        });
+        this.router.navigate([`${AppConst.TASKS}`]);
         this.setUserData(result.user);
       }).catch((error) => {
         window.alert(error.message);
@@ -75,10 +73,7 @@ export class AuthService {
   public authLogin(provider: any): Promise<void> {
     return this.afAuth.signInWithPopup(provider)
       .then((result) => {
-
-        this.ngZone.run(() => {
-          this.router.navigate([`${AppConst.TASKS}`]);
-        });
+        this.router.navigate([`${AppConst.TASKS}`]);
         this.setUserData(result.user);
       }).catch((error) => {
         window.alert(error);
@@ -99,7 +94,6 @@ export class AuthService {
         merge: true
       });
     } catch (err) {
-      console.log(err);
     }
   }
 

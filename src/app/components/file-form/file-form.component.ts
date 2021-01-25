@@ -13,6 +13,7 @@ export class FileFormComponent implements OnChanges{
   public selectedFiles?: FileList;
   public currentFileUpload?: FileData;
   public percentage: number = 0;
+  public isBigSize: boolean;
 
   constructor(private uploadService: FileDataService) { }
 
@@ -20,16 +21,22 @@ export class FileFormComponent implements OnChanges{
     if (changes.taskId && changes.taskId.currentValue) {
       this.percentage = 0;
       this.selectedFiles = null;
+      this.isBigSize = false;
     }
   }
 
   public selectFile(event: any): void {
     this.selectedFiles = event.target.files;
     this.percentage = 0;
+    this.isBigSize = this.selectedFiles.item(0).size > 10485760;
+  }
+
+  public disableButton(): boolean{
+    return !this.selectedFiles || this.isBigSize;
   }
 
   public upload(): void {
-    if (this.selectedFiles) {
+    if (this.selectedFiles && !this.isBigSize) {
       const file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;
 

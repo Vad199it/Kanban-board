@@ -38,8 +38,8 @@ export class LabelComponent implements OnInit, OnDestroy {
     this.label.order = +date;
     if (!this.label.color) { this.label.color = 'black'; }
     this.labelService.createLabel(this.label).then(() => {
-      this.submitted = false;
     });
+    this.submitted = false;
   }
 
   public newLabel(): void {

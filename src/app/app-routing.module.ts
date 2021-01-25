@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo, emailVerified} from '@angular/fire/auth-guard';
+import {pipe} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['sign-in']);
+const redirectEmailToLogin = () => redirectUnverifiedTo(['sign-in']);
 const redirectLoggedInToDashBoard = () => redirectLoggedInTo(['dashboard']);
+const redirectUnverifiedTo = (redirect: any[]) => pipe(emailVerified, map(emailVerified => emailVerified || redirect));
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full'},
   { path: 'sign-in', loadChildren: () => import('./pages/sign-in/sign-in.module')
-      .then(m => m.SignInModule), ...canActivate(redirectLoggedInToDashBoard) },
+      .then(m => m.SignInModule)},
   { path: 'sign-up', loadChildren: () => import('./pages/sign-up/sign-up.module')
       .then(m => m.SignUpModule), },
   { path: 'forgot-password', loadChildren: () => import('./pages/forgot-password/forgot-password.module')

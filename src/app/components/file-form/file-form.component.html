@@ -10,7 +10,7 @@
   </div>
   <div class="upload-file-container">
     <button class="upload-file"
-            [disabled]="!selectedFiles"
+            [disabled]="disableButton()"
             (click)="upload()"
     >
       Upload
@@ -22,9 +22,12 @@
      class="progress-container">
   <progress class="progress-bar"
             [ngStyle]="{ width: percentage + '%' }"
-    value="{{ percentage }}"
-    max="100"
+            value="{{ percentage }}"
+            max="100"
   >
     {{ percentage }}%
   </progress>
+</div>
+<div class="message-big-file">
+  <p *ngIf="isBigSize">File more than 10 Mb</p>
 </div>
