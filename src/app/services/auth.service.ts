@@ -112,9 +112,4 @@ export class AuthService {
       .where('uid', '==', id));
   }
 
-  get isLoggedIn(): boolean {
-    const user = firebase.auth().currentUser;
-    return (user !== null && user.emailVerified !== false);
-  }
-
 }
