@@ -10,15 +10,22 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ForgotPasswordComponent {
   public userForm: FormGroup;
+  public errorMessage: string;
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder) {
     this.userForm = this.formBuilder.group({
-      passwordResetEmail: ['', [Validators.required, Validators.email]]
+      passwordResetEmail: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]]
     });
   }
 
   public forgotPassword(passwordResetEmail: string): void{
-    this.authService.forgotPassword(passwordResetEmail);
+    this.authService.forgotPassword(passwordResetEmail).catch((error) => {
+      this.errorMessage = error.message;
+    });
+  }
+
+  public clearErrorMessage(): void{
+    this.errorMessage = null;
   }
 }

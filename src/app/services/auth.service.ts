@@ -7,7 +7,6 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {Router} from '@angular/router';
 import {AppConst} from '../app.constants';
 import {Observable} from 'rxjs';
-import Board from '../models/board';
 
 @Injectable({
   providedIn: 'root'
@@ -30,22 +29,20 @@ export class AuthService {
   }
 
   public signIn(email: string, password: string): Promise<void> {
-    return this.afAuth.signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.router.navigate([`${AppConst.TASKS}`]);
+        this.ngZone.run(() => {
+          this.router.navigate([`${AppConst.TASKS}`]);
+        });
         this.setUserData(result.user);
-      }).catch((error) => {
-        window.alert(error.message);
       });
   }
 
   public signUp(name: string, email: string, password: string): Promise<void> {
-    return this.afAuth.createUserWithEmailAndPassword(email, password)
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        this.sendVerificationMail();
-        this.setUserData(result.user, name);
-      }).catch((error: any) => {
-        window.alert(error.message); // :todo write modal
+        this.sendVerificationMail().catch(err => console.log(err));
+        this.setUserData(result.user, name).catch(err => console.log(err));
       });
   }
 
@@ -54,15 +51,12 @@ export class AuthService {
       return user.sendEmailVerification();
     }).then(() => {
       this.router.navigate([`${AppConst.VERIFY_EMAIL}`]);
-    });
+    }).catch(err => console.log(err));
   }
 
   public forgotPassword(passwordResetEmail: string): Promise<void> {
     return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
-      }).catch((error) => {
-        window.alert(error);
       });
   }
 
@@ -71,12 +65,13 @@ export class AuthService {
   }
 
   public authLogin(provider: any): Promise<void> {
-    return this.afAuth.signInWithPopup(provider)
+    return firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate([`${AppConst.TASKS}`]);
+        this.ngZone.run(() => {
+          this.router.navigate([`${AppConst.TASKS}`]);
+        });
         this.setUserData(result.user);
       }).catch((error) => {
-        window.alert(error);
       });
   }
 
@@ -92,7 +87,7 @@ export class AuthService {
       };
       return userRef.set(userData, {
         merge: true
-      });
+      }).catch(err => console.log(err));
     } catch (err) {
     }
   }
@@ -115,6 +110,11 @@ export class AuthService {
   public getAllUsers(id: string): AngularFirestoreCollection<User> {
     return this.afs.collection(this.dbPath, ref => ref
       .where('uid', '==', id));
+  }
+
+  get isLoggedIn(): boolean {
+    const user = firebase.auth().currentUser;
+    return (user !== null && user.emailVerified !== false);
   }
 
 }

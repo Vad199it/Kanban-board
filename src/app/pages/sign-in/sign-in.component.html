@@ -9,8 +9,10 @@
         >
           <h2>Sign In</h2>
           <label>
-            <input formControlName="email"
+            <input (input)="clearErrorMessage()"
+                   formControlName="email"
                    type="text"
+                   maxlength="32"
                    name=""
                    placeholder="UserEmail"
                    #userEmail
@@ -23,9 +25,11 @@
               Incorrect email</span>
           </div>
           <label>
-            <input formControlName="password"
+            <input (input)="clearErrorMessage()"
+                   formControlName="password"
                    type="password"
                    name=""
+                   maxlength="49"
                    placeholder="Password"
                    #userPassword
                    required
@@ -35,6 +39,9 @@
             <span *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched"
             >
               Incorrect password</span>
+            <span *ngIf="errorMessage"
+            >
+              {{errorMessage}}</span>
           </div>
           <div class="btn-container">
             <input [disabled]="!userForm.valid"

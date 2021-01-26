@@ -39,6 +39,10 @@
     justify-content: flex-end;
     margin-top: 4%;
 
+    @media(max-width: 900px) {
+      margin-right: 8px;
+    }
+
     .btn-save-task {
       margin: 0;
       padding: 4px 10px;
@@ -67,22 +71,38 @@
 
   .details {
     background-color: #fefefe;
-    margin: 1px auto;
+    margin: 140px auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 450px;
+    width: 900px;
     line-height: 16px;
     border-radius: 3px;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+    }
 
     .label-container {
       display: flex;
       margin-bottom: 10px;
 
-      p {
+      .label-title-container {
         display: flex;
-        align-items: center;
         color: #808080;
-        width: 100px;
+        flex-direction: column;
+
+        .selected-labels-title {
+          width: 100px;
+          margin-top: 20px;
+          line-height: 19px;
+        }
+
+        .labels-title{
+          width: 100px;
+          margin-top: 34px;
+        }
+
       }
 
       ::ng-deep {
@@ -142,13 +162,19 @@
     .task-order,
     .task-comments {
       display: flex;
-      margin-bottom: 4%;
+      margin-bottom: 17px;
+      align-items: center;
 
       label {
         width: 100px;
         display: flex;
         align-items: center;
         color: #808080;
+      }
+
+      span{
+        margin-left: 5px;
+        color: red;
       }
     }
 
@@ -170,6 +196,10 @@
       outline: none;
       border: 1px solid #cdcdcd;
       width: 308px;
+
+      @media(max-width: 900px) {
+        width: 234px;
+      }
     }
 
     .due-date-input{
@@ -189,8 +219,17 @@
       outline: none;
       border: 1px solid #cdcdcd;
       width: 308px;
-      height: 65px;
+      height: 92px;
       resize: none;
+
+      @media(max-width: 900px) {
+        width: 234px;
+      }
+
+    }
+
+    .comments-textarea{
+
     }
 
     .close {
@@ -209,11 +248,15 @@
   }
 }
 
-@media(max-width: 620px) {
+@media(max-width: 900px) {
   .create-task {
     .details {
       width: 375px;
-      margin: 25px auto;
+      margin: 0 auto;
+      padding: 10px 10px 10px 20px;
+      form {
+        flex-direction: column;
+      }
       .file-form{
         ::ng-deep{
           .choose-file{
@@ -222,13 +265,17 @@
         }
       }
       .label-container {
+
+        .label-title-container{
+          width: 100px;
+        }
         ::ng-deep{
           .labels-container {
             .search{
-              width: 252px;
+              width: 234px;
             }
             .app-label-list-task-container {
-              width: 252px;
+              width: 234px;
             }
           }
         }

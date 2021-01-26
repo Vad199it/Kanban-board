@@ -13,6 +13,13 @@
         display: flex;
         justify-content: space-between;
         padding: 10px;
+
+        span{
+          max-width: 189px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
       width: 250px;
       background-color: white;

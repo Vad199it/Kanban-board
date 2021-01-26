@@ -5,9 +5,7 @@ import {BoardService} from '../../services/board.service';
 import {AuthService} from '../../services/auth.service';
 import Board from '../../models/board';
 import firebase from 'firebase';
-import QuerySnapshot = firebase.firestore.QuerySnapshot;
 import {take} from 'rxjs/operators';
-import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-boards-list',

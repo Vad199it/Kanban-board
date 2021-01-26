@@ -15,12 +15,22 @@
   .task-comments,
   {
     display: flex;
-    margin-bottom: 2%;
+    margin-bottom: 6px;
+    align-items: center;
     label{
       width: 100px;
       display: flex;
       align-items: center;
       color: #808080;
+    }
+
+    span{
+      margin-left: 5px;
+      color: red;
+
+      @media(max-width: 620px){
+        font-size: 16px;
+      }
     }
 
     .scrollable{
@@ -46,6 +56,11 @@
       outline: none;
       border: 1px solid #cdcdcd;
       width: 236px;
+
+      @media(max-width: 620px){
+        width: 214px;
+      }
+
     }
 
     .createDate-input{
@@ -67,19 +82,24 @@
       width: 236px;
       height: 65px;
       resize: none;
+
+      @media(max-width: 620px){
+        width: 214px;
+      }
+
     }
   }
 
   .container-btn-delete-update-task {
     display: flex;
     justify-content: center;
-    margin-top: 4%;
+    margin-top: 14px;
+    width: 335px;
 
     @media(max-width: 620px){
       position: absolute;
       bottom: 10px;
-      top: 682px;
-      left: 96px;
+      top: 690px;
     }
 
     .btn-delete-task,

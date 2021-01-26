@@ -76,11 +76,19 @@ $user-img-path: '../../../assets/person-icon.png';
         font-weight: 500;
         color: #555;
         line-height: 1.2em;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         span {
           font-size: 12px;
           color: #cecece;
           font-weight: 400;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
 

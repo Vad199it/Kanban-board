@@ -41,7 +41,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
               private taskListService: TaskListService,
               private formBuilder: FormBuilder) {
     this.taskForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required]],
       content: ['', [Validators.required]],
       develop: ['', [Validators.required]],
       dueDate: ['', [Validators.required]]

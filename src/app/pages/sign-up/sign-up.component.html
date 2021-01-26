@@ -10,6 +10,7 @@
           <input type="text"
                  formControlName="name"
                  name=""
+                 maxlength="20"
                  placeholder="Username"
                  #userName
                  required
@@ -19,9 +20,11 @@
           >
               Incorrect name</span>
           </div>
-          <input type="email"
+          <input (input)="clearErrorMessage()"
+                 type="email"
                  formControlName="email"
                  name=""
+                 maxlength="32"
                  placeholder="Email Address"
                  #userEmail
                  required
@@ -30,10 +33,14 @@
             <span *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched"
             >
               Incorrect email</span>
+            <span *ngIf="errorMessage"
+            >
+              Email exists</span>
           </div>
           <input type="password"
                  formControlName="password"
                  name=""
+                 maxlength="49"
                  placeholder="Create Password"
                  #userPwd
                  required
@@ -46,6 +53,7 @@
           <input type="password"
                  formControlName="confirmPassword"
                  name=""
+                 maxlength="49"
                  placeholder="Confirm Password"
           >
           <div class="alert-danger">

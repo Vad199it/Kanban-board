@@ -9,22 +9,28 @@
         <input class="title-input"
                [(ngModel)]="currentTask.title"
                formControlName="name"
+               maxlength="20"
                type="text"
                id="title"
                name="title"
         />
+        <span *ngIf="taskForm.controls['name'].invalid"
+        >&#10059;</span>
       </div>
       <div class="task-content">
         <label for="content">Content</label>
         <textarea class="content-textarea"
                   [(ngModel)]="currentTask.content"
                   formControlName="content"
+                  maxlength="200"
                   id="content"
                   rows="1"
                   cols="1"
                   wrap="hard"
                   name="content"
         ></textarea>
+        <span *ngIf="taskForm.controls['content'].invalid"
+        >&#10059;</span>
       </div>
       <div class="task-develop">
         <label for="develop">Develop</label>
@@ -69,12 +75,15 @@
                id="dueDate"
                name="dueDate"
         />
+        <span *ngIf="taskForm.controls['dueDate'].invalid"
+        >&#10059;</span>
       </div>
       <div class="task-comments">
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
                   [(ngModel)]="currentTask.comments"
                   [ngModelOptions]= "{standalone: true}"
+                  maxlength="200"
                   id="comments"
                   name="comments"
         ></textarea>

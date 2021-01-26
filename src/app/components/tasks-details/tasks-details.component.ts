@@ -42,7 +42,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
               private taskListService: TaskListService,
               private formBuilder: FormBuilder) {
     this.taskForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required]],
       content: ['', [Validators.required]],
       dueDate: ['', [Validators.required]]
     });

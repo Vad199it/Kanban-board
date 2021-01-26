@@ -16,7 +16,11 @@
       <div class="menu"
            [ngClass]="{ active:isActiveFont }"
       >
-        <h3>{{ user.displayName }}<br><span>{{ user.email }}</span></h3>
+        <h3 [title]="user.displayName">
+          {{ user.displayName }}
+          <br>
+          <span [title]="user.email">{{ user.email }}</span>
+        </h3>
         <ul>
           <li>
             <div class="log-out-img"></div>
