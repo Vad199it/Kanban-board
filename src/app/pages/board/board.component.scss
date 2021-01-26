@@ -45,11 +45,11 @@
         background-color: rgba(9, 30, 66, 0.1);
       }
 
-      @media(max-width: 900px) {
-        position: absolute;
-        top: 50px;
-        right: 0;
-      }
+    }
+    @media(max-width: 900px) {
+      position: absolute;
+      top: 50px;
+      right: 0;
     }
   }
 }

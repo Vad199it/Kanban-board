@@ -5,12 +5,12 @@
 .taskList {
 
   @media(max-width: 900px) {
-    width: 355px;
+    width: 94vw;
     display: flex;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    z-index: 0
+
+    &::-webkit-scrollbar { width: 0; }
   }
 
   .task-list-col {
@@ -19,9 +19,8 @@
     .taskList-group {
 
       @media(max-width: 900px) {
-        width: 43%;
+        width: 94vw;
         flex-shrink: 0;
-        height: 100%;
 
         > div {
           scroll-snap-align: start;
