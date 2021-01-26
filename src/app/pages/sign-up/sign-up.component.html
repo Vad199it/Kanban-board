@@ -64,7 +64,7 @@
           <div class="btn-container">
             <input class="btn-sign-up"
                    [disabled]="!userForm.valid"
-                   (click)="signUp(userName.value, userEmail.value, userPwd.value)"
+                   (click)="signUp(userName.value.trim(), userEmail.value.trim(), userPwd.value.trim())"
                    type="button"
                    name=""
                    value="Sign Up"
