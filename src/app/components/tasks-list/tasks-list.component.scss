@@ -4,10 +4,29 @@
 
 .taskList {
 
+  @media(max-width: 900px) {
+    width: 355px;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    z-index: 0
+  }
+
   .task-list-col {
     white-space: nowrap;
 
     .taskList-group {
+
+      @media(max-width: 900px) {
+        width: 43%;
+        flex-shrink: 0;
+        height: 100%;
+
+        > div {
+          scroll-snap-align: start;
+        }
+      }
 
       .task-list-header{
         display: flex;
