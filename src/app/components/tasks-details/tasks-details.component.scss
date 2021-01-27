@@ -1,9 +1,28 @@
-.task-label-container{
+.task-label-container {
   display: flex;
   justify-content: space-between;
 
-  .task-details-container{
+  .task-details-container {
     position: relative;
+
+    form {
+      .searchUser-container {
+        display: flex;
+        justify-content: flex-end;
+
+        .searchUser {
+          border: 1px solid #cdcdcd;
+          border-radius: 3px;
+          padding: 4px;
+          width: 236px;
+          white-space: nowrap;
+          color: darkslateblue;
+          outline: none;
+          background-color: white;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   .task-title,
@@ -13,28 +32,31 @@
   .task-order,
   .task-dueDate,
   .task-comments,
+  .task-list
   {
     display: flex;
     margin-bottom: 6px;
     align-items: center;
-    label{
+
+    label {
       width: 100px;
       display: flex;
       align-items: center;
       color: #808080;
     }
 
-    span{
+    span {
       margin-left: 5px;
       color: red;
 
-      @media(max-width: 620px){
+      @media(max-width: 620px) {
         font-size: 16px;
       }
     }
 
-    .scrollable{
-      .develop-input{
+    .scrollable {
+      .develop-input {
+        height: 60px;
       }
     }
 
@@ -42,7 +64,8 @@
     .develop-input,
     .createDate-input,
     .order-input,
-    .dueDate-input{
+    .dueDate-input,
+    .task-list-input{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -57,18 +80,21 @@
       border: 1px solid #cdcdcd;
       width: 236px;
 
-      @media(max-width: 620px){
-        width: 214px;
+      @media(max-width: 620px) {
       }
 
     }
 
-    .createDate-input{
+    .task-list-input {
+      height: 57px;
+    }
+
+    .createDate-input {
       background-color: #f4f5f7;
     }
 
     .content-textarea,
-    .comments-textarea{
+    .comments-textarea {
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -83,10 +109,17 @@
       height: 65px;
       resize: none;
 
-      @media(max-width: 620px){
-        width: 214px;
+      @media(max-width: 620px) {
       }
 
+    }
+  }
+
+  .task-list{
+    display: none;
+
+    @media(max-width: 620px) {
+      display: flex;
     }
   }
 
@@ -96,10 +129,10 @@
     margin-top: 14px;
     width: 335px;
 
-    @media(max-width: 620px){
+    @media(max-width: 620px) {
       position: absolute;
       bottom: 10px;
-      top: 690px;
+      top: 808px;
     }
 
     .btn-delete-task,
@@ -123,7 +156,7 @@
         background-color: rgba(9, 30, 66, 0.1);
       }
 
-      &[disabled]{
+      &[disabled] {
         color: #cdcdcd;
       }
     }
@@ -133,37 +166,39 @@
     }
   }
 
-  .file-form{
+  .file-form {
     margin-bottom: 10px;
   }
 
 }
 
-@media(max-width: 620px){
-  .task-label-container{
+@media(max-width: 620px) {
+  .task-label-container {
     flex-direction: column;
   }
 
-  .container-btn-delete-update-task{
+  .container-btn-delete-update-task {
     margin: 2% 0;
   }
 
-  .label-container{
-    ::ng-deep{
-      .list-group{
+  .label-container {
+    ::ng-deep {
+      .list-group {
         max-height: 88px;
       }
-      .search{
+
+      .search {
         width: 334px;
       }
-      .app-label-list-task-container{
+
+      .app-label-list-task-container {
         width: 334px;
       }
     }
   }
-  .file-form{
-    ::ng-deep{
-      .upload-file{
+  .file-form {
+    ::ng-deep {
+      .upload-file {
         margin-left: 0;
       }
     }

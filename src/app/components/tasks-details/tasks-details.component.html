@@ -5,22 +5,22 @@
           novalidate
     >
       <div class="task-title">
-        <label for="title">Title</label>
+        <label for="title">Title<span>&#10059;</span></label>
         <input class="title-input"
                [(ngModel)]="currentTask.title"
+               [style.borderColor]="taskForm.controls['name'].invalid && taskForm.controls['name'].touched ? 'red': '#cdcdcd'"
                formControlName="name"
-               maxlength="20"
+               maxlength="100"
                type="text"
                id="title"
                name="title"
         />
-        <span *ngIf="taskForm.controls['name'].invalid"
-        >&#10059;</span>
       </div>
       <div class="task-content">
-        <label for="content">Content</label>
+        <label for="content">Content<span>&#10059;</span></label>
         <textarea class="content-textarea"
                   [(ngModel)]="currentTask.content"
+                  [style.borderColor]="taskForm.controls['content'].invalid && taskForm.controls['content'].touched ? 'red': '#cdcdcd'"
                   formControlName="content"
                   maxlength="200"
                   id="content"
@@ -29,23 +29,30 @@
                   wrap="hard"
                   name="content"
         ></textarea>
-        <span *ngIf="taskForm.controls['content'].invalid"
-        >&#10059;</span>
+      </div>
+      <div class="searchUser-container">
+        <label>
+          <input class="searchUser"
+                 [(ngModel)]="title"
+                 [ngModelOptions]="{standalone: true}"
+                 type="text"
+                 placeholder="Search">
+        </label>
       </div>
       <div class="task-develop">
         <label for="develop">Develop</label>
         <div class="scrollable">
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
-                  [ngModelOptions]= "{standalone: true}"
+                  [ngModelOptions]="{standalone: true}"
                   (ngModelChange)="changeUserInBoard(userId.value)"
                   #userId
                   name="develop"
                   id="develop"
-                  size="1"
+                  size="5"
                   autocomplete="off"
           >
-            <option *ngFor="let user of users"
+            <option *ngFor="let user of users | appFilterUsers: title"
                     [value]="user.uid"
             >
               {{user.displayName}}
@@ -65,24 +72,42 @@
         />
       </div>
       <div class="task-dueDate">
-        <label for="dueDate">Due date</label>
+        <label for="dueDate">Due date<span>&#10059;</span></label>
         <input class="dueDate-input"
                [(ngModel)]="currentTask.dueDate"
-               [min]="getCurrentDate()"
-               (keydown)="stopWrite()"
+               [min]="currentTask.createDate"
+               [style.borderColor]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched ? 'red': '#cdcdcd'"
                formControlName="dueDate"
                type="date"
                id="dueDate"
                name="dueDate"
         />
-        <span *ngIf="taskForm.controls['dueDate'].invalid"
-        >&#10059;</span>
+      </div>
+      <div class="task-list">
+        <label for="list">TaskLists</label>
+        <div class="scrollable">
+          <select class="task-list-input"
+                  [value]="taskListId"
+                  (change)="changeTaskListInTask(taskListId.value)"
+                  #taskListId
+                  name="list"
+                  id="list"
+                  size="3"
+                  autocomplete="off"
+          >
+            <option *ngFor="let taskList of taskLists | appFilter: titleTaskList"
+                    [value]="taskList.uid"
+            >
+              {{taskList.title}}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="task-comments">
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
                   [(ngModel)]="currentTask.comments"
-                  [ngModelOptions]= "{standalone: true}"
+                  [ngModelOptions]="{standalone: true}"
                   maxlength="200"
                   id="comments"
                   name="comments"

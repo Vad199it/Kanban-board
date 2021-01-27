@@ -19,6 +19,7 @@ import { FileListComponent } from '../../components/file-list/file-list.componen
 import { FileDetailsComponent } from '../../components/file-details/file-details.component';
 import {FilterTasksPipe} from '../../pipes/filterTasks.pipe';
 import {LabelFilterPipe} from '../../pipes/labelFilter.pipe';
+import {FilterUsersPipe} from '../../pipes/filterUsers.pipe';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {LabelFilterPipe} from '../../pipes/labelFilter.pipe';
     FileListComponent,
     FileDetailsComponent,
     FilterTasksPipe,
-    LabelFilterPipe
+    LabelFilterPipe,
+    FilterUsersPipe
   ],
     imports: [
         CommonModule,

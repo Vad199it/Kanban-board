@@ -29,6 +29,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   public board: Board[];
   public tasksId: string[];
   private boardId: string;
+  public title: string;
   public submitted: boolean = false;
   private subscription: Subscription = new Subscription();
   public taskForm: FormGroup;
@@ -44,7 +45,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       content: ['', [Validators.required]],
       develop: ['', [Validators.required]],
-      dueDate: ['', [Validators.required]]
+      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]]
     });
   }
 
@@ -142,10 +143,6 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   public closeModal(): void {
     this.submitted = !this.submitted;
     this.taskForm.markAsUntouched();
-  }
-
-  public stopWrite(): boolean{
-    return false;
   }
 
   public ngOnDestroy(): void {

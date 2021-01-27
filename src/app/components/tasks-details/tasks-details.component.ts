@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, take} from 'rxjs/operators';
 import {formatDate} from '@angular/common';
 
 import {User} from '../../models/user';
@@ -27,11 +27,16 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public users: User[];
   public board: Board[];
-  public tasksId: string[];
   public currentTask: Task;
+  public taskLists: TaskList[];
+  public newTaskList: TaskList;
+  public tasksId: string[];
   private boardId: string;
   private prevUserId: string;
+  public title: string;
+  public titleTaskList: string;
   public isChanged: Boolean = false;
+  public newTaskListId: string;
   private subscription: Subscription = new Subscription();
   public taskForm: FormGroup;
 
@@ -44,7 +49,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       content: ['', [Validators.required]],
-      dueDate: ['', [Validators.required]]
+      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]]
     });
   }
 
@@ -53,6 +58,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.retrieveUsers();
     this.retrieveBoards();
     this.retrieveTaskLists();
+    this.retrieveAllTaskLists();
   }
 
   private getUrlParam(): void{
@@ -85,7 +91,65 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.isChanged = false;
   }
 
+  private updateTaskListInTask(newId: string, uId: string): void {
+    const taskData: {id: string} = {
+      id: newId,
+    };
+    this.taskService.updateTask(uId, taskData)
+      .catch(err => console.log(err));
+  }
+
+  private getTaskListFromArrayTaskList(taskListId: string): TaskList {
+    return this.taskLists.find((elem: TaskList) => (taskListId === elem.uid));
+  }
+
+  private getAndUpdateNewTaskList(taskListId: string): void {
+    this.taskListService.getTaskListsById(taskListId).valueChanges({idField: 'id'})
+      .pipe(
+        take(1)
+      )
+      .subscribe((data: TaskList[]) => {
+        this.newTaskList = data[0];
+        const arrayOfTasksId: string[] = this.pushTaskIdFromTasksListAndReturn(this.currentTask.uid, this.newTaskList);
+        this.updateTasksId(taskListId, arrayOfTasksId);
+      });
+  }
+
+  private deleteTaskIdFromTasksListAndReturn(taskId: string, taskListId: string): string[]{
+    const taskList: TaskList = this.getTaskListFromArrayTaskList(taskListId);
+    const setOfTasksId = new Set(taskList.tasksId);
+    setOfTasksId.delete(taskId);
+    return [...setOfTasksId];
+  }
+
+  private pushTaskIdFromTasksListAndReturn(taskId: string, taskList: TaskList): string[]{
+    const arrayOfTasksId = taskList.tasksId;
+    arrayOfTasksId.unshift(taskId);
+    const setOfTasksId = new Set(arrayOfTasksId);
+    return [...setOfTasksId];
+  }
+
+  private updateTasksId(taskListId: string, data: string[]): Promise<void> {
+    const taskListData: {tasksId: string[]} = {
+      tasksId: [...data],
+    };
+    return this.taskListService.updateTaskList(taskListId, taskListData)
+      .catch(err => console.log(err));
+  }
+
+  private changeOldTaskList(): void {
+      const currArrayOfTasksId: string[] = this.deleteTaskIdFromTasksListAndReturn(this.currentTask.uid, this.taskListId);
+      this.updateTasksId(this.taskListId, currArrayOfTasksId)
+        .catch((error) => {});
+  }
+
   public updateTask(): void {
+    if (this.newTaskListId) {
+      this.updateTaskListInTask(this.newTaskListId, this.currentTask.uid);
+      this.changeOldTaskList();
+      this.getAndUpdateNewTaskList(this.newTaskListId);
+    }
+
     if (this.isChanged) {
       if (this.prevUserId !== this.currentTask.doTask) {
         this.changeUsername(this.prevUserId, this.currentTask.doTask);
@@ -170,6 +234,13 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       }));
   }
 
+  private retrieveAllTaskLists(): void {
+    this.subscription.add(this.taskListService.getTaskLists(this.boardId).valueChanges({idField: 'id'})
+      .subscribe((data: TaskList[]) => {
+        this.taskLists = data;
+      }));
+  }
+
   public removeFirst(src: string[], element: string): string[] {
     const index = src.indexOf(element);
     if (index === -1) { return src; }
@@ -180,8 +251,13 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     return formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
   }
 
-  public stopWrite(): boolean{
-    return false;
+  public changeTaskListInTask(newValue: string): void {
+    if (this.taskListId !== newValue) {
+      this.newTaskListId = newValue;
+    }
+    else{
+      this.newTaskListId = null;
+    }
   }
 
   public ngOnDestroy(): void {

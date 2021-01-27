@@ -14,23 +14,23 @@
       >
         <div>
           <div class="task-title">
-            <label for="title">Title</label>
+            <label for="title">Title<span>&#10059;</span></label>
             <input class="title-input"
                    [(ngModel)]="task.title"
+                   [style.borderColor]="taskForm.controls['name'].invalid && taskForm.controls['name'].touched ? 'red': '#cdcdcd'"
                    formControlName="name"
-                   maxlength="20"
+                   maxlength="100"
                    type="text"
                    id="title"
                    name="title"
                    required
             />
-            <span *ngIf="taskForm.controls['name'].invalid"
-            >&#10059;</span>
           </div>
           <div class="task-content">
-            <label for="content">Content</label>
+            <label for="content">Content<span>&#10059;</span></label>
             <textarea class="content-textarea"
                       [(ngModel)]="task.content"
+                      [style.borderColor]="taskForm.controls['content'].invalid && taskForm.controls['content'].touched ? 'red': '#cdcdcd'"
                       formControlName="content"
                       maxlength="200"
                       id="content"
@@ -40,41 +40,47 @@
                       wrap="hard"
                       required
             ></textarea>
-            <span *ngIf="taskForm.controls['content'].invalid"
-            >&#10059;</span>
+          </div>
+          <div class="searchUser-container">
+            <label>
+              <input class="searchUser"
+                     [(ngModel)]="title"
+                     [ngModelOptions]="{standalone: true}"
+                     type="text"
+                     placeholder="Search">
+            </label>
           </div>
           <div class="task-develop">
-            <label for="develop">Develop</label>
+            <label for="develop">Develop<span>&#10059;</span></label>
             <select class="develop-select"
                     [(ngModel)]="task.doTask"
+                    [style.borderColor]="taskForm.controls['develop'].invalid && taskForm.controls['develop'].touched ? 'red': '#cdcdcd'"
                     formControlName="develop"
                     name="develop"
                     id="develop"
+                    size="5"
+                    autocomplete="off"
             >
               <option [ngValue]="undefined" hidden>Select develop:</option>
-              <option *ngFor="let user of users"
+              <option *ngFor="let user of users | appFilterUsers: title"
                       [value]="user.uid"
               >
                 {{user.displayName}}
               </option>
             </select>
-            <span *ngIf="taskForm.controls['develop'].invalid"
-            >&#10059;</span>
           </div>
           <div class="task-due-date">
-            <label for="dueDate">Due date</label>
+            <label for="dueDate">Due date<span>&#10059;</span></label>
             <input class="due-date-input"
                    [(ngModel)]="task.dueDate"
                    [min]="getCurrentDate()"
-                   (keydown)="stopWrite()"
+                   [style.borderColor]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched ? 'red': '#cdcdcd'"
                    formControlName="dueDate"
                    type="date"
                    id="dueDate"
                    name="dueDate"
                    required
             />
-            <span *ngIf="taskForm.controls['dueDate'].invalid"
-            >&#10059;</span>
           </div>
           <div class="task-comments">
             <label for="comments">Comments</label>

@@ -63,7 +63,7 @@
         background-color: rgba(9, 30, 66, 0.1);
       }
 
-      &[disabled]{
+      &[disabled] {
         color: #cdcdcd;
       }
     }
@@ -71,7 +71,7 @@
 
   .details {
     background-color: #fefefe;
-    margin: 140px auto;
+    margin: 110px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 900px;
@@ -81,6 +81,28 @@
     form {
       display: flex;
       justify-content: space-between;
+
+      .searchUser-container {
+        display: flex;
+        justify-content: flex-end;
+
+        .searchUser {
+          border: 1px solid #cdcdcd;
+          border-radius: 3px;
+          padding: 4px;
+          width: 308px;
+          white-space: nowrap;
+          color: darkslateblue;
+          outline: none;
+          background-color: white;
+          text-decoration: none;
+
+          @media(max-width: 900px) {
+            width: 234px;
+            margin-right: 9px;
+          }
+        }
+      }
     }
 
     .label-container {
@@ -98,7 +120,7 @@
           line-height: 19px;
         }
 
-        .labels-title{
+        .labels-title {
           width: 100px;
           margin-top: 34px;
         }
@@ -172,7 +194,7 @@
         color: #808080;
       }
 
-      span{
+      span {
         margin-left: 5px;
         color: red;
       }
@@ -202,7 +224,11 @@
       }
     }
 
-    .due-date-input{
+    .develop-select {
+      height: 60px;
+    }
+
+    .due-date-input {
 
     }
 
@@ -228,7 +254,7 @@
 
     }
 
-    .comments-textarea{
+    .comments-textarea {
 
     }
 
@@ -254,33 +280,57 @@
       width: 375px;
       margin: 0 auto;
       padding: 10px 10px 10px 20px;
+
       form {
         flex-direction: column;
       }
-      .file-form{
-        ::ng-deep{
-          .choose-file{
+
+      .file-form {
+        ::ng-deep {
+          .choose-file {
             width: 256px;
           }
         }
       }
+
       .label-container {
 
-        .label-title-container{
+        .label-title-container {
           width: 100px;
         }
-        ::ng-deep{
+
+        ::ng-deep {
           .labels-container {
-            .search{
+            .search {
               width: 234px;
             }
+
             .app-label-list-task-container {
               width: 234px;
             }
           }
         }
-        p{
+
+        p {
           margin-right: 35px;
+        }
+      }
+    }
+  }
+}
+
+.file-form-list-container {
+  .file-list {
+    ::ng-deep {
+      .uploaded-files-container{
+        margin-right: 10px;
+      }
+      .list-files-container {
+        width: 100%;
+        height: 128px;
+
+        @media(max-width: 900px) {
+          height: 70px;
         }
       }
     }

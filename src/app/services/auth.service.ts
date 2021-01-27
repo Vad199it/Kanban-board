@@ -112,4 +112,16 @@ export class AuthService {
       .where('uid', '==', id));
   }
 
+  public getLimitUsers(): AngularFirestoreCollection<User> {
+    return this.afs.collection(this.dbPath, (ref) => ref
+      .limit(5));
+  }
+
+  public getUsersBySearch(searchText: string): AngularFirestoreCollection<User> {
+    return this.afs.collection(this.dbPath, ref => ref
+      .orderBy('displayName')
+      .where('displayName', '>=', searchText)
+      .where('displayName', '<=', searchText + '\uf8ff')
+      .limit(5));
+  }
 }
