@@ -103,9 +103,6 @@ export class BoardsListComponent implements OnInit, OnDestroy {
         this.subscription.add(this.boardService.getBoards(this.authService.getUser().uid, field, directionStr)
           .valueChanges({idField: 'id'})
           .subscribe((data: Board[]) => {
-            if (!data.length) {
-              return false;
-            }
             this.firstInResponse = response.docs[0];
             this.lastInResponse = response.docs[response.docs.length - 1];
             this.boards = data;
