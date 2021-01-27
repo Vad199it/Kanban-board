@@ -5,35 +5,46 @@
       <div class="option-container">
         <p class="title-create-label">Create label</p>
         <span class="close"
-              (click)="submitted = !submitted"
+              (click)="closeModal()"
         >&times;</span>
       </div>
-      <div class="label-title">
-        <label for="title">Title</label>
-        <input class="title-input"
-               [(ngModel)]="label.title"
-               type="text"
-               id="title"
-               name="title"
-               required
-        />
-      </div>
-      <div class="label-color">
-        <label for="color">Color</label>
-        <input class="color-input"
-               [(ngModel)]="label.color"
-               id="color"
-               type="color"
-               name="color"
-               required
-        />
-      </div>
-      <div class="container-btn-save-label">
-        <button class="btn-save-label"
-                (click)="saveLabel()"
-        >Create
-        </button>
-      </div>
+      <form [formGroup]="labelForm"
+            novalidate
+      >
+        <div class="label-title">
+          <label for="title">Title</label>
+          <input class="title-input"
+                 [(ngModel)]="label.title"
+                 formControlName="name"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="labelForm.controls['name'].invalid && labelForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="label-color">
+          <label for="color">Color</label>
+          <input class="color-input"
+                 [(ngModel)]="label.color"
+                 [ngModelOptions]= "{standalone: true}"
+                 id="color"
+                 type="color"
+                 name="color"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-label">
+          <button class="btn-save-label"
+                  [disabled]="!labelForm.valid"
+                  (click)="saveLabel()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

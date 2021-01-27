@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 
 import {LabelService} from '../../services/label.service';
 import Label from '../../models/label';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-label',
@@ -17,9 +18,15 @@ export class LabelComponent implements OnInit, OnDestroy {
   public label: Label;
   public submitted: boolean = false;
   private subscription: Subscription;
+  public labelForm: FormGroup;
 
   constructor(private activateRoute: ActivatedRoute,
-              private labelService: LabelService) { }
+              private labelService: LabelService,
+              private formBuilder: FormBuilder) {
+    this.labelForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   public ngOnInit(): void {
     this.getUrlParam();
@@ -40,11 +47,17 @@ export class LabelComponent implements OnInit, OnDestroy {
     this.labelService.createLabel(this.label).then(() => {
     });
     this.submitted = false;
+    this.labelForm.markAsUntouched();
   }
 
   public newLabel(): void {
     this.submitted = true;
     this.label = new Label();
+  }
+
+  public closeModal(): void{
+    this.submitted = !this.submitted;
+    this.labelForm.markAsUntouched();
   }
 
   public ngOnDestroy(): void {

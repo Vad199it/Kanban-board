@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 
 import Label from '../../models/label';
 import {LabelService} from '../../services/label.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-label-list-project-details',
@@ -13,8 +14,14 @@ export class LabelListProjectDetailsComponent implements OnChanges {
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public currentLabel: Label;
+  public labelForm: FormGroup;
 
-  constructor(private labelService: LabelService) { }
+  constructor(private labelService: LabelService,
+              private formBuilder: FormBuilder) {
+    this.labelForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.label && changes.label.currentValue) {

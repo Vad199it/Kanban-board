@@ -1,20 +1,29 @@
 <div *ngIf="currentLabel"
      class="label-details-container">
   <div class="label-details"></div>
-  <form>
+  <form class="label-details-edit-form"
+        [formGroup]="labelForm"
+        novalidate
+  >
     <div class="label-title">
       <label for="title">Title</label>
       <input class="title-input"
              [(ngModel)]="currentLabel.title"
+             formControlName="name"
              type="text"
              id="title"
              name="title"
       />
     </div>
+    <div class="alert-danger">
+            <span *ngIf="labelForm.controls['name'].invalid && labelForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+    </div>
     <div class="label-color">
       <label for="color">Color</label>
       <input class="color-input"
              [(ngModel)]="currentLabel.color"
+             [ngModelOptions]="{standalone: true}"
              type="color"
              id="color"
              value="{{currentLabel.color}}"
@@ -24,12 +33,14 @@
   </form>
   <div class="container-btn-delete-update-label">
     <button class="btn-update-label"
+            [disabled]="!labelForm.valid"
             (click)="updateLabel()"
             type="submit"
     >
       Update
     </button>
     <button class="btn-delete-label"
+            [disabled]="!labelForm.valid"
             (click)="deleteLabel()">
       Delete
     </button>

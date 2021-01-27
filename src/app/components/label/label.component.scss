@@ -3,6 +3,7 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 6%;
+
     .btn-add-label {
       margin: 0;
       padding: 4px 10px;
@@ -61,6 +62,10 @@
       &:hover {
         background-color: rgba(9, 30, 66, 0.1);
       }
+
+      &[disabled] {
+        color: #cdcdcd;
+      }
     }
   }
 
@@ -72,6 +77,16 @@
     width: 350px;
     line-height: 16px;
     border-radius: 3px;
+
+    form {
+      .alert-danger {
+        color: red;
+        font-size: 12px;
+        height: 14px;
+        margin-left: 70px;
+        margin-bottom: 10px;
+      }
+    }
 
     .option-container {
       display: flex;
