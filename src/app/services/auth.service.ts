@@ -29,21 +29,34 @@ export class AuthService {
   }
 
   public signIn(email: string, password: string): Promise<void> {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate([`${AppConst.TASKS}`]);
-        });
-        this.setUserData(result.user);
-      });
+    return firebase.auth().fetchSignInMethodsForEmail(email).then((signInMethods) => {
+      if (signInMethods.length > 0) {
+        return firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((result) => {
+            this.ngZone.run(() => {
+              this.router.navigate([`${AppConst.TASKS}`]);
+            });
+            this.setUserData(result.user);
+          });
+      }
+      else{
+        throw new Error('email_not_found');
+      }
+    });
   }
 
   public signUp(name: string, email: string, password: string): Promise<void> {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.sendVerificationMail().catch(err => console.log(err));
-        this.setUserData(result.user, name).catch(err => console.log(err));
-      });
+    return firebase.auth().fetchSignInMethodsForEmail(email).then((signInMethods) => {
+      if (signInMethods.length === 0) {
+        return firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then((result) => {
+            this.sendVerificationMail().catch(err => {});
+            this.setUserData(result.user, name).catch(err => {});
+          });
+      } else {
+        throw new Error('email_exist');
+      }
+    });
   }
 
   public sendVerificationMail(): Promise<void> {
@@ -51,7 +64,7 @@ export class AuthService {
       return user.sendEmailVerification();
     }).then(() => {
       this.router.navigate([`${AppConst.VERIFY_EMAIL}`]);
-    }).catch(err => console.log(err));
+    }).catch(err => {});
   }
 
   public forgotPassword(passwordResetEmail: string): Promise<void> {
