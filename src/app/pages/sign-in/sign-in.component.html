@@ -15,14 +15,11 @@
                    maxlength="32"
                    name=""
                    placeholder="UserEmail"
-                   #userEmail
-                   required
             >
           </label>
           <div class="alert-danger">
             <span *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched"
-            >
-              Incorrect email</span>
+            >Incorrect email</span>
           </div>
           <label>
             <input (input)="clearErrorMessage()"
@@ -31,21 +28,18 @@
                    name=""
                    maxlength="49"
                    placeholder="Password"
-                   #userPassword
-                   required
             >
           </label>
           <div class="alert-danger">
             <span *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched"
-            >
-              Incorrect password</span>
+            >Incorrect password</span>
             <span *ngIf="errorMessage"
             >
               {{errorMessage}}</span>
           </div>
           <div class="btn-container">
             <input [disabled]="!userForm.valid"
-                   (click)="signIn(userEmail.value.trim(), userPassword.value.trim())"
+                   (click)="signIn()"
                    type="button"
                    name=""
                    value="Login"

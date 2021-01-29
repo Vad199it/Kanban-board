@@ -13,6 +13,7 @@ import {BoardService} from '../../services/board.service';
 import {TaskListService} from '../../services/task-list.service';
 import TaskList from '../../models/task-list';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-tasks-details',
@@ -23,6 +24,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() task: Task;
   @Input() taskListId: string;
+  @Input() title: string;
+  @Input() titleTaskList: string;
+  @Input() text: string;
+  @Input() comments: string[] = [];
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public users: User[];
@@ -33,10 +38,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   public tasksId: string[];
   private boardId: string;
   private prevUserId: string;
-  public title: string;
-  public titleTaskList: string;
   public isChanged: Boolean = false;
   public newTaskListId: string;
+  public size: number = 1;
+  public sizeTaskList: number = 1;
   private subscription: Subscription = new Subscription();
   public taskForm: FormGroup;
 
@@ -45,15 +50,19 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
               private activateRoute: ActivatedRoute,
               private boardService: BoardService,
               private taskListService: TaskListService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder) {}
+
+  public createForm(): void{
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       content: ['', [Validators.required]],
-      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]]
+      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]],
+      text: ['', []],
     });
   }
 
   public ngOnInit(): void {
+    this.createForm();
     this.getUrlParam();
     this.retrieveUsers();
     this.retrieveBoards();
@@ -72,6 +81,9 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.task && changes.task.currentValue) {
       this.currentTask = {...this.task};
     }
+    this.title = '';
+    this.titleTaskList = '';
+    this.text = this.task.comments.join('');
     this.prevUserId = this.currentTask.doTask;
   }
 
@@ -165,7 +177,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         dueDate: Date,
         title: string,
         content: string,
-        comments: string,
+        comments: string[],
         nameOfDeveloper: string
       } = {
         ownerTask: this.currentTask.ownerTask,
@@ -173,7 +185,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         dueDate: this.currentTask.dueDate,
         title: this.currentTask.title,
         content: this.currentTask.content,
-        comments: this.currentTask.comments || '',
+        comments: [...this.currentTask.comments, ...this.comments] || [''],
         nameOfDeveloper: this.currentTask.nameOfDeveloper,
       };
       this.taskService.updateTask(this.currentTask.id, data)
@@ -258,6 +270,28 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     else{
       this.newTaskListId = null;
     }
+  }
+
+  public addTextInComments(): void {
+    this.comments.push(firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n');
+    this.text = this.text + firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n';
+    this.taskForm.get('text').setValue('');
+  }
+
+  public changeSizeToFive(): void {
+    this.size = 5;
+  }
+
+  public changeSizeToOne(): void {
+    this.size = 1;
+  }
+
+  public changeSizeTaskListToFive(): void {
+    this.sizeTaskList = 3;
+  }
+
+  public changeSizeTaskListToOne(): void {
+    this.sizeTaskList = 1;
   }
 
   public ngOnDestroy(): void {

@@ -15,7 +15,7 @@ export class VerifyEmailComponent {
   }
 
   public sendVerificationMail(): void {
-    this.authService.sendVerificationMail();
+    this.authService.sendVerificationMail().catch((err) => {});
   }
 
 }

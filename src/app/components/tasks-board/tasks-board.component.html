@@ -46,28 +46,35 @@
               <input class="searchUser"
                      [(ngModel)]="title"
                      [ngModelOptions]="{standalone: true}"
+                     (focusin)="changeSizeToFive()"
+                     (focusout)="changeSizeToOne()"
                      type="text"
                      placeholder="Search">
             </label>
           </div>
           <div class="task-develop">
             <label for="develop">Develop<span>&#10059;</span></label>
-            <select class="develop-select"
-                    [(ngModel)]="task.doTask"
-                    [style.borderColor]="taskForm.controls['develop'].invalid && taskForm.controls['develop'].touched ? 'red': '#cdcdcd'"
-                    formControlName="develop"
-                    name="develop"
-                    id="develop"
-                    size="5"
-                    autocomplete="off"
+            <div class="container-select"
+                 (focusin)="changeSizeToFive()"
+                 (focusout)="changeSizeToOne()"
             >
-              <option [ngValue]="undefined" hidden>Select develop:</option>
-              <option *ngFor="let user of users | appFilterUsers: title"
-                      [value]="user.uid"
+              <select class="develop-select"
+                      [(ngModel)]="task.doTask"
+                      [style.borderColor]="taskForm.controls['develop'].invalid && taskForm.controls['develop'].touched ? 'red': '#cdcdcd'"
+                      formControlName="develop"
+                      name="develop"
+                      id="develop"
+                      [size]="size"
+                      autocomplete="off"
               >
-                {{user.displayName}}
-              </option>
-            </select>
+                <option [ngValue]="undefined" hidden>Select develop:</option>
+                <option *ngFor="let user of users | appFilterUsers: title"
+                        [value]="user.uid"
+                >
+                  {{user.displayName}}
+                </option>
+              </select>
+            </div>
           </div>
           <div class="task-due-date">
             <label for="dueDate">Due date<span>&#10059;</span></label>
@@ -85,12 +92,23 @@
           <div class="task-comments">
             <label for="comments">Comments</label>
             <textarea class="comments-textarea"
-                      [(ngModel)]="task.comments"
-                      [ngModelOptions]="{standalone: true}"
+                      [value]="text"
+                      formControlName="comments"
                       maxlength="200"
                       id="comments"
                       name="comments"
             ></textarea>
+          </div>
+          <div class="task-text">
+            <label>
+              <input class="add-text-to-comments"
+                     formControlName="text"
+              />
+            </label>
+            <button class="send-message"
+                    [disabled]="!taskForm.value.text"
+                    (click)="addTextInComments()">Add
+            </button>
           </div>
         </div>
         <div>

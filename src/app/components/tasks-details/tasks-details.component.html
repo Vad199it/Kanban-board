@@ -35,13 +35,18 @@
           <input class="searchUser"
                  [(ngModel)]="title"
                  [ngModelOptions]="{standalone: true}"
+                 (focusin)="changeSizeToFive()"
+                 (focusout)="changeSizeToOne()"
                  type="text"
                  placeholder="Search">
         </label>
       </div>
       <div class="task-develop">
         <label for="develop">Develop</label>
-        <div class="scrollable">
+        <div class="scrollable"
+             (focusin)="changeSizeToFive()"
+             (focusout)="changeSizeToOne()"
+        >
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
                   [ngModelOptions]="{standalone: true}"
@@ -49,7 +54,7 @@
                   #userId
                   name="develop"
                   id="develop"
-                  size="5"
+                  [size] = "size"
                   autocomplete="off"
           >
             <option *ngFor="let user of users | appFilterUsers: title"
@@ -83,16 +88,30 @@
                name="dueDate"
         />
       </div>
+      <div class="searchUser-container">
+        <label>
+          <input class="searchUser"
+                 [(ngModel)]="titleTaskList"
+                 [ngModelOptions]="{standalone: true}"
+                 (focusin)="changeSizeTaskListToFive()"
+                 (focusout)="changeSizeTaskListToOne()"
+                 type="text"
+                 placeholder="Search">
+        </label>
+      </div>
       <div class="task-list">
-        <label for="list">TaskLists</label>
-        <div class="scrollable">
+        <label for="list">Task lists</label>
+        <div class="scrollable"
+             (focusin)="changeSizeTaskListToFive()"
+             (focusout)="changeSizeTaskListToOne()"
+        >
           <select class="task-list-input"
                   [value]="taskListId"
                   (change)="changeTaskListInTask(taskListId.value)"
                   #taskListId
                   name="list"
                   id="list"
-                  size="3"
+                  [size]="sizeTaskList"
                   autocomplete="off"
           >
             <option *ngFor="let taskList of taskLists | appFilter: titleTaskList"
@@ -106,12 +125,22 @@
       <div class="task-comments">
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
-                  [(ngModel)]="currentTask.comments"
-                  [ngModelOptions]="{standalone: true}"
+                  [value]="text"
                   maxlength="200"
                   id="comments"
                   name="comments"
+                  [disabled]="true"
         ></textarea>
+      </div>
+      <div class="task-text">
+        <label>
+          <input class="add-text-to-comments"
+                 formControlName="text"
+          />
+        </label>
+        <button class="send-message"
+                [disabled]="!taskForm.value.text"
+                (click)="addTextInComments()">Add</button>
       </div>
       <div class="file-container">
         <div class="file-form">

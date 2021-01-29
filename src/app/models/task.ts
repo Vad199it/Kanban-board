@@ -7,7 +7,7 @@ export default class Task {
   dueDate: Date;
   title: string;
   content: string;
-  comments: string;
+  comments: string[];
   idTicket: string;
   uid: string; //
 }

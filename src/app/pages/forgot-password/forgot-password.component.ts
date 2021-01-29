@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -8,19 +8,21 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit{
   public userForm: FormGroup;
   public errorMessage: string;
 
   constructor(private authService: AuthService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder) { }
+
+  public ngOnInit(): void {
     this.userForm = this.formBuilder.group({
       passwordResetEmail: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]]
     });
   }
 
-  public forgotPassword(passwordResetEmail: string): void{
-    this.authService.forgotPassword(passwordResetEmail).catch((error) => {
+  public forgotPassword(): void{
+    this.authService.forgotPassword(this.userForm.value.passwordResetEmail.trim()).catch((error) => {
       this.errorMessage = error.message;
     });
   }

@@ -22,6 +22,10 @@ export class TasksComponent implements OnInit, OnDestroy {
   private projectId: string;
   public boardName: string;
   public tasksId: string[];
+  public text: string;
+  public title: string = '';
+  public titleTaskList: string = '';
+  public comments: string[] = [];
   public tasks: Task[];
   public currentTask: Task;
   public isModal: Boolean = false;
@@ -126,6 +130,16 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   public endDrag(ev: any): void{
     ev.target.querySelector('.task-group').style.backgroundColor = '#f4f5f7';
+  }
+
+  public showModal(): void {
+    this.isModal = !this.isModal;
+    this.text = '';
+    this.comments = [];
+    const inputs = document.querySelectorAll('.add-text-to-comments');
+    inputs.forEach((elem) => {
+      (elem as HTMLInputElement).value = '';
+    });
   }
 
   public ngOnDestroy(): void {

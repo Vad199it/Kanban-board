@@ -14,6 +14,7 @@ import {BoardService} from '../../services/board.service';
 import TaskList from '../../models/task-list';
 import {TaskListService} from '../../services/task-list.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-tasks-board',
@@ -28,6 +29,9 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   public task: Task;
   public board: Board[];
   public tasksId: string[];
+  public comments: string[] = [];
+  public size: number = 1;
+  public text: string = '';
   private boardId: string;
   public title: string;
   public submitted: boolean = false;
@@ -45,7 +49,9 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       content: ['', [Validators.required]],
       develop: ['', [Validators.required]],
-      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]]
+      dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]],
+      text: ['', []],
+      comments: [{value: '', disabled: true}, []]
     });
   }
 
@@ -85,15 +91,19 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.updateUsernamesInBoard();
     this.updateTasksIdInTaskList();
     this.task.id = this.taskListId;
+    this.task.comments = this.comments;
     this.task.createDate = formatDate(new Date(Date.now()), 'yyyy-MM-dd', 'en');
     this.authService.getAllUsers(this.task.doTask).valueChanges({idField: 'id'})
       .subscribe((data: User[]) => {
       this.task.nameOfDeveloper = data[0].displayName;
       this.task.ownerTask = this.authService.getUser().displayName;
       this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
+      this.taskForm.reset();
       this.taskService.createTask(this.task, this.task.uid).then(() => {
       });
     });
+    this.comments = [];
+    this.text = '';
     this.submitted = false;
     this.taskForm.markAsUntouched();
   }
@@ -143,6 +153,24 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   public closeModal(): void {
     this.submitted = !this.submitted;
     this.taskForm.markAsUntouched();
+    this.comments = [];
+    this.text = '';
+    this.title = '';
+    this.taskForm.reset();
+  }
+
+  public addTextInComments(): void {
+    this.comments.push(firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n');
+    this.text = this.text + this.taskForm.value.text + '\n';
+    this.taskForm.get('text').setValue('');
+  }
+
+  public changeSizeToFive(): void {
+    this.size = 5;
+  }
+
+  public changeSizeToOne(): void {
+    this.size = 1;
   }
 
   public ngOnDestroy(): void {

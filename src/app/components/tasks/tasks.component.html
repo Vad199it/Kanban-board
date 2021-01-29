@@ -38,13 +38,16 @@
       <div class="option-container">
         <p class="title-update-task">Update task</p>
         <span class="close"
-              (click)="this.isModal = !this.isModal"
+              (click)="showModal()"
         >&times;</span>
       </div>
       <app-tasks-details [task]="currentTask"
                          [taskListId]="taskListId"
                          (refreshList)="refreshTask()"
-                         (isModal)="this.closeModal($event)"
+                         (isModal)="closeModal($event)"
+                         [text]="text"
+                         [comments]="comments"
+                         [titleTaskList]="titleTaskList"
       ></app-tasks-details>
     </div>
   </div>
