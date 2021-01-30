@@ -15,12 +15,10 @@
       display: flex;
       justify-content: center;
 
-      .prev-button{
-        margin-right: 10px;
-      }
-
-      .next-button{
-        margin-left: 10px;
+      .prev-next-btn{
+        display: flex;
+        width: 120px;
+        justify-content: space-between;
       }
 
       button{

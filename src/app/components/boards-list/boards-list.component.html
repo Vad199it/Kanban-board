@@ -9,14 +9,14 @@
     >
     </app-table>
     <div class="prev-next-btn-container">
-      <button class="prev-button"
-              [disabled]="!disablePrev"
-              (click)="prevPage()">prev
-      </button>
-      <button class="next-button"
-              [disabled]="!disableNext"
-              (click)="nextPage()">next
-      </button>
+      <div class="prev-next-btn">
+        <button [disabled]="!disablePrev"
+                (click)="prevPage()">prev
+        </button>
+        <button [disabled]="!disableNext"
+                (click)="nextPage()">next
+        </button>
+      </div>
     </div>
   </div>
   <div class="board-lists">
@@ -29,14 +29,14 @@
     >
     </app-table>
     <div class="prev-next-btn-container">
-      <button class="prev-button"
-              [disabled]="!disablePrevOther"
-              (click)="prevPageOther()">prev
-      </button>
-      <button class="next-button"
-              [disabled]="!disableNextOther"
-              (click)="nextPageOther()">next
-      </button>
+      <div class="prev-next-btn">
+        <button [disabled]="!disablePrevOther"
+                (click)="prevPageOther()">prev
+        </button>
+        <button [disabled]="!disableNextOther"
+                (click)="nextPageOther()">next
+        </button>
+      </div>
     </div>
   </div>
 </div>
