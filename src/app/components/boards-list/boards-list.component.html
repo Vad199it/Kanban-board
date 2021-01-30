@@ -9,10 +9,12 @@
     >
     </app-table>
     <div class="prev-next-btn-container">
-      <button [disabled]="!disablePrev"
+      <button class="prev-button"
+              [disabled]="!disablePrev"
               (click)="prevPage()">prev
       </button>
-      <button [disabled]="!disableNext"
+      <button class="next-button"
+              [disabled]="!disableNext"
               (click)="nextPage()">next
       </button>
     </div>
@@ -27,10 +29,12 @@
     >
     </app-table>
     <div class="prev-next-btn-container">
-      <button [disabled]="!disablePrevOther"
+      <button class="prev-button"
+              [disabled]="!disablePrevOther"
               (click)="prevPageOther()">prev
       </button>
-      <button [disabled]="!disableNextOther"
+      <button class="next-button"
+              [disabled]="!disableNextOther"
               (click)="nextPageOther()">next
       </button>
     </div>

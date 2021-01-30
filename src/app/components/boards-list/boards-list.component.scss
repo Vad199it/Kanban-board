@@ -15,8 +15,15 @@
       display: flex;
       justify-content: center;
 
+      .prev-button{
+        margin-right: 10px;
+      }
+
+      .next-button{
+        margin-left: 10px;
+      }
+
       button{
-        margin-right: 40px;
         padding: 4px 10px;
         box-sizing: border-box;
         border-radius: 3px;
