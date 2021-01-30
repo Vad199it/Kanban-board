@@ -11,6 +11,11 @@
 html
 {
   height: 100vh;
+  overflow: hidden;
+  @media(max-width: 770px){
+    overflow: auto;
+  }
+
 }
 body
 {

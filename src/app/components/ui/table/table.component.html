@@ -3,6 +3,7 @@
          [(ngModel)]="title"
          (input)="searchResults(searchText.value)"
          type="text"
+         maxlength="30"
          placeholder="Search"
          #searchText
   >
@@ -31,6 +32,7 @@
           <ng-template #iconBut><span>&#8595;</span></ng-template>
         </span>
         <ng-template #icon><span>&#8597;</span></ng-template>
+        <span class="date">date</span>
       </th>
       <th (click)="filterBoards('boardName')">Board name
         <span *ngIf="arrayFilterButtons[1].active;else boardName">

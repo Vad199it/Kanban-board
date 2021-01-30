@@ -83,6 +83,21 @@
       justify-content: space-between;
 
       .send-message {
+        margin: 0;
+        padding: 4px 10px;
+        box-sizing: border-box;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        background-color: rgba(9, 30, 66, 0.08);
+        border: 1px solid transparent;
+        text-decoration: none;
+        height: 30px;
+        white-space: nowrap;
+        color: darkslateblue;
+        outline: none;
+
         &[disabled] {
           color: #cdcdcd;
         }
@@ -188,7 +203,7 @@
     .task-create-date,
     .task-due-date,
     .task-order,
-    .task-comments {
+    .task-comments{
       display: flex;
       margin-bottom: 17px;
       align-items: center;
@@ -207,11 +222,36 @@
       }
     }
 
+    .task-comments{
+      margin-bottom: 5px;
+    }
+
+    .task-text{
+      display: flex;
+      justify-content: flex-end;
+
+      @media(max-width: 900px) {
+        margin-right: 8px;
+        margin-bottom: 5px;
+      }
+    }
+
+    .task-develop{
+      height: 30px;
+      position: relative;
+      .collapsed-select{
+        position: absolute;
+        top: 0;
+        height: 75px;
+      }
+    }
+
     .title-input,
     .develop-select,
     .create-date-input,
     .due-date-input,
-    .order-input {
+    .order-input,
+    .add-text-to-comments{
       padding: 4px;
       box-sizing: border-box;
       border-radius: 3px;
@@ -231,8 +271,17 @@
       }
     }
 
+    .add-text-to-comments{
+      width: 250px;
+      margin-right: 10px;
+      @media(max-width: 900px) {
+        width: 178px;
+      }
+    }
+
     .develop-select {
-      height: 60px;
+      height: 30px;
+      margin-top: 5px;
     }
 
     .due-date-input {
@@ -297,6 +346,10 @@
           .choose-file {
             width: 256px;
           }
+
+          .choose-upload-file-container{
+            width: 322px;
+          }
         }
       }
 
@@ -330,7 +383,7 @@
   .file-list {
     ::ng-deep {
       .uploaded-files-container {
-        margin-right: 10px;
+
       }
 
       .list-files-container {

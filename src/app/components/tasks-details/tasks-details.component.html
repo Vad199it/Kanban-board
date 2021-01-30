@@ -2,6 +2,7 @@
      class="task-label-container">
   <div class="task-details-container">
     <form [formGroup]="taskForm"
+          (click)="changeSizeToOneForm($event)"
           novalidate
     >
       <div class="task-title">
@@ -35,14 +36,15 @@
           <input class="searchUser"
                  [(ngModel)]="title"
                  [ngModelOptions]="{standalone: true}"
-                 (focusin)="changeSizeToFive()"
-                 (focusout)="changeSizeToOne()"
+                 (focusin)="changeSizeToFiveSearch()"
+                 (focusout)="changeSizeToOneSearch()"
+                 maxlength="30"
                  type="text"
                  placeholder="Search">
         </label>
       </div>
       <div class="task-develop">
-        <label for="develop">Develop</label>
+        <label for="develop">Developer</label>
         <div class="scrollable"
              (focusin)="changeSizeToFive()"
              (focusout)="changeSizeToOne()"
@@ -50,7 +52,9 @@
           <select class="develop-input"
                   [ngModel]="currentTask.doTask"
                   [ngModelOptions]="{standalone: true}"
+                  [class.collapsed-select]="isOpened"
                   (ngModelChange)="changeUserInBoard(userId.value)"
+                  (focusin)="changeSizeToOneOption($event)"
                   #userId
                   name="develop"
                   id="develop"
@@ -59,6 +63,7 @@
           >
             <option *ngFor="let user of users | appFilterUsers: title"
                     [value]="user.uid"
+                    (click)="changeSizeToOne()"
             >
               {{user.displayName}}
             </option>
@@ -88,13 +93,14 @@
                name="dueDate"
         />
       </div>
-      <div class="searchUser-container">
+      <div class="search-task-lists-container">
         <label>
           <input class="searchUser"
                  [(ngModel)]="titleTaskList"
                  [ngModelOptions]="{standalone: true}"
                  (focusin)="changeSizeTaskListToFive()"
                  (focusout)="changeSizeTaskListToOne()"
+                 maxlength="30"
                  type="text"
                  placeholder="Search">
         </label>
@@ -136,6 +142,7 @@
         <label>
           <input class="add-text-to-comments"
                  formControlName="text"
+                 maxlength="100"
           />
         </label>
         <button class="send-message"

@@ -4,6 +4,7 @@
 
   .task-details-container {
     position: relative;
+    width: 380px;
 
     form {
       .searchUser-container {
@@ -14,12 +15,19 @@
           border: 1px solid #cdcdcd;
           border-radius: 3px;
           padding: 4px;
-          width: 236px;
+          width: 280px;
           white-space: nowrap;
           color: darkslateblue;
           outline: none;
           background-color: white;
           text-decoration: none;
+          margin-bottom: 5px;
+
+
+          @media(max-width: 620px) {
+            width: 234px;
+            margin-right: 46px;
+          }
         }
       }
     }
@@ -37,6 +45,7 @@
     display: flex;
     margin-bottom: 6px;
     align-items: center;
+    position: relative;
 
     label {
       width: 100px;
@@ -57,7 +66,13 @@
 
     .scrollable {
       .develop-input {
-        height: 60px;
+        height: 30px;
+      }
+      .develop-input.collapsed-select{
+        position: absolute;
+        top: 0;
+        height: 75px;
+        z-index: 2;
       }
     }
 
@@ -79,15 +94,17 @@
       color: darkslateblue;
       outline: none;
       border: 1px solid #cdcdcd;
-      width: 236px;
+      width: 280px;
 
       @media(max-width: 620px) {
+        width: 234px;
       }
 
     }
 
+
     .task-list-input {
-      height: 57px;
+      height: 30px;
     }
 
     .createDate-input {
@@ -106,13 +123,100 @@
       color: darkslateblue;
       outline: none;
       border: 1px solid #cdcdcd;
-      width: 236px;
+      width: 280px;
       height: 65px;
       resize: none;
 
       @media(max-width: 620px) {
+        width: 234px;
       }
 
+    }
+    .comments-textarea{
+      height: 114px;
+    }
+  }
+
+  .task-develop{
+    height: 30px;
+  }
+
+  .task-text{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+
+    .add-text-to-comments{
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 228px;
+      margin-right: 5px;
+
+      @media(max-width: 620px) {
+        width: 186px;
+      }
+    }
+
+    .send-message{
+      margin: 0;
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(9, 30, 66, 0.08);
+      border: 1px solid transparent;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+
+      &[disabled] {
+        color: #cdcdcd;
+      }
+
+      @media(max-width: 620px) {
+        margin-right: 44px;
+      }
+    }
+  }
+
+  .search-task-lists-container{
+    display: none;
+
+    @media(max-width: 620px) {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .searchUser {
+      border: 1px solid #cdcdcd;
+      border-radius: 3px;
+      padding: 4px;
+      width: 236px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      background-color: white;
+      text-decoration: none;
+
+      @media(max-width: 620px) {
+        width: 234px;
+        margin-right: 46px;
+        margin-bottom: 5px;
+      }
     }
   }
 
@@ -133,7 +237,7 @@
     @media(max-width: 620px) {
       position: absolute;
       bottom: 10px;
-      top: 808px;
+      top: 878px;
     }
 
     .btn-delete-task,
@@ -168,7 +272,7 @@
   }
 
   .file-form {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
 }

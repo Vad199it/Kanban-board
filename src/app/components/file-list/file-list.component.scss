@@ -5,5 +5,8 @@
   border-radius: 3px;
   margin: 5px 0;
   padding: 4px;
-  width: 335px;
+
+  @media(max-width: 620px) {
+    width: 334px;
+  }
 }

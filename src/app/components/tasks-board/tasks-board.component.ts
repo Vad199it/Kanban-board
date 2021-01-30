@@ -35,6 +35,9 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
   private boardId: string;
   public title: string;
   public submitted: boolean = false;
+  public isOpened: boolean = false;
+  public isSearchOpen: boolean = false;
+  public valid: boolean = false;
   private subscription: Subscription = new Subscription();
   public taskForm: FormGroup;
 
@@ -48,10 +51,11 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       content: ['', [Validators.required]],
-      develop: ['', [Validators.required]],
+      develop: ['' , [Validators.required]],
       dueDate: ['', [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]],
       text: ['', []],
-      comments: [{value: '', disabled: true}, []]
+      comments: [{value: '', disabled: true}, []],
+      title: ['', []],
     });
   }
 
@@ -87,7 +91,15 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.taskListService.updateTaskList(this.taskListId, taskListData).catch(err => console.log(err));
   }
 
+  public saveDataInTask(): void {
+    this.task.title = this.taskForm.value.name;
+    this.task.content = this.taskForm.value.content;
+    this.task.dueDate = this.taskForm.value.dueDate;
+    this.task.doTask = this.taskForm.value.develop;
+  }
+
   public saveTask(): void {
+    this.saveDataInTask();
     this.updateUsernamesInBoard();
     this.updateTasksIdInTaskList();
     this.task.id = this.taskListId;
@@ -99,12 +111,14 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
       this.task.ownerTask = this.authService.getUser().displayName;
       this.task.idTicket = (this.generationKey(this.task.title).toString()).substr(0, 6);
       this.taskForm.reset();
+      this.taskForm.get('develop').setValue('');
       this.taskService.createTask(this.task, this.task.uid).then(() => {
       });
     });
     this.comments = [];
     this.text = '';
     this.submitted = false;
+    this.title = '';
     this.taskForm.markAsUntouched();
   }
 
@@ -157,20 +171,55 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     this.text = '';
     this.title = '';
     this.taskForm.reset();
+    this.taskForm.get('develop').setValue('');
   }
 
   public addTextInComments(): void {
     this.comments.push(firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n');
-    this.text = this.text + this.taskForm.value.text + '\n';
+    this.text = this.text + firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n';
     this.taskForm.get('text').setValue('');
   }
 
   public changeSizeToFive(): void {
     this.size = 5;
+    this.isOpened = true;
   }
 
   public changeSizeToOne(): void {
     this.size = 1;
+    this.isOpened = false;
+  }
+
+  public changeSizeToOneSearch(): void {
+    // this.size = 1;
+    this.isOpened = false;
+  }
+
+  public changeSizeToFiveSearch(): void {
+    this.size = 5;
+    this.isOpened = true;
+    this.isSearchOpen = true;
+  }
+
+  public changeSizeToOneForm(e: any): void {
+    if (!e.target.closest('.searchUser-container')) {
+      this.size = 1;
+      if ((!this.taskForm.value.develop && this.isOpened) || (!this.taskForm.value.develop && this.isSearchOpen)) {
+        this.valid = true;
+        this.isSearchOpen = false;
+      }
+      this.isOpened = false;
+    }
+  }
+
+  public changeSizeToOneOption(e: any): void {
+    e.target.blur();
+    this.size = 5;
+    this.isOpened = true;
+  }
+
+  public changeTitle(): void{
+    this.title = this.taskForm.value.title;
   }
 
   public ngOnDestroy(): void {

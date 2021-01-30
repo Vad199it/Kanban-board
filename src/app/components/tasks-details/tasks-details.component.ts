@@ -39,6 +39,9 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private boardId: string;
   private prevUserId: string;
   public isChanged: Boolean = false;
+  public isOpened: boolean = false;
+  public isSearchOpen: boolean = false;
+  public valid: boolean = false;
   public newTaskListId: string;
   public size: number = 1;
   public sizeTaskList: number = 1;
@@ -280,10 +283,12 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   public changeSizeToFive(): void {
     this.size = 5;
+    this.isOpened = true;
   }
 
   public changeSizeToOne(): void {
     this.size = 1;
+    this.isOpened = false;
   }
 
   public changeSizeTaskListToFive(): void {
@@ -292,6 +297,35 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   public changeSizeTaskListToOne(): void {
     this.sizeTaskList = 1;
+  }
+
+  public changeSizeToOneForm(e: any): void {
+    if (!e.target.closest('.searchUser-container')) {
+      this.size = 1;
+      if ((!this.taskForm.value.develop && this.isOpened) || (!this.taskForm.value.develop && this.isSearchOpen)) {
+        this.valid = true;
+        this.isSearchOpen = false;
+      }
+      this.isOpened = false;
+      this.size = 1;
+    }
+  }
+
+  public changeSizeToOneSearch(): void {
+    // this.size = 1;
+    this.isOpened = false;
+  }
+
+  public changeSizeToOneOption(e: any): void {
+    e.target.blur();
+    this.size = 5;
+    this.isOpened = true;
+  }
+
+  public changeSizeToFiveSearch(): void {
+    this.size = 5;
+    this.isOpened = true;
+    this.isSearchOpen = true;
   }
 
   public ngOnDestroy(): void {

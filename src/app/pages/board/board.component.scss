@@ -19,10 +19,10 @@
   margin: 1%;
   border-radius: 3px;
   box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
-  min-height: 84%;
+  height: 84%;
   padding: 2%;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow: auto;
 
   .btn-add-task-list-container {
     .btn-add-task-list {

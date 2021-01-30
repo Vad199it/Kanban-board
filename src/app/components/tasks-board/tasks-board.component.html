@@ -10,13 +10,13 @@
         >&times;</span>
       </div>
       <form [formGroup]="taskForm"
+            (click)="changeSizeToOneForm($event)"
             novalidate
       >
         <div>
           <div class="task-title">
             <label for="title">Title<span>&#10059;</span></label>
             <input class="title-input"
-                   [(ngModel)]="task.title"
                    [style.borderColor]="taskForm.controls['name'].invalid && taskForm.controls['name'].touched ? 'red': '#cdcdcd'"
                    formControlName="name"
                    maxlength="100"
@@ -29,7 +29,6 @@
           <div class="task-content">
             <label for="content">Content<span>&#10059;</span></label>
             <textarea class="content-textarea"
-                      [(ngModel)]="task.content"
                       [style.borderColor]="taskForm.controls['content'].invalid && taskForm.controls['content'].touched ? 'red': '#cdcdcd'"
                       formControlName="content"
                       maxlength="200"
@@ -44,32 +43,36 @@
           <div class="searchUser-container">
             <label>
               <input class="searchUser"
-                     [(ngModel)]="title"
-                     [ngModelOptions]="{standalone: true}"
-                     (focusin)="changeSizeToFive()"
-                     (focusout)="changeSizeToOne()"
+                     (input)="changeTitle()"
+                     (focusin)="changeSizeToFiveSearch()"
+                     (focusout)="changeSizeToOneSearch()"
+                     formControlName="title"
+                     maxlength="30"
                      type="text"
                      placeholder="Search">
             </label>
           </div>
           <div class="task-develop">
-            <label for="develop">Develop<span>&#10059;</span></label>
+            <label for="develop">Developer<span>&#10059;</span></label>
             <div class="container-select"
+                 id="dark"
                  (focusin)="changeSizeToFive()"
                  (focusout)="changeSizeToOne()"
             >
               <select class="develop-select"
-                      [(ngModel)]="task.doTask"
-                      [style.borderColor]="taskForm.controls['develop'].invalid && taskForm.controls['develop'].touched ? 'red': '#cdcdcd'"
+                      [class.collapsed-select]="isOpened"
+                      [style.borderColor]="taskForm.controls['develop'].invalid && valid && (taskForm.controls['develop'].touched || taskForm.controls['title'].touched) ? 'red': '#cdcdcd'"
+                      (focusin)="changeSizeToOneOption($event)"
                       formControlName="develop"
                       name="develop"
                       id="develop"
                       [size]="size"
                       autocomplete="off"
               >
-                <option [ngValue]="undefined" hidden>Select develop:</option>
+                <option value="" hidden>Select developer:</option>
                 <option *ngFor="let user of users | appFilterUsers: title"
                         [value]="user.uid"
+                        (click)="changeSizeToOne()"
                 >
                   {{user.displayName}}
                 </option>
@@ -79,7 +82,6 @@
           <div class="task-due-date">
             <label for="dueDate">Due date<span>&#10059;</span></label>
             <input class="due-date-input"
-                   [(ngModel)]="task.dueDate"
                    [min]="getCurrentDate()"
                    [style.borderColor]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched ? 'red': '#cdcdcd'"
                    formControlName="dueDate"

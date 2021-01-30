@@ -22,6 +22,8 @@
 
     .name-of-developer-container {
       margin: 2% 0 2% 0;
+      align-items: center;
+      display: flex;
 
       span {
         &:first-child {
@@ -78,10 +80,11 @@
 
   .details {
     background-color: #fefefe;
-    margin: 65px auto;
+    margin: 25px auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 630px;
+    width: 670px;
+    height: 692px;
     line-height: 16px;
     border-radius: 3px;
 
@@ -120,11 +123,19 @@
       .details {
         margin: 1px auto;
         width: 375px;
-        height: 930px;
+        height: 1000px;
         overflow: auto;
       }
     }
   }
+}
+
+.name-of-developer{
+  max-width: 189px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 

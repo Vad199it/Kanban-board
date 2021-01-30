@@ -22,14 +22,22 @@
 .choose-upload-file-container {
   display: flex;
   align-items: center;
-  width: 334px;
+  width: 380px;
   justify-content: space-between;
+  @media(max-width: 620px) {
+    width: 337px
+  }
 
   .choose-file {
     border: 1px solid #cdcdcd;
     border-radius: 3px;
     padding: 3px;
     cursor: pointer;
+    width: 303px;
+
+    @media(max-width: 620px) {
+      width: 250px
+    }
 
     &::-webkit-file-upload-button {
       padding: 4px 10px;
