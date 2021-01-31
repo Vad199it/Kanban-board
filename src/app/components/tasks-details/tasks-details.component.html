@@ -132,6 +132,8 @@
         <label for="comments">Comments</label>
         <textarea class="comments-textarea"
                   [value]="text"
+                  [scrollTop]="textarea.scrollHeight"
+                  #textarea
                   maxlength="200"
                   id="comments"
                   name="comments"

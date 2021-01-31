@@ -84,6 +84,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.task && changes.task.currentValue) {
       this.currentTask = {...this.task};
     }
+    this.retrieveTaskById();
     this.title = '';
     this.titleTaskList = '';
     this.text = this.task.comments.join('');
@@ -93,6 +94,14 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   public changeUserInBoard(newValue: string): void {
     this.currentTask.doTask = newValue;
     this.isChanged = true;
+  }
+
+  private retrieveTaskById(): void {
+    this.subscription.add(this.taskService.getTaskById(this.currentTask.uid).valueChanges({idField: 'id'})
+      .subscribe((data: Task[]) => {
+        this.currentTask.comments = data[0].comments;
+        this.text = this.currentTask.comments.join('');
+      }));
   }
 
   private changeUsername(prevUserId: string, currUserId: string): void{
@@ -171,7 +180,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     this.prevUserId = this.currentTask.doTask;
-    this.subscription.add(this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'})
+    this.authService.getAllUsers(this.currentTask.doTask).valueChanges({idField: 'id'})
+      .pipe(
+        take(1)
+      )
       .subscribe((users: User[]) => {
       this.currentTask.nameOfDeveloper = users[0].displayName;
       const data: {
@@ -197,10 +209,24 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.comments = [];
         })
         .catch(err => {
-          console.log(err);
           this.comments = [];
         });
-    }));
+    });
+  }
+
+  public updateComments(): void {
+    const data: {
+      comments: string[],
+    } = {
+      comments: [...this.currentTask.comments, ...this.comments] || [''],
+    };
+    this.taskService.updateTask(this.currentTask.id, data)
+      .then(() => {
+        this.comments = [];
+      })
+      .catch(err => {
+        this.comments = [];
+      });
   }
 
   private deleteUsernameFromBoard(): void{
@@ -283,6 +309,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.comments.push(firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n');
     this.text = this.text + firebase.auth().currentUser.displayName + ': ' + this.taskForm.value.text + '\n';
     this.taskForm.get('text').setValue('');
+    this.updateComments();
   }
 
   public changeSizeToFive(): void {

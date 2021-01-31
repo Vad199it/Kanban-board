@@ -26,6 +26,10 @@ export class TaskService implements OnDestroy {
     return this.db.collection(this.dbPath, ref => ref.where(AppConst.ID, '==', taskId));
   }
 
+  public getTaskById(taskId: string): AngularFirestoreCollection<Task> {
+    return this.db.collection(this.dbPath, ref => ref.where('uid', '==', taskId));
+  }
+
   public getTasksFromTaskList(tasksId: string[]): AngularFirestoreCollection<Task> {
     return this.db.collection(this.dbPath, ref => ref.where('uid', 'in', tasksId));
   }
