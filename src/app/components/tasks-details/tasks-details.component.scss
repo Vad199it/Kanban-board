@@ -4,7 +4,6 @@
 
   .task-details-container {
     position: relative;
-    width: 380px;
 
     form {
       .searchUser-container {
@@ -26,7 +25,6 @@
 
           @media(max-width: 620px) {
             width: 234px;
-            margin-right: 46px;
           }
         }
       }
@@ -188,7 +186,6 @@
       }
 
       @media(max-width: 620px) {
-        margin-right: 44px;
       }
     }
   }
@@ -214,7 +211,6 @@
 
       @media(max-width: 620px) {
         width: 234px;
-        margin-right: 46px;
         margin-bottom: 5px;
       }
     }
