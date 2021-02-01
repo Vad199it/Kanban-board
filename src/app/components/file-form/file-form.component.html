@@ -17,17 +17,16 @@
     </button>
   </div>
 </div>
-
-<div *ngIf="currentFileUpload"
-     class="progress-container">
-  <progress class="progress-bar"
+<div class="message-big-file">
+  <p *ngIf="isBigSize">File more than 10 Mb</p>
+</div>
+<div class="progress-container">
+  <progress *ngIf="currentFileUpload"
+            class="progress-bar"
             [ngStyle]="{ width: percentage + '%' }"
             value="{{ percentage }}"
             max="100"
   >
     {{ percentage }}%
   </progress>
-</div>
-<div class="message-big-file">
-  <p *ngIf="isBigSize">File more than 10 Mb</p>
 </div>
