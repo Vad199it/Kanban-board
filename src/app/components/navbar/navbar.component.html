@@ -1,13 +1,33 @@
-<div class="container"></div><div class="head"><h2>KanbanBoard</h2></div>
-<div class="action" *ngIf="authService.getUser() as user">
-  <div class="profile" (click)="changeActiveFont()">
-    <img src="{{(user.photoURL) ? user.photoURL : this.userImg}}" alt="{{user.displayName}}">
-  </div>
-  <div class="menu" [ngClass]="{active:isActiveFont}">
-<h3>{{user.displayName}}<br><span>{{user.email}}</span></h3>
-    <ul>
-      <li><img src="{{profileImg}}" alt><a href="#">My Profile</a></li>
-      <li><img src="{{logoutImg}}" alt><a (click)="authService.signOut()">Logout</a></li>
-    </ul>
+<div class="header-container">
+  <div class="header">
+    <h2><a routerLink="/dashboard">KanbanBoard</a></h2>
+    <div *ngIf="(users | async) as user"
+         class="action">
+      <div class="profile"
+           (click)="changeActiveFont()">
+        <div class="profile-img-container">
+          <img *ngIf="user.photoURL"
+               class="profile-img"
+               src="{{ user.photoURL }}"
+               alt=""
+          >
+        </div>
+      </div>
+      <div class="menu"
+           [ngClass]="{ active:isActiveFont }"
+      >
+        <h3 [title]="user.displayName">
+          {{ user.displayName }}
+          <br>
+          <span [title]="user.email">{{ user.email }}</span>
+        </h3>
+        <ul>
+          <li>
+            <div class="log-out-img"></div>
+            <a (click)="signOut()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
+

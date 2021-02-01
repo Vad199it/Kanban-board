@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "kanban-board-b3d29"
+  },
+  "targets": {
+    "kanban-board-b3d29": {
+      "hosting": {
+        "kanban": [
+          "kanban-board-b3d29"
+        ]
+      }
+    }
   }
 }

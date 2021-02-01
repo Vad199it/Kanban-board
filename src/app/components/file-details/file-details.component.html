@@ -1,0 +1,7 @@
+<div class="file-container">
+  <a href="{{ fileUpload.url }}">{{ correctFileName(fileUpload.name) }}</a>
+  <button class="btn-delete-file"
+          (click)="deleteFileUpload(fileUpload)">
+    Delete
+  </button>
+</div>

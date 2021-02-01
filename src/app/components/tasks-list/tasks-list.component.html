@@ -1,30 +1,40 @@
 <div class="taskList">
-  <div class="col">
-    <div
-      *ngFor="let taskList of taskLists; let i = index;trackBy: trackByMethod"
-      class="taskList-group">
-      {{ taskList.title }}
-      <div class="update-button"
-           (click)="setActiveTaskList(taskList, i)"
-      ></div>
-      <div class="taskList-group-item">
-
+  <div class="task-list-col">
+    <div *ngFor="let taskList of taskLists; trackBy: trackByMethod"
+         class="taskList-group"
+         [id]="taskList.uid"
+         (drop)="drop($event)"
+         (dragover)="overDrag($event)"
+    >
+      <div class="task-list-header">
+        <span><span *ngIf="taskList.isFinalList">&#9672; </span>{{ taskList.title }}</span>
+        <div class="update-button"
+             (click)="setActiveTaskList(taskList)"
+        ></div>
       </div>
+      <app-tasks-board
+        [taskListId]="taskList.uid.toString()"
+        [taskListIsFinalList]="taskList.isFinalList"
+      ></app-tasks-board>
     </div>
   </div>
   <div
     class="container-details"
-    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
   >
-    <div class="details" *ngIf="currentTaskList">
-      <span
-        class="close"
-        (click)="this.isModal = !this.isModal"
-      >&times;</span>
-      <app-tasks-list-details
-        (refreshList)="refreshTaskList()"
-        [taskList]="currentTaskList"
-        (isModal)= "this.closeModal($event)"
+    <div *ngIf="currentTaskList"
+         class="details">
+      <div class="option-container">
+        <p class="title-update-task-list">Update task list</p>
+        <span
+          class="close"
+          (click)="this.isModal = !this.isModal"
+        >&times;</span>
+      </div>
+      <app-tasks-list-details [boardId]="projectId"
+                              [taskList]="currentTaskList"
+                              (refreshList)="refreshTaskList()"
+                              (isModal)="this.closeModal($event)"
       ></app-tasks-list-details>
     </div>
   </div>

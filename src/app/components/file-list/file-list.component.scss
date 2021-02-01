@@ -1,0 +1,12 @@
+.list-files-container {
+  height: 70px;
+  overflow-y: auto;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 4px;
+
+  @media(max-width: 620px) {
+    width: 334px;
+  }
+}

@@ -1,0 +1,187 @@
+<div *ngIf="currentTask"
+     class="task-label-container">
+  <div class="task-details-container">
+    <form [formGroup]="taskForm"
+          (click)="changeSizeToOneForm($event)"
+          novalidate
+    >
+      <div class="task-title">
+        <label for="title">Title<span>&#10059;</span></label>
+        <input class="title-input"
+               [(ngModel)]="currentTask.title"
+               [style.borderColor]="taskForm.controls['name'].invalid && taskForm.controls['name'].touched ? 'red': '#cdcdcd'"
+               formControlName="name"
+               maxlength="100"
+               type="text"
+               id="title"
+               name="title"
+        />
+      </div>
+      <div class="task-content">
+        <label for="content">Content<span>&#10059;</span></label>
+        <textarea class="content-textarea"
+                  [(ngModel)]="currentTask.content"
+                  [style.borderColor]="taskForm.controls['content'].invalid && taskForm.controls['content'].touched ? 'red': '#cdcdcd'"
+                  formControlName="content"
+                  maxlength="200"
+                  id="content"
+                  rows="1"
+                  cols="1"
+                  wrap="hard"
+                  name="content"
+        ></textarea>
+      </div>
+      <div class="searchUser-container">
+        <label>
+          <input class="searchUser"
+                 [(ngModel)]="title"
+                 [ngModelOptions]="{standalone: true}"
+                 (focusin)="changeSizeToFiveSearch()"
+                 (focusout)="changeSizeToOneSearch()"
+                 maxlength="30"
+                 type="text"
+                 placeholder="Search">
+        </label>
+      </div>
+      <div class="task-develop">
+        <label for="develop">Developer</label>
+        <div class="scrollable"
+             (focusin)="changeSizeToFive()"
+             (focusout)="changeSizeToOne()"
+        >
+          <select class="develop-input"
+                  [ngModel]="currentTask.doTask"
+                  [ngModelOptions]="{standalone: true}"
+                  [class.collapsed-select]="isOpened"
+                  (ngModelChange)="changeUserInBoard(userId.value)"
+                  (focusin)="changeSizeToOneOption($event)"
+                  #userId
+                  name="develop"
+                  id="develop"
+                  [size] = "size"
+                  autocomplete="off"
+          >
+            <option *ngFor="let user of users | appFilterUsers: title"
+                    [value]="user.uid"
+                    (click)="changeSizeToOne()"
+            >
+              {{user.displayName}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="task-createDate">
+        <label for="createDate">Created date</label>
+        <input class="createDate-input"
+               [value]="currentTask.createDate"
+               [min]="getCurrentDate()"
+               type="date"
+               id="createDate"
+               name="createDate"
+               disabled
+        />
+      </div>
+      <div class="task-dueDate">
+        <label for="dueDate">Due date<span>&#10059;</span></label>
+        <input class="dueDate-input"
+               [(ngModel)]="currentTask.dueDate"
+               [min]="currentTask.createDate"
+               [style.borderColor]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched ? 'red': '#cdcdcd'"
+               formControlName="dueDate"
+               type="date"
+               id="dueDate"
+               name="dueDate"
+        />
+      </div>
+      <div class="search-task-lists-container">
+        <label>
+          <input class="searchUser"
+                 [(ngModel)]="titleTaskList"
+                 [ngModelOptions]="{standalone: true}"
+                 (focusin)="changeSizeTaskListToFive()"
+                 (focusout)="changeSizeTaskListToOne()"
+                 maxlength="30"
+                 type="text"
+                 placeholder="Search">
+        </label>
+      </div>
+      <div class="task-list">
+        <label for="list">Task lists</label>
+        <div class="scrollable"
+             (focusin)="changeSizeTaskListToFive()"
+             (focusout)="changeSizeTaskListToOne()"
+        >
+          <select class="task-list-input"
+                  [value]="taskListId"
+                  (change)="changeTaskListInTask(taskListId.value)"
+                  #taskListId
+                  name="list"
+                  id="list"
+                  [size]="sizeTaskList"
+                  autocomplete="off"
+          >
+            <option *ngFor="let taskList of taskLists | appFilter: titleTaskList"
+                    [value]="taskList.uid"
+            >
+              {{taskList.title}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="task-comments">
+        <label for="comments">Comments</label>
+        <textarea class="comments-textarea"
+                  [value]="text"
+                  [scrollTop]="textarea.scrollHeight"
+                  #textarea
+                  maxlength="200"
+                  id="comments"
+                  name="comments"
+                  [disabled]="true"
+        ></textarea>
+      </div>
+      <div class="task-text">
+        <label>
+          <input class="add-text-to-comments"
+                 formControlName="text"
+                 maxlength="100"
+          />
+        </label>
+        <button class="send-message"
+                [disabled]="!taskForm.value.text"
+                (click)="addTextInComments()">Add</button>
+      </div>
+      <div class="file-container">
+        <div class="file-form">
+          <app-file-form [taskId]="currentTask.uid"></app-file-form>
+        </div>
+        <div class="file-list">
+          <app-file-list [taskId]="currentTask.uid"></app-file-list>
+        </div>
+      </div>
+    </form>
+    <div class="container-btn-delete-update-task">
+      <button class="btn-update-task"
+              [disabled]="!taskForm.valid"
+              (click)="updateTask()"
+              type="submit"
+      >
+        Update
+      </button>
+      <button class="btn-delete-task"
+              [disabled]="!taskForm.valid"
+              (click)="deleteTask()">
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="label-container">
+    <app-label [taskId]="task.uid"></app-label>
+  </div>
+
+</div>
+
+<div *ngIf="!currentTask">
+  <br/>
+  <p>Cannot access this Board...</p>
+</div>

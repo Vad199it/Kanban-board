@@ -1,0 +1,42 @@
+.list {
+  margin: 0;
+
+  .list-group {
+
+    .list-group-item {
+      display: inline-flex;
+      border-radius: 3px;
+      color: white;
+      padding: 1% 2%;
+      margin: 0 5px 5px 0;
+
+      p{
+        max-width: 189px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 5px;
+      }
+
+      .update-button-task {
+        color: #000000;
+        border-radius: 50%;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:after {
+          content: '×';
+          transform: translate(-50%, -50%) rotate(90deg);
+          font-size: 14px;
+          color: white;
+          height: 100%;
+        }
+      }
+
+      &:hover {
+      }
+    }
+  }
+}

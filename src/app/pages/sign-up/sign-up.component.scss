@@ -45,6 +45,18 @@ section
 
         form
         {
+          width: 100%;
+
+          .btn-sign-up[disabled]{
+            color: #cdcdcd;
+          }
+
+          .alert-danger{
+            color: red;
+            font-size: 12px;
+            height: 14px;
+          }
+
           h2
           {
             color: #545454;

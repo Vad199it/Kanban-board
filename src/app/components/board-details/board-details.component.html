@@ -1,51 +1,47 @@
-<div *ngIf="currentBoard" class="edit-form">
-  <h4>Board</h4>
-  <form>
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        [(ngModel)]="currentBoard.title"
-        name="title"
+<div *ngIf="currentBoard"
+     class="board-details-edit-form-container">
+  <form class="board-details-edit-form"
+        [formGroup]="boardForm"
+        novalidate
+  >
+    <div class="board-title">
+      <label for="title"><span>Title</span></label>
+      <input class="title-input"
+             [(ngModel)]="currentBoard.title"
+             formControlName="name"
+             maxlength="20"
+             id="title"
+             type="text"
+             name="title"
       />
     </div>
-    <div class="form-group">
-      <label for="type">Type</label>
-      <input
-        type="text"
-        class="form-control"
-        id="type"
-        [(ngModel)]="currentBoard.type"
-        name="type"
-      />
+    <div class="alert-danger">
+            <span *ngIf="boardForm.controls['name'].invalid && boardForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
     </div>
-
-    <div class="form-group">
+    <div class="board-color">
       <label for="color">Color</label>
-      <input
-        type="color"
-        class="form-control"
-        id="color"
-        value="{{currentBoard.color}}"
-        [(ngModel)]="currentBoard.color"
-        name="color"
+      <input class="color-input"
+             [(ngModel)]="currentBoard.color"
+             [ngModelOptions]="{standalone: true}"
+             id="color"
+             type="color"
+             value="{{currentBoard.color}}"
+             name="color"
       />
     </div>
   </form>
-
-  <button class="badge" (click)="deleteBoard()">
-    Delete
-  </button>
-
-  <button type="submit" class="badge-success" (click)="updateBoard()">
-    Update
-  </button>
-  <p>{{ message }}</p>
-</div>
-
-<div *ngIf="!currentBoard">
-  <br />
-  <p>Cannot access this Board...</p>
+  <div class="container-btn-delete-update-board">
+    <button class="btn-update-board"
+            [disabled]="!boardForm.valid"
+            (click)="updateBoard()"
+            type="submit">
+      Update
+    </button>
+    <button class="btn-delete-board"
+            [disabled]="!boardForm.valid"
+            (click)="deleteBoard()">
+      Delete
+    </button>
+  </div>
 </div>

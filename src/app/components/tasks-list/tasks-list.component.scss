@@ -1,64 +1,76 @@
-.taskList {
-  margin: 80px;
+:host{
 
-  .col {
-    display: grid;
-    grid-gap: 10px;
-    height: 100vh;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
-    background-color: #fff;
-    color: #444;
+}
+
+.taskList {
+
+  @media(max-width: 900px) {
+    width: 94vw;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    height: 100%;
+
+    &::-webkit-scrollbar { width: 0; }
+  }
+
+  .task-list-col {
+    white-space: nowrap;
 
     .taskList-group {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      color: #ff0000;
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 150%;
-      min-height: 100px;
-      word-wrap: break-word;
-      cursor: grabbing;
-      box-shadow: #030303 1px 1px 1px 1px;
+
+      @media(max-width: 900px) {
+        width: 94vw;
+        flex-shrink: 0;
+
+        > div {
+          scroll-snap-align: start;
+        }
+      }
+
+      .task-list-header{
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+
+        span{
+          max-width: 189px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      width: 250px;
+      background-color: white;
+      margin-right: 10px;
+      border-radius: 3px;
+      color: darkslateblue;
+      display: inline-block;
+      vertical-align: top;
+      white-space: normal;
 
       .taskList-group-item{
-        width: 100%;
-        height: 100%;
+
       }
 
       .update-button {
-        position: relative;
-        top: -1em;
-        right: -3em;
-        width: 25px;
-        height: 25px;
-        color: white;
-        border-radius: 50%;
 
         &:hover {
-          transform: scale(1.05);
-          transition: 0.1s;
           cursor: pointer;
         }
 
         &:after {
           content: '•••';
-          position: absolute;
-          top: 50%;
-          left: 50%;
           transform: translate(-50%, -50%) rotate(90deg);
           font-size: 10px;
           letter-spacing: 4px;
-          margin-top: 2px;
-          color: #030303;
+          color: darkslateblue;
         }
       }
     }
   }
 
   .container-details {
-    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -74,22 +86,36 @@
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 80%;
+      width: 350px;
+      line-height: 16px;
+      border-radius: 3px;
+
+      .option-container{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e2e2e2;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+
+        .title-update-task-list{
+          color: darkslateblue;
+          font-size: 16px;
+        }
+      }
 
       .close {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
-      }
-      &:hover,
-      &:focus
-      {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
+        &:hover,
+        &:focus
+        {
+          color: rgba(9, 30, 66, 0.24);
+          text-decoration: none;
+          cursor: pointer;
+        }
       }
     }
   }
-
 }

@@ -1,0 +1,16 @@
+<div class="list">
+  <div class="col">
+    <div class="list-group">
+      <div *ngFor="let label of labels; trackBy: trackByMethod"
+           class="list-group-item"
+           [style.background-color]="label.color"
+      >
+        <p [title]="label.title">{{ label.title }}</p>
+        <span class="update-button-task"
+              (click)="deleteLabelFromTask(label)"
+        ></span>
+      </div>
+    </div>
+  </div>
+</div>
+

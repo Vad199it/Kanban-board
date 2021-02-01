@@ -1,48 +1,64 @@
 <app-navbar></app-navbar>
 <div class="submit-form">
-  <div *ngIf="submitted">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="board.title"
-        name="title"
-      />
+  <div class="create-board"
+       *ngIf="submitted">
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-board">Create board</p>
+        <span class="close"
+              (click)="closeModal()"
+        >&times;</span>
+      </div>
+      <form [formGroup]="boardForm"
+            novalidate
+      >
+        <div class="board-title">
+          <label for="title"><span>Title</span></label>
+          <input class="title-input"
+                 [(ngModel)]="board.title"
+                 formControlName="name"
+                 maxlength="20"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="boardForm.controls['name'].invalid && boardForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="board-color">
+          <label for="color">Color</label>
+          <input class="color-input"
+                 [(ngModel)]="board.color"
+                 [ngModelOptions]= "{standalone: true}"
+                 type="color"
+                 id="color"
+                 value="#444"
+                 name="color"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-board">
+          <button class="btn-save-board"
+                  [disabled]="!boardForm.valid"
+                  (click)="saveBoard()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="type">Type</label>
-      <input
-        class="form-control"
-        id="type"
-        required
-        [(ngModel)]="board.type"
-        name="type"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="color">Type</label>
-      <input
-        type="color"
-        class="form-control"
-        id="color"
-        value="#444"
-        required
-        [(ngModel)]="board.color"
-        name="color"
-      />
-    </div>
-
-    <button (click)="saveBoard()" class="btn-success">Submit</button>
+  </div>
+  <div class="add-board-button-container">
+    <span>Boards</span>
+    <button class="add-board-button"
+            (click)="newBoard()"
+    >
+      Create board
+    </button>
   </div>
 
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newBoard()">
-  </div>
 </div>
 
 <app-boards-list></app-boards-list>

@@ -1,8 +1,13 @@
 export default class Task {
-  id: string;
-  content: string;
-  order: number;
+  id: string; //
+  ownerTask: string; //
+  doTask: string;
+  nameOfDeveloper: string;
+  createDate: string;
   dueDate: Date;
-  label: number;
-  comments = [];
+  title: string;
+  content: string;
+  comments: string[];
+  idTicket: string;
+  uid: string; //
 }

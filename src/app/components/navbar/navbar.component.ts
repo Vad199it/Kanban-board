@@ -1,28 +1,31 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
+import {User} from '../../models/user';
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public isActiveFont: boolean = false;
-  public userImg = '.../../../assets/person-icon.png';
-  public profileImg = '../../../assets/user.png';
-  public logoutImg = '../../../assets/log-out.png';
+  public users: Observable<User>;
+  public isActiveFont: Boolean = false;
 
-  constructor(public authService: AuthService,
-              public router: Router,
-              public ngZone: NgZone) { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.users = this.authService.getUserById(this.authService.getUser().uid);
   }
 
-   public changeActiveFont(): void {
-     this.isActiveFont = !this.isActiveFont;
+  public changeActiveFont(): void {
+    this.isActiveFont = !this.isActiveFont;
+  }
+
+  public signOut(): void{
+    this.authService.signOut();
   }
 
 }

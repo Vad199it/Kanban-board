@@ -1,0 +1,156 @@
+.search-container {
+  position: relative;
+
+  .search {
+    margin-bottom: 2%;
+    padding: 4px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: rgb(255, 255, 255);
+    text-decoration: none;
+    height: 30px;
+    white-space: nowrap;
+    color: darkslateblue;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    width: 35%;
+
+    @media(max-width: 620px) {
+      width: 100%;
+    }
+  }
+
+  .search-results{
+    z-index: 2;
+    position: absolute;
+    max-height: 133px;
+    min-height: 30px;
+    width: 35%;
+    background-color: white;
+    top: 31px;
+    border-radius: 3px;
+    border: 1px solid #cdcdcd;
+    overflow: auto;
+
+    @media(max-width: 620px) {
+      width: 100%;
+    }
+
+    .search-value-container{
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #cdcdcd;
+      border-radius: 3px;
+      color: darkslateblue;
+      padding: 5px;
+      margin: 2px;
+
+      .search-board-icon{
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+.boards-table-container {
+  min-height: 500px;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #cdcdcd;
+  margin-bottom: 10px;
+  border-radius: 3px;
+
+  .boards-table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns:
+      minmax(50px, 0.8fr)
+      minmax(50px, 1.67fr)
+      minmax(50px, 1.67fr)
+      minmax(50px, 0.8fr);
+
+    tbody tr:nth-child(odd) {
+      td{
+        background-color: white;
+      }
+    }
+
+    thead,
+    tbody,
+    tr {
+      display: contents;
+
+      th,
+      td {
+        padding: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .board-details {
+        overflow: unset;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        text-align: left;
+        font-weight: bold;
+        font-size: 14px;
+        color: darkslateblue;
+        border-bottom: 2px solid #cdcdcd;
+        background-color: #f4f5f7;
+        padding: 10px 0;
+        cursor: pointer;
+        border-top: 2px solid #cdcdcd;
+
+        &:last-child {
+
+        }
+      }
+
+      td {
+        padding: 10px 0;
+        color: #808080;
+        border-bottom: 1px solid #cdcdcd;
+      }
+
+    }
+  }
+
+  .list-group-item {
+
+    .board-icon {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .board-title {
+      a {
+        cursor: pointer;
+      }
+    }
+
+    .update-button {
+      padding: 0;
+      border: none;
+      font: inherit;
+      color: inherit;
+      background-color: transparent;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}
+
+.date{
+  font-size: 8px;
+}
+

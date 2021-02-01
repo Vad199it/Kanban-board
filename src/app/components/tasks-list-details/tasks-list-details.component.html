@@ -1,39 +1,48 @@
-<div *ngIf="currentTaskList" class="edit-form">
-  <h4>TaskList</h4>
-  <form>
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        [(ngModel)]="currentTaskList.title"
-        name="title"
+<div *ngIf="currentTaskList"
+     class="edit-form">
+  <form [formGroup]="taskListForm"
+        novalidate
+  >
+    <div class="task-list-title">
+      <label for="title"><span>Title</span></label>
+      <input class="title-input"
+             [(ngModel)]="currentTaskList.title"
+             formControlName="name"
+             maxlength="20"
+             type="text"
+             id="title"
+             name="title"
       />
     </div>
-    <div class="form-group">
-      <label for="order">Order</label>
-      <input
-        type="text"
-        class="form-control"
-        id="order"
-        [(ngModel)]="currentTaskList.order"
-        name="type"
+    <div class="alert-danger">
+            <span *ngIf="taskListForm.controls['name'].invalid && taskListForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+    </div>
+    <div class="task-list-is-final-list">
+      <label for="check"><span>Final list</span></label>
+      <input class="check-input"
+             [checked]="currentTaskList.isFinalList"
+             (change)="currentTaskList.isFinalList = !currentTaskList.isFinalList"
+             type="checkbox"
+             id="check"
+             name="check"
+             required
       />
     </div>
   </form>
-
-  <button class="badge" (click)="deleteTaskList()">
-    Delete
-  </button>
-
-  <button type="submit" class="badge-success" (click)="updateTaskList()">
-    Update
-  </button>
-  <p>{{ message }}</p>
-</div>
-
-<div *ngIf="!currentTaskList">
-  <br />
-  <p>Cannot access this Board...</p>
+  <div class="container-btn-delete-update-task-list">
+    <button class="btn-update-task-list"
+            [disabled]="!taskListForm.valid"
+            (click)="updateTaskList()"
+            type="submit"
+    >
+      Update
+    </button>
+    <button class="btn-delete-task-list"
+            [disabled]="!taskListForm.valid"
+            (click)="deleteTaskList()"
+    >
+      Delete
+    </button>
+  </div>
 </div>

@@ -1,0 +1,399 @@
+.btn-add-task-container {
+  padding: 4%;
+
+  .btn-add-task {
+    margin: 0;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: rgba(9, 30, 66, 0.08);
+    border: 1px solid transparent;
+    text-decoration: none;
+    height: 30px;
+    white-space: nowrap;
+    color: darkslateblue;
+    outline: none;
+    width: 100%;
+
+    &:hover {
+      background-color: rgba(9, 30, 66, 0.1);
+    }
+  }
+}
+
+.create-task {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .container-btn-save-task {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+
+    @media(max-width: 900px) {
+      margin-right: 8px;
+    }
+
+    .btn-save-task {
+      margin: 0;
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(9, 30, 66, .08);
+      border: 1px solid transparent;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+
+      &:hover {
+        background-color: rgba(9, 30, 66, 0.1);
+      }
+
+      &[disabled] {
+        color: #cdcdcd;
+      }
+    }
+  }
+
+  .details {
+    background-color: #fefefe;
+    margin: 110px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 900px;
+    line-height: 16px;
+    border-radius: 3px;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+
+      .send-message {
+        margin: 0;
+        padding: 4px 10px;
+        box-sizing: border-box;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        background-color: rgba(9, 30, 66, 0.08);
+        border: 1px solid transparent;
+        text-decoration: none;
+        height: 30px;
+        white-space: nowrap;
+        color: darkslateblue;
+        outline: none;
+
+        &[disabled] {
+          color: #cdcdcd;
+        }
+      }
+
+      .searchUser-container {
+        display: flex;
+        justify-content: flex-end;
+
+        .searchUser {
+          border: 1px solid #cdcdcd;
+          border-radius: 3px;
+          padding: 4px;
+          width: 308px;
+          white-space: nowrap;
+          color: darkslateblue;
+          outline: none;
+          background-color: white;
+          text-decoration: none;
+
+          @media(max-width: 900px) {
+            width: 234px;
+            margin-right: 9px;
+          }
+        }
+      }
+    }
+
+    .label-container {
+      display: flex;
+      margin-bottom: 10px;
+
+      .label-title-container {
+        display: flex;
+        color: #808080;
+        flex-direction: column;
+
+        .selected-labels-title {
+          width: 100px;
+          margin-top: 20px;
+          line-height: 19px;
+        }
+
+        .labels-title {
+          width: 100px;
+          margin-top: 34px;
+        }
+
+      }
+
+      ::ng-deep {
+        .list-group {
+          height: 60px;
+
+          .update-button {
+            display: none;
+          }
+        }
+
+        .labels-container {
+          .app-label-list-task-container {
+            width: 308px;
+            height: 72px;
+          }
+
+          .search {
+            width: 308px;
+          }
+
+          .container-btn-add-label {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .file-form {
+      margin-bottom: 10px;
+
+      ::ng-deep {
+        .choose-file {
+          width: 332px;
+        }
+      }
+    }
+
+    .option-container {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e2e2;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+
+      .title-create-task {
+        color: darkslateblue;
+        font-size: 16px;
+      }
+    }
+
+    .task-title,
+    .task-content,
+    .task-develop,
+    .task-create-date,
+    .task-due-date,
+    .task-order,
+    .task-comments{
+      display: flex;
+      margin-bottom: 17px;
+      align-items: center;
+
+      label {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        color: #808080;
+      }
+
+      span {
+        margin-left: 5px;
+        color: red;
+        font-size: 8px;
+      }
+    }
+
+    .task-comments{
+      margin-bottom: 5px;
+    }
+
+    .task-text{
+      display: flex;
+      justify-content: flex-end;
+
+      @media(max-width: 900px) {
+        margin-right: 8px;
+        margin-bottom: 5px;
+      }
+    }
+
+    .task-develop{
+      height: 30px;
+      position: relative;
+      .collapsed-select{
+        position: absolute;
+        top: 0;
+        height: 75px;
+      }
+    }
+
+    .title-input,
+    .develop-select,
+    .create-date-input,
+    .due-date-input,
+    .order-input,
+    .add-text-to-comments{
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 308px;
+
+      @media(max-width: 900px) {
+        width: 234px;
+      }
+    }
+
+    .add-text-to-comments{
+      width: 250px;
+      margin-right: 10px;
+      @media(max-width: 900px) {
+        width: 178px;
+      }
+    }
+
+    .develop-select {
+      height: 30px;
+      margin-top: 5px;
+    }
+
+    .due-date-input {
+
+    }
+
+    .content-textarea,
+    .comments-textarea {
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+      width: 308px;
+      height: 92px;
+      resize: none;
+
+      @media(max-width: 900px) {
+        width: 234px;
+      }
+
+    }
+
+    .comments-textarea {
+
+    }
+
+    .close {
+      color: rgba(9, 30, 66, 0.18);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: rgba(9, 30, 66, 0.24);
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media(max-width: 900px) {
+  .create-task {
+    .details {
+      width: 375px;
+      margin: 0 auto;
+      padding: 10px 10px 10px 20px;
+
+      form {
+        flex-direction: column;
+      }
+
+      .file-form {
+        ::ng-deep {
+          .choose-file {
+            width: 256px;
+          }
+
+          .choose-upload-file-container{
+            width: 322px;
+          }
+        }
+      }
+
+      .label-container {
+
+        .label-title-container {
+          width: 100px;
+        }
+
+        ::ng-deep {
+          .labels-container {
+            .search {
+              width: 234px;
+            }
+
+            .app-label-list-task-container {
+              width: 234px;
+            }
+          }
+        }
+
+        p {
+          margin-right: 35px;
+        }
+      }
+    }
+  }
+}
+
+.file-form-list-container {
+  .file-list {
+    ::ng-deep {
+      .uploaded-files-container {
+
+      }
+
+      .list-files-container {
+        width: 100%;
+        height: 128px;
+
+        @media(max-width: 900px) {
+          height: 70px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="choose-upload-file-container">
+  <div class="choose-file-container">
+    <label for="choose-file">
+      <input class="choose-file"
+             (change)="selectFile($event)"
+             id="choose-file"
+             type="file"
+      />
+    </label>
+  </div>
+  <div class="upload-file-container">
+    <button class="upload-file"
+            [disabled]="disableButton()"
+            (click)="upload()"
+    >
+      Upload
+    </button>
+  </div>
+</div>
+
+<div *ngIf="currentFileUpload"
+     class="progress-container">
+  <progress class="progress-bar"
+            [ngStyle]="{ width: percentage + '%' }"
+            value="{{ percentage }}"
+            max="100"
+  >
+    {{ percentage }}%
+  </progress>
+</div>
+<div class="message-big-file">
+  <p *ngIf="isBigSize">File more than 10 Mb</p>
+</div>

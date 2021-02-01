@@ -1,0 +1,56 @@
+<div class="task">
+  <div class="task-col">
+    <div *ngFor="let task of tasks | appFilterTasks: tasksId; trackBy: trackByMethod"
+         class="task-group-container"
+         [id]="task.uid"
+         (dragstart)="startDrag($event)"
+         (dragend)="endDrag($event)"
+         draggable="true"
+    >
+      <div class="task-group">
+        <div class="task-header">
+          <span class="id-ticket">{{correctIdTicket(task)}}</span>
+          <div class="update-button"
+               (click)="setActiveTask(task)"
+          ></div>
+        </div>
+        <div
+          class="date"
+          [ngStyle]="{'display': checkExpiredDate(task.dueDate) ? 'block' : 'none'}"
+        >
+          &#9832; Date expired
+        </div>
+        <span class="task-title">{{ task.title }}</span>
+        <div class="name-of-developer-container">
+          <span>Assignee: </span>
+          <span class="name-of-developer">{{task.nameOfDeveloper}}</span>
+        </div>
+        <app-label-list-task [taskId]="task.uid.toString()"></app-label-list-task>
+      </div>
+    </div>
+  </div>
+  <div
+    class="container-details"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
+  >
+    <div *ngIf="currentTask"
+         class="details">
+      <div class="option-container">
+        <p class="title-update-task">Update task</p>
+        <span class="close"
+              (click)="showModal()"
+        >&times;</span>
+      </div>
+      <app-tasks-details [task]="currentTask"
+                         [taskListId]="taskListId"
+                         (refreshList)="refreshTask()"
+                         (isModal)="closeModal($event)"
+                         [text]="text"
+                         [comments]="comments"
+                         [titleTaskList]="titleTaskList"
+      ></app-tasks-details>
+    </div>
+  </div>
+</div>
+
+

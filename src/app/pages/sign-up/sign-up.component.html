@@ -2,14 +2,76 @@
   <div class="container">
     <div class="user">
       <div class="formBx">
-        <form>
+        <form class="sign-up-form"
+              [formGroup]="userForm"
+              novalidate
+        >
           <h2>Create an account</h2>
-          <input type="text" name="" placeholder="Username" #userName required>
-          <input type="email" name="" placeholder="Email Address" #userEmail required>
-          <input type="password" name="" placeholder="Create Password" #userPwd required>
-          <input type="password" name="" placeholder="Confirm Password">
-          <input type="button" name="" value="Sign Up" (click)="authService.signUp(userName.value, userEmail.value, userPwd.value)">
-          <input class="Google" type="button" name="" value="Continue with Google" (click)="authService.googleAuth()">
+          <label>
+            <input type="text"
+                   formControlName="name"
+                   name=""
+                   maxlength="20"
+                   placeholder="Username"
+            >
+          </label>
+          <div class="alert-danger">
+          <span *ngIf="userForm.controls['name'].invalid && userForm.controls['name'].touched"
+          >Incorrect name</span>
+          </div>
+          <label>
+            <input (input)="clearErrorMessage()"
+                   type="email"
+                   formControlName="email"
+                   name=""
+                   maxlength="32"
+                   placeholder="Email Address"
+            >
+          </label>
+          <div class="alert-danger">
+            <span *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched"
+            >Incorrect email</span>
+            <span *ngIf="errorMessage"
+            >Email exists</span>
+          </div>
+          <label>
+            <input type="password"
+                   formControlName="password"
+                   name=""
+                   maxlength="49"
+                   placeholder="Create Password"
+            >
+          </label>
+          <div class="alert-danger">
+      <span *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched"
+      >Incorrect password</span>
+          </div>
+          <label>
+            <input type="password"
+                   formControlName="confirmPassword"
+                   name=""
+                   maxlength="49"
+                   placeholder="Confirm Password"
+            >
+          </label>
+          <div class="alert-danger">
+      <span *ngIf="userForm.controls['confirmPassword'].invalid && userForm.controls['confirmPassword'].touched"
+      >Incorrect password</span>
+          </div>
+          <div class="btn-container">
+            <input class="btn-sign-up"
+                   [disabled]="!userForm.valid"
+                   (click)="signUp()"
+                   type="button"
+                   name=""
+                   value="Sign Up"
+            >
+            <input (click)="googleAuth()"
+                   class="Google"
+                   type="button"
+                   name="" value="Continue with Google"
+            >
+          </div>
           <p class="signup">Already have an account ? <a routerLink="/sign-in">Sign in.</a></p>
         </form>
       </div>

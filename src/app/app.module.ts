@@ -5,14 +5,16 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {AuthService} from './services/auth.service';
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,7 @@ import {AuthService} from './services/auth.service';
     AngularFirestoreModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireStorageModule
   ],
   providers: [AuthService],
   exports: [

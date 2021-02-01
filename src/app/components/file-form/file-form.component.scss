@@ -1,0 +1,77 @@
+.upload-file {
+  padding: 4px 10px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: rgba(9, 30, 66, 0.08);
+  border: 1px solid transparent;
+  text-decoration: none;
+  height: 30px;
+  white-space: nowrap;
+  color: darkslateblue;
+  outline: none;
+  margin-left: 10px;
+
+  &[disabled] {
+    color: #cdcdcd;
+  }
+}
+
+.choose-upload-file-container {
+  display: flex;
+  align-items: center;
+  width: 380px;
+  justify-content: space-between;
+  @media(max-width: 620px) {
+    width: 337px
+  }
+
+  .choose-file {
+    border: 1px solid #cdcdcd;
+    border-radius: 3px;
+    padding: 3px;
+    cursor: pointer;
+    width: 303px;
+
+    @media(max-width: 620px) {
+      width: 250px
+    }
+
+    &::-webkit-file-upload-button {
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(9, 30, 66, 0.08);
+      border: 1px solid transparent;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    &:focus, &:hover {
+      outline: none;
+    }
+  }
+}
+
+.progress-container {
+  .progress-bar {
+    &::-webkit-progress-value {
+      background: darkslateblue;
+    }
+  }
+}
+
+.message-big-file {
+  color: red;
+  font-size: 12px;
+  height: 14px;
+}

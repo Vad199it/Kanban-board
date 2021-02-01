@@ -1,35 +1,66 @@
 <app-navbar></app-navbar>
+<div *ngFor="let board of boards | async"
+     class="name-task-list-container">
+  <span>{{board.title}}</span>
+</div>
 <div class="submit-form">
-  <div *ngIf="submitted">
-
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        required
-        [(ngModel)]="taskList.title"
-        name="title"
-      />
+  <div *ngIf="submitted"
+       class="create-task-list">
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-task-list">Create task list</p>
+        <span
+          class="close"
+          (click)="closeModal()"
+        >&times;</span>
+      </div>
+      <form [formGroup]="taskListForm"
+            novalidate
+      >
+        <div class="task-list-title">
+          <label for="title"><span>Title</span></label>
+          <input class="title-input"
+                 [(ngModel)]="taskList.title"
+                 formControlName="name"
+                 maxlength="20"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="taskListForm.controls['name'].invalid && taskListForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="task-list-is-final-list">
+          <label for="check"><span>Final list</span></label>
+          <input class="check-input"
+                 [checked]="isFinalList"
+                 (change)="isFinalList = !isFinalList"
+                 type="checkbox"
+                 id="check"
+                 name="check"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-task-list">
+          <button class="btn-save-task-list"
+                  [disabled]="!taskListForm.valid"
+                  (click)="saveTaskList()"
+          >Create
+          </button>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="order">Type</label>
-      <input
-        class="form-control"
-        id="order"
-        required
-        [(ngModel)]="taskList.order"
-        name="order"
-      />
-    </div>
-
-    <button (click)="saveTaskList()" class="btn-success">Submit</button>
-  </div>
-
-  <div *ngIf="!submitted">
-    <img src='{{addBoardImg}}' alt="add Board" (click)="newTaskList()">
   </div>
 </div>
-<app-tasks-list [projectId]="id"></app-tasks-list>
+<div class="task-list-container">
+  <app-tasks-list [projectId]="id"></app-tasks-list>
+  <div class="btn-add-task-list-container">
+    <button class="btn-add-task-list"
+            (click)="newTaskList()"
+    >+ New task list
+    </button>
+  </div>
+</div>

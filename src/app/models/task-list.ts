@@ -3,4 +3,6 @@ export default class TaskList {
   order: number;
   id: string;
   uid: string;
+  isFinalList: boolean;
+  tasksId: string[] = [' '];
 }

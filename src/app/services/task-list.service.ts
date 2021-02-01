@@ -1,27 +1,35 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-
 import TaskList from '../models/task-list';
+import {TaskService} from './task.service';
 import {Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskListService {
+export class TaskListService implements OnDestroy {
 
-  private dbPath = '/task-lists';
+  private subscription: Subscription;
+  private readonly dbPath: string = '/task-lists';
+  private taskListRef: AngularFirestoreCollection<TaskList>;
 
-  taskListRef: AngularFirestoreCollection<TaskList>;
-
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private taskService: TaskService) {
     this.taskListRef = db.collection(this.dbPath);
   }
 
-  getTaskLists(taskListId: string): AngularFirestoreCollection<TaskList> {
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', taskListId));
+  public getTaskLists(projectId: string): AngularFirestoreCollection<TaskList> {
+    return this.db.collection(this.dbPath, ref => ref
+      .where('id', '==', projectId)
+      .orderBy('order', 'asc'));
   }
 
-  createTaskList(taskList: TaskList): Promise<void> {
+  public getTaskListsById(taskListId: string): AngularFirestoreCollection<TaskList> {
+    return this.db.collection(this.dbPath, ref => ref
+      .where('uid', '==', taskListId));
+  }
+
+  public createTaskList(taskList: TaskList): Promise<void> {
     const id = this.db.createId();
     const taskListRef: AngularFirestoreDocument<any> = this.db.doc(`task-lists/${id}`);
     return taskListRef.set({ ...taskList, ...{uid: id} }, {
@@ -29,20 +37,26 @@ export class TaskListService {
     });
   }
 
-  updateTaskList(id: string, data: any): Promise<void> {
+  public updateTaskList(id: string, data: any): Promise<void> {
     return this.taskListRef.doc(id).update(data);
   }
 
-  deleteTaskList(id: string): Promise<void> {
+  public deleteTaskList(id: string, boardId?: string): Promise<void> {
+    this.taskService.deleteAllTaskFromTaskList(id, boardId);
     return this.taskListRef.doc(id).delete();
   }
 
-  deleteAllTaskListFromBoard(boardId: string): any{
-    return this.db.collection(this.dbPath, ref => ref.where('id', '==', boardId))
+  public deleteAllTaskListFromBoard(boardId: string): Subscription {
+    return this.subscription = this.db.collection(this.dbPath, ref => ref.where('id', '==', boardId))
       .get().subscribe((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          this.taskService.deleteAllTaskFromTaskList(doc.id);
           doc.ref.delete();
         });
       });
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,0 +1,58 @@
+<div class="app-label-list-task-container">
+  <app-label-list-task [taskId]="taskId"></app-label-list-task>
+</div>
+  <label>
+    <input class="search"
+           [(ngModel)]="title"
+           type="text"
+           placeholder="Search"
+           maxlength="30"
+    >
+  </label>
+<div class="list">
+  <div class="col">
+    <div class="list-group">
+      <div
+        *ngFor="let label of labels | appLabelFilter: taskLabels | appFilter: title; trackBy: trackByMethod"
+        class="list-group-item"
+      >
+        <div class="label-container">
+          <div class="label-close-color-container">
+            <div class="label-color"
+                 (click)="choseLabel(label)"
+                 [style.background-color]="label.color"
+            ></div>
+          </div>
+          <p class="label-title"
+             (click)="choseLabel(label)"
+             [title]="label.title"
+          >
+            {{ label.title }}
+          </p>
+          <div class="update-button"
+               (click)="setActiveLabel(label)"
+          >Edit
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="container-details"
+    [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
+  >
+    <div *ngIf="currentLabel"
+         class="details">
+      <div class="option-container">
+        <p class="title-update-label">Update label</p>
+        <span class="close"
+              (click)="this.isModal = !this.isModal"
+        >&times;</span>
+      </div>
+      <app-label-list-project-details (refreshList)="refreshList()"
+                                      [label]="currentLabel"
+                                      (isModal)="this.closeModal($event)"
+      ></app-label-list-project-details>
+    </div>
+  </div>
+</div>

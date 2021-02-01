@@ -3,12 +3,55 @@
     <div class="user">
       <div class="imgBx"></div>
       <div class="formBx">
-        <form>
+        <form class="sign-in-form"
+              [formGroup]="userForm"
+              novalidate
+        >
           <h2>Sign In</h2>
-          <input type="text" name="" placeholder="Username" #userName required>
-          <input type="password" name="" placeholder="Password" #userPassword required>
-          <input type="button" name="" value="Login" (click)="authService.signIn(userName.value, userPassword.value)">
-          <input class="Google" type="button" name="" value="Login with Google" (click)="authService.googleAuth()">
+          <label>
+            <input (input)="clearErrorMessage()"
+                   formControlName="email"
+                   type="text"
+                   maxlength="32"
+                   name=""
+                   placeholder="UserEmail"
+            >
+          </label>
+          <div class="alert-danger">
+            <span *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched"
+            >Incorrect email</span>
+          </div>
+          <label>
+            <input (input)="clearErrorMessage()"
+                   formControlName="password"
+                   type="password"
+                   name=""
+                   maxlength="49"
+                   placeholder="Password"
+            >
+          </label>
+          <div class="alert-danger">
+            <span *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched"
+            >Incorrect password</span>
+            <span *ngIf="errorMessage"
+            >
+              {{errorMessage}}</span>
+          </div>
+          <div class="btn-container">
+            <input [disabled]="!userForm.valid"
+                   (click)="signIn()"
+                   type="button"
+                   name=""
+                   value="Login"
+                   class="btn-sign-in"
+            >
+            <input class="Google"
+                   (click)="googleAuth()"
+                   type="button"
+                   name=""
+                   value="Login with Google"
+            >
+          </div>
           <p class="signup">Don't have an account ? <a routerLink="/sign-up">Sign Up.</a></p>
           <p class="signup"><a routerLink="/forgot-password">Forgot Password ? </a></p>
         </form>

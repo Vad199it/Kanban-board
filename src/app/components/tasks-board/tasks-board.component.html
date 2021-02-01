@@ -1,0 +1,154 @@
+<div class="create-board-submit-form">
+  <div *ngIf="submitted"
+       class="create-task"
+  >
+    <div class="details">
+      <div class="option-container">
+        <p class="title-create-task">Create task</p>
+        <span class="close"
+              (click)="closeModal()"
+        >&times;</span>
+      </div>
+      <form [formGroup]="taskForm"
+            (click)="changeSizeToOneForm($event)"
+            novalidate
+      >
+        <div>
+          <div class="task-title">
+            <label for="title">Title<span>&#10059;</span></label>
+            <input class="title-input"
+                   [style.borderColor]="taskForm.controls['name'].invalid && taskForm.controls['name'].touched ? 'red': '#cdcdcd'"
+                   formControlName="name"
+                   maxlength="100"
+                   type="text"
+                   id="title"
+                   name="title"
+                   required
+            />
+          </div>
+          <div class="task-content">
+            <label for="content">Content<span>&#10059;</span></label>
+            <textarea class="content-textarea"
+                      [style.borderColor]="taskForm.controls['content'].invalid && taskForm.controls['content'].touched ? 'red': '#cdcdcd'"
+                      formControlName="content"
+                      maxlength="200"
+                      id="content"
+                      name="content"
+                      rows="1"
+                      cols="1"
+                      wrap="hard"
+                      required
+            ></textarea>
+          </div>
+          <div class="searchUser-container">
+            <label>
+              <input class="searchUser"
+                     (input)="changeTitle()"
+                     (focusin)="changeSizeToFiveSearch()"
+                     (focusout)="changeSizeToOneSearch()"
+                     formControlName="title"
+                     maxlength="30"
+                     type="text"
+                     placeholder="Search">
+            </label>
+          </div>
+          <div class="task-develop">
+            <label for="develop">Developer<span>&#10059;</span></label>
+            <div class="container-select"
+                 id="dark"
+                 (focusin)="changeSizeToFive()"
+                 (focusout)="changeSizeToOne()"
+            >
+              <select class="develop-select"
+                      [class.collapsed-select]="isOpened"
+                      [style.borderColor]="taskForm.controls['develop'].invalid && valid && (taskForm.controls['develop'].touched || taskForm.controls['title'].touched) ? 'red': '#cdcdcd'"
+                      (focusin)="changeSizeToOneOption($event)"
+                      formControlName="develop"
+                      name="develop"
+                      id="develop"
+                      [size]="size"
+                      autocomplete="off"
+              >
+                <option value="" hidden>Select developer:</option>
+                <option *ngFor="let user of users | appFilterUsers: title"
+                        [value]="user.uid"
+                        (click)="changeSizeToOne()"
+                >
+                  {{user.displayName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="task-due-date">
+            <label for="dueDate">Due date<span>&#10059;</span></label>
+            <input class="due-date-input"
+                   [min]="getCurrentDate()"
+                   [style.borderColor]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched ? 'red': '#cdcdcd'"
+                   formControlName="dueDate"
+                   type="date"
+                   id="dueDate"
+                   name="dueDate"
+                   required
+            />
+          </div>
+          <div class="task-comments">
+            <label for="comments">Comments</label>
+            <textarea class="comments-textarea"
+                      [value]="text"
+                      formControlName="comments"
+                      maxlength="200"
+                      id="comments"
+                      name="comments"
+            ></textarea>
+          </div>
+          <div class="task-text">
+            <label>
+              <input class="add-text-to-comments"
+                     formControlName="text"
+              />
+            </label>
+            <button class="send-message"
+                    [disabled]="!taskForm.value.text"
+                    (click)="addTextInComments()">Add
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="label-container">
+            <div class="label-title-container">
+              <p class="selected-labels-title">Selected labels</p>
+              <p class="labels-title">Labels</p>
+            </div>
+            <app-label [taskId]="task.uid"></app-label>
+          </div>
+          <div class="file-form-list-container">
+            <div class="file-form">
+              <app-file-form [taskId]="task.uid"></app-file-form>
+            </div>
+
+            <div class="file-list">
+              <app-file-list [taskId]="task.uid"></app-file-list>
+            </div>
+          </div>
+          <div class="container-btn-save-task">
+            <button class="btn-save-task"
+                    [disabled]="!taskForm.valid"
+                    (click)="saveTask()"
+            >Create
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="taskList-group-item">
+  <app-tasks [taskListId]="taskListId"></app-tasks>
+  <div class="btn-add-task-container">
+    <button class="btn-add-task"
+            *ngIf="!taskListIsFinalList"
+            (click)="newTask()"
+    >+ Add another task
+    </button>
+  </div>
+</div>

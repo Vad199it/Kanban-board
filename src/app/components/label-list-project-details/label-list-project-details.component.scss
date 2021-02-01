@@ -1,0 +1,74 @@
+.alert-danger{
+  color: red;
+  font-size: 12px;
+  height: 14px;
+  margin-left: 50px;
+  margin-bottom: 10px;
+}
+.label-details-container{
+
+  .label-title,
+  .label-color
+  {
+    display: flex;
+    margin-bottom: 2%;
+    label{
+      width: 70px;
+      display: flex;
+      align-items: center;
+      color: #808080;
+    }
+
+    .title-input {
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: white;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+      border: 1px solid #cdcdcd;
+    }
+  }
+
+  .container-btn-delete-update-label {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+
+    .btn-delete-label,
+    .btn-update-label {
+      margin: 0;
+      padding: 4px 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(9, 30, 66, .08);
+      border: 1px solid transparent;
+      text-decoration: none;
+      height: 30px;
+      white-space: nowrap;
+      color: darkslateblue;
+      outline: none;
+
+      &:hover {
+        background-color: rgba(9, 30, 66, 0.1);
+      }
+
+      &[disabled]{
+        color: #cdcdcd;
+      }
+    }
+
+    .btn-update-label {
+      margin-right: 10px;
+    }
+  }
+
+}

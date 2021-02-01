@@ -1,0 +1,61 @@
+<div class="labels-submit-form">
+  <div *ngIf="submitted"
+       class="create-label">
+    <div class="label-details">
+      <div class="option-container">
+        <p class="title-create-label">Create label</p>
+        <span class="close"
+              (click)="closeModal()"
+        >&times;</span>
+      </div>
+      <form [formGroup]="labelForm"
+            novalidate
+      >
+        <div class="label-title">
+          <label for="title">Title</label>
+          <input class="title-input"
+                 [(ngModel)]="label.title"
+                 formControlName="name"
+                 type="text"
+                 id="title"
+                 name="title"
+                 required
+          />
+        </div>
+        <div class="alert-danger">
+            <span *ngIf="labelForm.controls['name'].invalid && labelForm.controls['name'].touched"
+            >Incorrect name(>3)</span>
+        </div>
+        <div class="label-color">
+          <label for="color">Color</label>
+          <input class="color-input"
+                 [(ngModel)]="label.color"
+                 [ngModelOptions]= "{standalone: true}"
+                 id="color"
+                 type="color"
+                 name="color"
+                 required
+          />
+        </div>
+        <div class="container-btn-save-label">
+          <button class="btn-save-label"
+                  [disabled]="!labelForm.valid"
+                  (click)="saveLabel()"
+          >Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="labels-container">
+  <app-label-list-project [projectId]="id"
+                          [taskId]="taskId"
+  ></app-label-list-project>
+  <div class="container-btn-add-label">
+    <button class="btn-add-label"
+            (click)="newLabel()"
+    >+ New label
+    </button>
+  </div>
+</div>

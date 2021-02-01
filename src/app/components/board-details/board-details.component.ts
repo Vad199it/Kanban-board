@@ -1,48 +1,50 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {Component, Input, OnChanges, Output, EventEmitter, SimpleChanges} from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import Board from '../../models/board';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-board-details',
   templateUrl: './board-details.component.html',
-  styleUrls: ['./board-details.component.css']
+  styleUrls: ['./board-details.component.scss']
 })
-export class BoardDetailsComponent implements OnInit, OnChanges {
-
+export class BoardDetailsComponent implements OnChanges {
   @Input() board: Board;
   @Output() isModal: EventEmitter<boolean> = new EventEmitter(false);
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentBoard: Board = null;
-  message: string = '';
+  public currentBoard: Board;
+  public boardForm: FormGroup;
 
-  constructor(private boardService: BoardService) { }
-
-  ngOnInit(): void {
-    this.message = '';
+  constructor(private boardService: BoardService,
+              private formBuilder: FormBuilder) {
+    this.boardForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
   }
 
-  ngOnChanges(): void {
-    this.message = '';
-    this.currentBoard = { ...this.board };
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.board && changes.board.currentValue) {
+      this.currentBoard = { ...this.board };
+    }
   }
 
-  updateBoard(): void {
-    const data = {
+  public updateBoard(): void {
+    const data: {title: string, color: string} = {
       title: this.currentBoard.title,
-      type: this.currentBoard.type,
-      color: this.currentBoard.color
+      color: this.currentBoard.color || 'black'
     };
     this.boardService.updateBoard(this.currentBoard.id, data)
-      .then(() => this.message = 'The board was updated successfully!')
+      .then(() => {
+        this.isModal.emit(true);
+      })
       .catch(err => console.log(err));
   }
 
-  deleteBoard(): void {
+  public deleteBoard(): void {
     this.isModal.emit(true);
     this.boardService.deleteBoard(this.currentBoard.id)
       .then(() => {
         this.refreshList.emit();
-        this.message = 'The board was updated successfully!';
       })
       .catch(err => console.log(err));
   }

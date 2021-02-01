@@ -1,34 +1,60 @@
-<input type="text" [(ngModel)]="tittle" (input)="search()" >
-<div class="list">
-  <div class="col">
-    <div class="list-group">
-      <div
-        class="list-group-item"
-        *ngFor="let board of boards; let i = index;trackBy: trackByMethod"
-        [ngStyle]="{'background-color': board.color == null ? 'default' : board.color}"
-        (click)="navigateToBoard(board.uid)"
-      >
-        {{ board.title }}
-        <div appClickStopPropagation class="update-button"
-          (click)="setActiveBoard(board, i)"
-        ></div>
+<div class="board-lists-container">
+  <div class="board-lists">
+    <p class="name-board-lists">My boards</p>
+    <app-table [boards]="boards"
+               [tableId]="'myBoards'"
+               (isModal)="this.closeModal($event)"
+               (currentBoard)="setActiveBoard($event)"
+               (filter)="retrieveBoardsByFilter($event)"
+    >
+    </app-table>
+    <div class="prev-next-btn-container">
+      <div class="prev-next-btn">
+        <button [disabled]="!disablePrev"
+                (click)="prevPage()">prev
+        </button>
+        <button [disabled]="!disableNext"
+                (click)="nextPage()">next
+        </button>
       </div>
     </div>
   </div>
-  <div
-    class="container-details"
-    [ngStyle]="{'display': this.isModal == true ? 'block' : 'none'}"
-  >
-    <div class="details" *ngIf="currentBoard">
-      <span
-        class="close"
-        (click)="this.isModal = !this.isModal"
-      >&times;</span>
-      <app-board-details
-        (refreshList)="refreshList()"
-        [board]="currentBoard"
-        (isModal)= "this.closeModal($event)"
-      ></app-board-details>
+  <div class="board-lists">
+    <p class="name-board-lists">Assigned boards </p>
+    <app-table [boards]="otherBoards"
+               [tableId]="'assignedBoards'"
+               (isModal)="this.closeModal($event)"
+               (currentBoard)="setActiveBoard($event)"
+               (filter)="retrieveBoardsByFilter($event)"
+    >
+    </app-table>
+    <div class="prev-next-btn-container">
+      <div class="prev-next-btn">
+        <button [disabled]="!disablePrevOther"
+                (click)="prevPageOther()">prev
+        </button>
+        <button [disabled]="!disableNextOther"
+                (click)="nextPageOther()">next
+        </button>
+      </div>
     </div>
+  </div>
+</div>
+<div
+  class="container-board-lists-details-container"
+  [ngStyle]="{'display': this.isModal ? 'block' : 'none'}"
+>
+  <div *ngIf="currentBoard"
+       class="container-board-lists-details">
+    <div class="option-container">
+      <p class="title-update-board">Update board</p>
+      <span class="close"
+            (click)="this.isModal = !this.isModal"
+      >&times;</span>
+    </div>
+    <app-board-details [board]="currentBoard"
+                       (refreshList)="refreshList()"
+                       (isModal)="this.closeModal($event)"
+    ></app-board-details>
   </div>
 </div>
