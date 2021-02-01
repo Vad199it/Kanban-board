@@ -98,8 +98,8 @@
           <input class="searchUser"
                  [(ngModel)]="titleTaskList"
                  [ngModelOptions]="{standalone: true}"
-                 (focusin)="changeSizeTaskListToFive()"
-                 (focusout)="changeSizeTaskListToOne()"
+                 (focusin)="changeSizeTaskListToFiveSearch()"
+                 (focusout)="changeSizeTaskListToOneSearch()"
                  maxlength="30"
                  type="text"
                  placeholder="Search">
@@ -108,20 +108,24 @@
       <div class="task-list">
         <label for="list">Task lists</label>
         <div class="scrollable"
-             (focusin)="changeSizeTaskListToFive()"
-             (focusout)="changeSizeTaskListToOne()"
+             (focusin)="changeSizeToFiveTaskList()"
+             (focusout)="changeSizeToOneTaskList()"
         >
           <select class="task-list-input"
-                  [value]="taskListId"
+                  [value]=""
+                  [class.collapsed-select]="isOpenedTaskList"
                   (change)="changeTaskListInTask(taskListId.value)"
+                  (focusin)="changeSizeToOneOptionTaskList($event)"
                   #taskListId
                   name="list"
                   id="list"
                   [size]="sizeTaskList"
                   autocomplete="off"
           >
+            <option value="" hidden>Select task list:</option>
             <option *ngFor="let taskList of taskLists | appFilter: titleTaskList"
                     [value]="taskList.uid"
+                    (click)="changeSizeToOneTaskList()"
             >
               {{taskList.title}}
             </option>

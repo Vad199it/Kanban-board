@@ -40,7 +40,9 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private prevUserId: string;
   public isChanged: Boolean = false;
   public isOpened: boolean = false;
+  public isOpenedTaskList = false;
   public isSearchOpen: boolean = false;
+  public isSearchOpenTaskList: boolean = false;
   public valid: boolean = false;
   public newTaskListId: string;
   public size: number = 1;
@@ -319,17 +321,30 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     this.isOpened = true;
   }
 
+  public changeSizeToFiveTaskList(): void {
+    this.sizeTaskList = 5;
+    this.isOpenedTaskList = true;
+  }
+
   public changeSizeToOne(): void {
     this.size = 1;
     this.isOpened = false;
   }
 
-  public changeSizeTaskListToFive(): void {
-    this.sizeTaskList = 3;
+
+  public changeSizeToOneTaskList(): void {
+    this.sizeTaskList = 1;
+    this.isOpenedTaskList = false;
   }
 
-  public changeSizeTaskListToOne(): void {
-    this.sizeTaskList = 1;
+  public changeSizeTaskListToFiveSearch(): void {
+    this.sizeTaskList = 5;
+    this.isOpenedTaskList = true;
+    this.isSearchOpenTaskList = true;
+  }
+
+  public changeSizeTaskListToOneSearch(): void {
+    this.isOpened = false;
   }
 
   public changeSizeToOneForm(e: any): void {
@@ -342,6 +357,14 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
       this.isOpened = false;
       this.size = 1;
     }
+    if (!e.target.closest('.search-task-lists-container')) {
+      this.sizeTaskList = 1;
+      if ((this.isOpenedTaskList) || (this.isSearchOpenTaskList)) {
+        this.isSearchOpenTaskList = false;
+      }
+      this.isOpenedTaskList = false;
+      this.sizeTaskList = 1;
+    }
   }
 
   public changeSizeToOneSearch(): void {
@@ -353,6 +376,12 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
     e.target.blur();
     this.size = 5;
     this.isOpened = true;
+  }
+
+  public changeSizeToOneOptionTaskList(e: any): void {
+    e.target.blur();
+    this.sizeTaskList = 5;
+    this.isOpenedTaskList = true;
   }
 
   public changeSizeToFiveSearch(): void {
