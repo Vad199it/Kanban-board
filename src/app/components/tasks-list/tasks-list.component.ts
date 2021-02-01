@@ -88,6 +88,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   public updateTasksIdArray(tasksId: string[], dragTaskId: string, value: string, currTaskId?: string): string[]{
     let index;
+    tasksId = this.removeFirst(tasksId, dragTaskId);
     if (currTaskId){
       index = tasksId.indexOf(currTaskId);
     }
