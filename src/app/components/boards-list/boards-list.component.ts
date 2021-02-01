@@ -193,8 +193,8 @@ export class BoardsListComponent implements OnInit, OnDestroy {
   }
 
   public prevPageOther(): void {
-    const prevStartAtOther: any = this.getPrevStartAt(this.prevStrAtOther, this.paginationClickedCountOther);
     --this.paginationClickedCountOther;
+    const prevStartAtOther: any = this.getPrevStartAt(this.prevStrAtOther, this.paginationClickedCountOther);
     this.subscription.add(this.boardService.getPrevPageOfOtherBoards(this.authService.getUser().uid, this.fieldOther,
       this.directionStrOther, this.firstInResponseOther, prevStartAtOther)
       .get()
