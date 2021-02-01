@@ -99,8 +99,10 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private retrieveTaskById(): void {
     this.subscription.add(this.taskService.getTaskById(this.currentTask.uid).valueChanges({idField: 'id'})
       .subscribe((data: Task[]) => {
-        this.currentTask.comments = data[0].comments;
-        this.text = this.currentTask.comments.join('');
+        if (data[0]) {
+          this.currentTask.comments = data[0].comments;
+          this.text = this.currentTask.comments.join('');
+        }
       }));
   }
 
@@ -200,7 +202,7 @@ export class TasksDetailsComponent implements OnInit, OnChanges, OnDestroy {
         dueDate: this.currentTask.dueDate,
         title: this.currentTask.title,
         content: this.currentTask.content,
-        comments: [...this.currentTask.comments, ...this.comments] || [''],
+        comments: this.currentTask.comments || [''],
         nameOfDeveloper: this.currentTask.nameOfDeveloper,
       };
       this.taskService.updateTask(this.currentTask.id, data)

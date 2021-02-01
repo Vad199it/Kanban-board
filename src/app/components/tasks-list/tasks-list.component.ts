@@ -100,13 +100,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
         return [... new Set(tasksId)];
       case 'top':
         tasksId.unshift(dragTaskId);
-        return [... new Set(tasksId)];
+        return tasksId;
       case 'bottom':
         tasksId.push(dragTaskId);
-        return [... new Set(tasksId)];
+        return tasksId;
       default:
         tasksId.unshift(dragTaskId);
-        return [... new Set(tasksId)];
+        return tasksId;
     }
   }
 
