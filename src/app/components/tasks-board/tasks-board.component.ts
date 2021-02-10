@@ -134,7 +134,7 @@ export class TasksBoardComponent implements OnInit, OnDestroy {
     for (i = 0, len = str.length; i < len; i++) {
       chr   = str.charCodeAt(i);
       hash  = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
+      hash |= 0;
     }
     return Math.abs(hash);
   }
