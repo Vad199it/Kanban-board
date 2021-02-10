@@ -63,6 +63,7 @@
 }
 
 .progress-container {
+  height: 18px;
   .progress-bar {
     &::-webkit-progress-value {
       background: darkslateblue;

@@ -9,8 +9,7 @@ const path = {
 }
 
 const gulp = require('gulp'),
-  { parallel, series } = require('gulp'),
-  // rename = require('gulp-rename'),
+  { parallel } = require('gulp'),
   imagemin = require('gulp-imagemin'),
   htmlmin = require('gulp-htmlmin'),
   cleanCSS = require('gulp-clean-css'),

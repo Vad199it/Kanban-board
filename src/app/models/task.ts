@@ -1,6 +1,6 @@
 export default class Task {
-  id: string; //
-  ownerTask: string; //
+  id: string;
+  ownerTask: string;
   doTask: string;
   nameOfDeveloper: string;
   createDate: string;
@@ -9,5 +9,5 @@ export default class Task {
   content: string;
   comments: string[];
   idTicket: string;
-  uid: string; //
+  uid: string;
 }
